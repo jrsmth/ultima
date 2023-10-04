@@ -1,3 +1,3 @@
-# U L T I M A
-⭕ Ultimate Tic Tac Toe
+# ⭕ U L T I M A
+Ultimate Tic Tac Toe
 <!-- Private repo whilst under development, publicise upon submission -->
