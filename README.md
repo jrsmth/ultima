@@ -9,7 +9,7 @@
 
 ## Explanation
 - ⭕ Each square contains a smaller game of Tic-Tac-Toe
-- ℹ️ [More info](https://en.wikipedia.org/wiki/Ultimate_tic-tac-toe)
+- ℹ️ [More info](https://www.thegamegal.com/2018/09/01/ultimate-tic-tac-toe/)
 
 ## Run Locally
 - 🔧 `pip3 install Flask`
