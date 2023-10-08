@@ -12,4 +12,5 @@
 - ℹ️ [More info](https://en.wikipedia.org/wiki/Ultimate_tic-tac-toe)
 
 ## Run Locally
-- 🚀  `flask run`
+- 🔧 `pip3 install Flask`
+- 🚀 `make start`
