@@ -8,7 +8,7 @@
 <!-- TODO :: Replace with .GIF -->
 
 ## Explanation
-- ⭕ Each square contains a smaller Tic-Tac-Toe board
+- ⭕ Ultimate Tic-Tac-Toe where each square contains a smaller board
 - ℹ️ [More info](https://en.wikipedia.org/wiki/Ultimate_tic-tac-toe)
 
 ## Run Locally
