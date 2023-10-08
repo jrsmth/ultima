@@ -1,5 +1,4 @@
-# <img src="https://github.com/JRSmiffy/ultima/assets/34093915/b67d641d-1963-48cd-b110-b13e6d3537d8" width="28" alt="Logo"> U L T I M A
-*Ultimate Tic Tac Toe*
+# <img src="https://github.com/JRSmiffy/ultima/assets/34093915/b67d641d-1963-48cd-b110-b13e6d3537d8" width="28" alt="Logo"> Ultimate Tic Tac Toe
 <!-- Private repo whilst under development, publicise upon submission -->
 
 <br>
