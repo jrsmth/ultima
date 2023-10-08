@@ -9,7 +9,7 @@
 
 ## Explanation
 - ⭕ The Tic-Tac-Toe that you know where each square contains a smaller Tic-Tac-Toe board
-- ℹ️  [More info](https://en.wikipedia.org/wiki/Ultimate_tic-tac-toe)
+- ℹ️ [More info](https://en.wikipedia.org/wiki/Ultimate_tic-tac-toe)
 
 ## Run Locally
 - 🚀  `flask run`
