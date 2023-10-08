@@ -1,15 +1,15 @@
-# <img src="https://github.com/JRSmiffy/ultima/assets/34093915/b67d641d-1963-48cd-b110-b13e6d3537d8" width="28" alt="Logo"> U L T I M A
-*Ultimate Tic Tac Toe*
+[![Build and Deploy](https://github.com/JRSmiffy/delaunay/actions/workflows/main.yaml/badge.svg)](https://github.com/JRSmiffy/delaunay/actions/workflows/main.yaml)
+
+# <img src="https://github.com/JRSmiffy/ultima/assets/34093915/b67d641d-1963-48cd-b110-b13e6d3537d8" width="28" alt="Logo"> Ultima
 <!-- Private repo whilst under development, publicise upon submission -->
+[ultima.wtf](https://ultima.wtf)
 
-<br>
-<br>
-
-<img src="https://github.com/JRSmiffy/ultima/assets/34093915/c12d8ec5-7ac7-4e13-a80a-84d23c283eb8" width="1440" alt="Ultima Game Play">
+<img width="1440" alt="Ultima Game Play" src="https://github.com/JRSmiffy/ultima/assets/34093915/c847db7d-8b72-4614-b3fc-7219e95c3bf5">
 <!-- TODO :: Replace with .GIF -->
 
-<br>
-<br>
+## Explanation
+- ⭕ The Tic-Tac-Toe that you know where each square contains a smaller Tic-Tac-Toe board
+- ℹ️  [More info](https://en.wikipedia.org/wiki/Ultimate_tic-tac-toe)
 
 ## Run Locally
-* `flask run`
+- 🚀  `flask run`
