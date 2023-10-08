@@ -2,9 +2,34 @@
 <html lang="">
     <head>
         <title>Ultima</title>
+        <link rel="icon" type="image/x-icon" href="../static/favicon/favicon.ico">
+        <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/css/main.css') }}">
     </head>
     <body>
-        <h1>Ultima</h1>
+        <img id="logo" alt="logo" src="../static/img/logo.png">
+        <section>
+            <form action="" method="post">
+                <input type="text" placeholder="Name" name="name" value="{{ request.form.name }}" autocomplete="off">
+                <input type="text" placeholder="Game ID" name="gameId" value="{{ request.form.gameId }}" autocomplete="off">
+<!--                <input type="text"-->
+<!--                       id="name"-->
+<!--                       placeholder="Name"-->
+<!--                       autocomplete="off"-->
+<!--                       value="{{ request.form.name }}">-->
+<!--                <input type="text"-->
+<!--                       id="game-id"-->
+<!--                       placeholder="Game ID"-->
+<!--                       autocomplete="off"-->
+<!--                       value="{{ request.form.gameId }}">-->
+                <br>
+                <button type="submit">Play</button>
+                {% if error %}
+                    <p class="error"><strong>Error:</strong> {{ error }}</p>
+                {% endif %}
+            </form>
+
+            <section id="shadow-section"></section>
+        </section>
     </body>
 </html>
