@@ -19,6 +19,7 @@ def login():
         print(request.form["name"])  # log me
         print(request.form["gameId"])
 
+        # TODO :: set redis obj as dict { $game_id: [player1: "", player2: ""] }
         if request.form["gameId"] == "":
             redis_client.set("player1", request.form["name"])
             return redirect(url_for("game", id=generateGameId()))
@@ -31,6 +32,11 @@ def login():
             error = "Invalid Game Id :: Please try again or leave blank to start a new game"
 
     return render_template("login.html", error=error)
+
+
+@app.route("/game/<id>/clear")
+def clear_game():
+    return ""  # TODO :: clear the game state for given id
 
 
 if __name__ == "__main__":
