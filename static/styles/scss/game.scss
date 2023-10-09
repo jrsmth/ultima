@@ -1,0 +1,18 @@
+@import "base";
+
+header {
+  display: flex;
+
+  #badge {
+    height: 2.5rem;
+    margin: .5rem;
+  }
+
+  h1 {
+    margin: .5rem;
+    text-transform: uppercase;
+    letter-spacing: .25rem;
+    font-weight: 200;
+  }
+}
+

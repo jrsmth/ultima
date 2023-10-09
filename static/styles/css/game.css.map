@@ -1,1 +1,1 @@
-{"version":3,"sourceRoot":"","sources":[],"names":[],"mappings":"","file":"game.css"}
+{"version":3,"sourceRoot":"","sources":["../scss/base.scss","../scss/game.scss"],"names":[],"mappings":"AAAA;EACE;;;AAGF;EACE;EACA;;;ACJF;EACE;;AAEA;EACE;EACA;;AAGF;EACE;EACA;EACA;EACA","file":"game.css"}

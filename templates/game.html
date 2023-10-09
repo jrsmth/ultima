@@ -1,4 +1,21 @@
-<img id="logo" alt="logo" src="../static/img/badge.png">
-
-<p>{{ player1 }}</p>
-<p>{{ player2 }}</p>
+<!DOCTYPE html>
+<html lang="">
+    <head>
+        <title>Ultima</title>
+        <link rel="icon" type="image/x-icon" href="../static/favicon/favicon.ico">
+        <link href='https://fonts.googleapis.com/css?family=Montserrat:200,400' rel='stylesheet'>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles/css/game.css') }}">
+    </head>
+    <body>
+        <header>
+            <a href="https://github.com/JRSmiffy/ultima" target="_blank">
+                <img id="badge" alt="badge" src="../static/img/badge.png">
+            </a>
+            <h1>Ultima</h1>
+        </header>
+        <section class="side-bar left">
+            <p>{{ player1 }}</p>
+            <p>{{ player2 }}</p>
+        </section>
+    </body>
+</html>
