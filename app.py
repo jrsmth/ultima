@@ -1,31 +1,47 @@
 import sys
 from flask import Flask, render_template, redirect, url_for, request
+from flask_redis import FlaskRedis
 
 app = Flask(__name__)
+redis_client = FlaskRedis(app)
+# TODO :: switch to snake_case?
 
-@app.route("/game-id")
-def game():
-    return "Welcome, ${player}!"
+
+@app.route("/game/<id>")
+def game(id):
+    return render_template("game.html", player1=redis_client.get("player1"), player2=redis_client.get("player2"))
+
 
 @app.route("/", methods=["GET", "POST"])
 def login():
     error = None
     if request.method == "POST":
-        print(request.form["name"])
+        print(request.form["name"])  # log me
         print(request.form["gameId"])
 
-        if isValidGameId(request.form["gameId"]):
-            return redirect(url_for("game"))
+        if request.form["gameId"] == "":
+            redis_client.set("player1", request.form["name"])
+            return redirect(url_for("game", id=generateGameId()))
+
+        elif isValidGameId(request.form["gameId"]):
+            redis_client.set("player2", request.form["name"])
+            return redirect(url_for("game", id=request.form["gameId"]))
+
         else:
-            error = "Invalid Credentials. Please try again."
+            error = "Invalid Game Id :: Please try again or leave blank to start a new game"
 
     return render_template("login.html", error=error)
+
 
 if __name__ == "__main__":
     app.run()
 
+
 def isValidGameId(id):
-    if id == "":
-        return False
-    else:
+    if id != "-1":  # Does game id already exist?
         return True
+    else:
+        return False
+
+def generateGameId():
+    return "ab12-3cd4-e5f6-78gh"
