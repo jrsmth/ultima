@@ -3,4 +3,4 @@ WORKDIR /code
 COPY requirements.txt /code
 RUN pip install -r requirements.txt --no-cache-dir
 COPY . /code
-CMD sass --update static/styles/scss:static/styles/css && gunicorn app:app
+CMD gunicorn app:app

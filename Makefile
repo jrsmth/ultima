@@ -1,5 +1,8 @@
+make build:
+	sass --update static/styles/scss:static/styles/css
+
 make start:
-	sass --update static/styles/scss:static/styles/css && gunicorn app:app
+	make build && gunicorn app:app
 	# Make sure redis is running
 
 make test:
