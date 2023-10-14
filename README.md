@@ -12,5 +12,5 @@
 - ℹ️ [More info](https://www.thegamegal.com/2018/09/01/ultimate-tic-tac-toe/)
 
 ## Run Locally
-- 🔧 `pip3 install Flask`
+- 🔧 `pip install -r requirements.txt`
 - 🚀 `make start`

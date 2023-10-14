@@ -1,5 +1,6 @@
 make start:
-	sass --update static/styles/scss:static/styles/css && flask run
+	sass --update static/styles/scss:static/styles/css && gunicorn app:app
+	# Make sure redis is running
 
 make test:
 	python3 -m unittest test

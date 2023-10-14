@@ -12,16 +12,6 @@
             <form action="" method="post">
                 <input type="text" placeholder="Name" name="name" value="{{ request.form.name }}" autocomplete="off">
                 <input type="text" placeholder="Game ID" name="gameId" value="{{ request.form.gameId }}" autocomplete="off">
-<!--                <input type="text"-->
-<!--                       id="name"-->
-<!--                       placeholder="Name"-->
-<!--                       autocomplete="off"-->
-<!--                       value="{{ request.form.name }}">-->
-<!--                <input type="text"-->
-<!--                       id="game-id"-->
-<!--                       placeholder="Game ID"-->
-<!--                       autocomplete="off"-->
-<!--                       value="{{ request.form.gameId }}">-->
                 <br>
                 <button type="submit">Play</button>
                 {% if error %}
