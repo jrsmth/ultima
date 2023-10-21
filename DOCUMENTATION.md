@@ -8,6 +8,7 @@
 * Draw.io (diagrams)
 * Jira (issue tracker)
 * GitHub (source repository)
+* Render (hosting)
 * GitHub Actions (CI/CD)
 * IntelliJ (IDE)
 

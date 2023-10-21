@@ -2,16 +2,23 @@
   font-family: Montserrat, sans-serif;
 }
 
+html {
+  height: 100%;
+  overflow-y: hidden;
+}
+
 body {
   background-color: #180405;
   color: whitesmoke;
+  height: 100%;
 }
 
+/** Header */
 header {
   display: flex;
 }
 header #badge {
-  height: 2.5rem;
+  height: 2.25rem;
   margin: 0.5rem;
 }
 header h1 {
@@ -19,6 +26,83 @@ header h1 {
   text-transform: uppercase;
   letter-spacing: 0.25rem;
   font-weight: 200;
+  font-size: 1.5rem;
+  line-height: 2.25rem;
+}
+
+/** Tooltip */
+.tooltip .tooltip-text {
+  display: flex;
+  visibility: hidden;
+  position: absolute;
+  letter-spacing: 1.5px;
+  width: 20rem;
+  padding: 0 1rem;
+  font-size: 0.75rem;
+}
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+}
+
+/** Main Content */
+#content {
+  display: flex;
+  height: 100%;
+}
+#content .this-user {
+  color: #d8ff00;
+}
+#content .main-bar {
+  width: 70%;
+  text-align: center;
+}
+#content .main-bar .this-user.symbol {
+  font-size: 5rem;
+}
+
+/** Side Bar */
+.side-bar {
+  margin-top: 6rem;
+  width: 15%;
+}
+.side-bar .player {
+  margin: 1rem;
+  padding: 1rem;
+  width: 10rem;
+}
+.side-bar .player.active {
+  border: 1px solid rgba(231, 4, 83, 0.7490196078);
+  background-color: #2b0710;
+}
+.side-bar .player .fa-user {
+  margin-right: 0.5rem;
+  color: #e70453;
+}
+.side-bar .player .symbol {
+  color: #e70453;
+  margin-left: 0.5rem;
+  float: right;
+  transform: translateY(1px);
+}
+
+/** Board */
+.board {
+  height: 25rem;
+  width: 25rem;
+  margin-left: calc(50% - 12.5rem);
+  background-color: rgba(231, 4, 83, 0.2509803922);
+  margin-top: 2rem;
+}
+
+/** Notification */
+.notification {
+  margin-top: 2rem;
+  background-color: rgba(231, 4, 83, 0.2509803922);
+  width: 25rem;
+  height: 4rem;
+  position: absolute;
+  bottom: 4rem;
+  left: calc(50% - 12.5rem);
 }
 
 /*# sourceMappingURL=game.css.map */

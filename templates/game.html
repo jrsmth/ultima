@@ -3,20 +3,39 @@
     <head>
         <title>Ultima</title>
         <link rel="icon" type="image/x-icon" href="../static/favicon/favicon.ico">
-        <link href='https://fonts.googleapis.com/css?family=Montserrat:200,400' rel='stylesheet'>
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:200,400" rel="styleshee">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" type="text/css">
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/css/game.css') }}">
     </head>
     <body>
         <header>
-            <a href="https://github.com/JRSmiffy/ultima" target="_blank">
-                <img id="badge" alt="badge" src="../static/img/badge.png">
-            </a>
+            <div class="tooltip">
+                <a href="https://github.com/JRSmiffy/ultima" target="_blank"><img id="badge" alt="badge" src="../static/img/badge.png"></a>
+                <div class="tooltip-text"><span>{{ version }}</span></div>
+            </div>
             <h1>Ultima</h1>
-            <p>{{ version }}</p>
         </header>
-        <section class="side-bar left">
-            <p>{{ player1 }}</p>
-            <p>{{ player2 }}</p>
+        <section id="content">
+            <section class="side-bar left">
+                <div class="player" id="player1">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <span>{{ player1 }}</span>
+                    <i class="fa fa-circle symbol this-user"></i>
+                </div>
+                <div class="player active" id="player2">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <span>{{ player2 }}</span>
+                    <i class="fa fa-times symbol"></i>
+                </div>
+            </section>
+            <section class="main-bar">
+                <i id="whose-turn" class="fa fa-circle symbol this-user"></i>
+                <div class="board">
+
+                </div>
+                <div class="notification"></div>
+            </section>
+            <section class="side-bar right"></section>
         </section>
     </body>
 </html>
