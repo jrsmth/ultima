@@ -16,6 +16,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 # Releases
 <!-- @LatestFirst -->
 
+## [0.1.0] - 21/10/2023
+
+### Tickets
+- UMA-4: ...
+
 ## [0.0.0] - 21/10/2023
 
 ### Tickets
@@ -26,3 +31,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <br>
 
 [0.0.0]: https://github.com/JRSmiffy/ultima/releases/tag/0.0.0
+[0.1.0]: https://github.com/JRSmiffy/ultima/releases/tag/0.0.0...0.1.0
