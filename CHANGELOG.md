@@ -16,8 +16,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 # Releases
 <!-- @LatestFirst -->
 
+## [0.1.1] - 21/10/2023
+- UMA-4: Set-up GitHub action to build, test, release and deploy
+- UMA-5: Acquire domain name and set-up on repo/platform
+
 ## [0.1.0] - 21/10/2023
-- UMA-4: ...
+- UMA-4: Set-up GitHub action to build, test, release and deploy
 
 ## [0.0.0] - 21/10/2023
 - UMA-2: Create Flask MVP
@@ -28,3 +32,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 [0.0.0]: https://github.com/JRSmiffy/ultima/releases/tag/0.0.0
 [0.1.0]: https://github.com/JRSmiffy/ultima/releases/tag/0.0.0...0.1.0
+[0.1.1]: https://github.com/JRSmiffy/ultima/releases/tag/0.1.0...0.1.1
