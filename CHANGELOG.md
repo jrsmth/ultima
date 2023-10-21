@@ -8,8 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <br>
 
 # Version History
-- `0.0.x`: End-to-end Flask PoC
-- `0.1.x`: GitHub Actions
+- `0.0.x` : End-to-end Flask PoC
+- `0.1.x` : GitHub Actions
 
 <br>
 
