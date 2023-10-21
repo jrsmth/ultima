@@ -1,2 +1,3 @@
-$boardLength: 25rem;
-$halfBoardLength: calc($boardLength * 0.5)
+$boardLengthMax: 600px;
+$boardLengthMin: 400px;
+$boardLengthDefault: 50%; // of main #content height
