@@ -7,12 +7,15 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      working-directory: .
+      FLASK_ENV: prod
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
+      - name: Install (x)
+        run: pip3 install -r requirements.txt --no-cache-dir
       - name: Test 📋
-        working-directory: .
-        run: |
-          export FLASK_ENV=local
-          pip3 install -r requirements.txt --no-cache-dir
-          python3 -m unittest test
+        run: python3 -m unittest test
+      - name: Build 🔧
+        run: sass --update static/styles/scss:static/styles/css
