@@ -1,8 +1,11 @@
-FROM python:3.11.0a6-alpine3.15
+FROM python:3.9-slim
 WORKDIR /code
 COPY requirements.txt /code
-RUN pip install -r requirements.txt --no-cache-dir
+RUN pip3 install -r requirements.txt --no-cache-dir
 COPY . /code
-CMD export FLASK_ENV=prod && gunicorn app:app
+ENV PYTHONUNBUFFERED=0
+ENV FLASK_ENV=local
+EXPOSE 8080
+ENTRYPOINT ["gunicorn", "-b", "0.0.0.0:8080", "app:app"]
 
 # Question :: when is the sass build going to happen?
