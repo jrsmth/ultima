@@ -1,4 +1,4 @@
-[![Build and Deploy](https://github.com/JRSmiffy/delaunay/actions/workflows/main.yaml/badge.svg)](https://github.com/JRSmiffy/delaunay/actions/workflows/main.yaml)
+[![Test, Tag and Deploy](https://github.com/JRSmiffy/ultima/actions/workflows/main.yaml/badge.svg)](https://github.com/JRSmiffy/ultima/actions/workflows/main.yaml)
 
 # <img src="https://github.com/JRSmiffy/ultima/assets/34093915/b67d641d-1963-48cd-b110-b13e6d3537d8" width="28" alt="Logo"> Ultima
 <!-- TODO :: Private repo whilst under development, publicise upon submission -->
