@@ -1,8 +1,9 @@
 make build:
 	sass --update static/styles/scss:static/styles/css
 
+env = "local"
 make start:
-	make build && gunicorn app:app
+	export FLASK_ENV=$(env) && make build && gunicorn app:app
 	# Make sure redis is running
 
 make test:

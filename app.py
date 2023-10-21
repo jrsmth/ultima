@@ -1,8 +1,21 @@
+import os
 import sys
 from flask import Flask, render_template, redirect, url_for, request
 from flask_redis import FlaskRedis
+from config import Config, ProductionConfig
 
 app = Flask(__name__)
+env = os.environ.get("FLASK_ENV")
+
+if not env:
+    raise ValueError("Start-up failed: no environment specified!")
+elif env == "local":
+    app.config.from_object(Config())
+    print("Starting app in [local] mode")
+elif env == "prod":
+    app.config.from_object(ProductionConfig())
+    print("Starting app in [production] mode")
+
 redis_client = FlaskRedis(app)
 # TODO :: switch to snake_case?
 
@@ -39,15 +52,16 @@ def clear_game():
     return ""  # TODO :: clear the game state for given id
 
 
-if __name__ == "__main__":
-    app.run()
-
-
 def isValidGameId(id):
     if id != "-1":  # Does game id already exist?
         return True
     else:
         return False
 
+
 def generateGameId():
     return "ab12-3cd4-e5f6-78gh"
+
+
+if __name__ == "__main__":
+    app.run()
