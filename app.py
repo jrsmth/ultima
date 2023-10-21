@@ -3,6 +3,7 @@ import sys
 from flask import Flask, render_template, redirect, url_for, request
 from flask_redis import FlaskRedis
 from config import Config, ProductionConfig
+from version.version import __version__
 
 app = Flask(__name__)
 env = os.environ.get("FLASK_ENV")
@@ -22,7 +23,7 @@ redis_client = FlaskRedis(app)
 
 @app.route("/game/<id>")
 def game(id):
-    return render_template("game.html", player1=redis_client.get("player1"), player2=redis_client.get("player2"))
+    return render_template("game.html", version=__version__, player1=redis_client.get("player1"), player2=redis_client.get("player2"))
 
 
 @app.route("/", methods=["GET", "POST"])

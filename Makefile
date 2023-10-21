@@ -3,7 +3,7 @@ make build:
 
 env = "local"
 make start:
-	export FLASK_ENV=$(env) && make build && gunicorn app:app
+	export FLASK_ENV=$(env) && make build && gunicorn -b 0.0.0.0:8080 app:app
 	# Make sure redis is running
 
 make test:
