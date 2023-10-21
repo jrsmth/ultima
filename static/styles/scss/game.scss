@@ -89,8 +89,23 @@ header {
   height: $boardLength;
   width: $boardLength;
   margin-left: calc(50% - $halfBoardLength);
-  background-color: $pink25;
   margin-top: 2rem;
+  display: grid;
+  grid-template-columns: 33.3% 33.3% 33.3%;
+
+  .square {
+    border: 1px solid $pink25;
+    margin: .5rem;
+
+    .shadow-square {
+      top: 3px;
+      left: 3px;
+      z-index: -1;
+      width: 100%;
+      height: 100%;
+      // FixMe...
+    }
+  }
 }
 
 /** Notification */
