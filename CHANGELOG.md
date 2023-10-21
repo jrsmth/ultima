@@ -17,13 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <!-- @LatestFirst -->
 
 ## [0.1.0] - 21/10/2023
-
-### Tickets
 - UMA-4: ...
 
 ## [0.0.0] - 21/10/2023
-
-### Tickets
 - UMA-2: Create Flask MVP
 - UMA-3: Deploy to Render (with Redis)
 - UMA-9: Add project version and create a CHANGELOG
