@@ -13,5 +13,6 @@ jobs:
       - name: Test 📋
         working-directory: .
         run: |
+          export FLASK_ENV=local
           pip3 install -r requirements.txt --no-cache-dir
           python3 -m unittest test
