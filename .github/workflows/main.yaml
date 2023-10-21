@@ -1,11 +1,11 @@
-name: build-tag-deploy
+name: test-tag-deploy
 on:
   push:
     branches: [ main ]
 permissions:
   contents: write
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     env:
       working-directory: .
@@ -17,8 +17,25 @@ jobs:
         run: pip3 install -r requirements.txt --no-cache-dir
       - name: Test 📋
         run: python3 -m unittest test
-      - name: Compile CSS 💅
-        uses: gha-utilities/sass-build@v0.5.1
+  tag:
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./version
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+      - name: Set-up User 🐵
+        uses: fregante/setup-git-user@v2
+      - name: Bump and Tag 🏷️
+        run: echo "VERSION=$(python release_snapshot.py)" >> $GITHUB_ENV
+      - name: Release 📦
+        uses: softprops/action-gh-release@v1
         with:
-          source: static/styles/scss
-          destination: static/styles/css
+          tag_name: ${{ env.VERSION }}
+      - name: Add -SNAPSHOT 📷
+        working-directory: ./app
+        run: python bump_version.py
+      - name: Commit -SNAPSHOT 💾
+        uses: stefanzweifel/git-auto-commit-action@v4
+
+# SASS compile should happen with the start command on the docker container
