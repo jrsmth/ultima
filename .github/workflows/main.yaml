@@ -1,0 +1,15 @@
+name: build-tag-deploy
+on:
+  push:
+    branches: [ main ]
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+      - name: Test 📋
+        working-directory: .
+        run: python3 -m unittest test
