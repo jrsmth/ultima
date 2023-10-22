@@ -1,4 +1,4 @@
-[![jhc github](https://img.shields.io/badge/GitHub-jhrcook-181717.svg?style=flat&logo=github)](https://github.com/jhrcook)
+[![jhc github](https://img.shields.io/badge/GitHub-jrsmth-181717.svg?style=flat&logo=github)](https://github.com/jrsmth)
 [![python](https://img.shields.io/badge/Python-3.9-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
 [![Run Tests](https://github.com/jrsmth/ultima/actions/workflows/main.yaml/badge.svg)](https://github.com/jrsmth/ultima/actions/workflows/main.yaml)
 
