@@ -17,6 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 # Releases
 <!-- @LatestFirst -->
 
+## [0.2.0] - ?
+- UMA-10: Create interactive game board
+
 ## [0.1.1] - 21/10/2023
 - UMA-4: Set-up GitHub action to build, test, release and deploy
 - UMA-5: Acquire domain name and set-up on repo/platform
@@ -31,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <br>
 
-[0.0.0]: https://github.com/JRSmiffy/ultima/releases/tag/0.0.0
-[0.1.0]: https://github.com/JRSmiffy/ultima/releases/tag/0.0.0...0.1.0
-[0.1.1]: https://github.com/JRSmiffy/ultima/releases/tag/0.1.0...0.1.1
+[0.0.0]: https://github.com/jrsmth/ultima/releases/tag/0.0.0
+[0.1.0]: https://github.com/jrsmth/ultima/releases/tag/0.0.0...0.1.0
+[0.1.1]: https://github.com/jrsmth/ultima/releases/tag/0.1.0...0.1.1
+[0.2.0]: https://github.com/jrsmth/ultima/releases/tag/0.1.0...0.1.1
