@@ -38,6 +38,7 @@ def game(id, userId):
         player1=redis_client.get("player1"),
         player2=redis_client.get("player2"),
         thisUserId=userId,
+        thisUserSymbol=redis_client.get(userId),
         version=__version__
     )
 
@@ -75,6 +76,7 @@ def login():
     # TODO :: set redis obj as dict { $game_id: [player1: "", player2: ""] }
         if request.form["gameId"] == "":
             redis_client.set("player1", request.form["name"])
+            redis_client.set(request.form["name"], "1") # For now, set this player's symbol to circle
             return redirect(url_for("game", id=generateGameId(), userId=request.form["name"]))
 
         elif isValidGameId(request.form["gameId"]):

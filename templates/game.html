@@ -4,11 +4,12 @@
         <title>Ultima</title>
         <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon/favicon.ico') }}">
         <link href="https://fonts.googleapis.com/css?family=Montserrat:200,400" rel="styleshee">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" type="text/css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" type="text/css">
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/css/game.css') }}">
     </head>
     <body>
         <input id="this-user-id" type="hidden" value="{{ thisUserId }}">
+        <input id="this-user-symbol" type="hidden" value="{{ thisUserSymbol }}">
         <header>
             <div class="tooltip">
                 <a href="https://github.com/JRSmiffy/ultima" target="_blank"><img id="badge" alt="badge" src="{{ url_for('static', filename='img/badge.png') }}"></a>
@@ -21,7 +22,7 @@
                 <div class="player" id="player1">
                     <i class="fa fa-user" aria-hidden="true"></i>
                     <span>{{ player1 }}</span>
-                    <i class="fa fa-circle symbol this-user"></i>
+                    <i class="fa-regular fa-circle symbol this-user"></i>
                 </div>
                 <div class="player active" id="player2">
                     <i class="fa fa-user" aria-hidden="true"></i>
@@ -30,7 +31,8 @@
                 </div>
             </section>
             <section class="main-bar">
-                <i id="whose-turn" class="fa fa-circle symbol this-user"></i>
+                <i id="whose-turn-actual" class="fa-regular fa-circle symbol this-user"></i>
+                <i id="whose-turn-shadow" class="fa-regular fa-circle symbol this-user"></i>
                 <div class="board">
                     <div class="shadow-square" id="square-1"><div class="square" onclick="placeMove('1')">{{ one }}</div></div>
                     <div class="shadow-square" id="square-2"><div class="square" onclick="placeMove('2')">{{ two }}</div></div>
