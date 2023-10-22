@@ -1,4 +1,4 @@
-name: test-tag-deploy
+name: test-n-tag
 on:
   push:
     branches: [ main ]
