@@ -10,11 +10,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 # Version History
 - `0.0.x` : End-to-end Flask PoC
 - `0.1.x` : GitHub Actions
+- `0.2.x` : Simple Tic Tac Toe (3 x 3)
 
 <br>
 
 # Releases
 <!-- @LatestFirst -->
+
+## [0.2.0] - ?
+- UMA-10: Create interactive game board
+- ...
 
 ## [0.1.2] - 22/10/2023
 - UMA-5: Acquire domain name and set-up on repo/platform
@@ -34,6 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <br>
 
 [0.0.0]: https://github.com/jrsmth/ultima/releases/tag/0.0.0
-[0.1.0]: https://github.com/jrsmth/ultima/releases/tag/0.0.0...0.1.0
-[0.1.1]: https://github.com/jrsmth/ultima/releases/tag/0.1.0...0.1.1
-[0.1.2]: https://github.com/jrsmth/ultima/releases/tag/0.1.1...0.1.2
+[0.1.0]: https://github.com/jrsmth/ultima/compare/0.0.0...0.1.0
+[0.1.1]: https://github.com/jrsmth/ultima/compare/0.1.0...0.1.1
+[0.1.2]: https://github.com/jrsmth/ultima/compare/0.1.1...0.1.2
+[0.2.0]: https://github.com/jrsmth/ultima/compare/0.1.2...0.2.0

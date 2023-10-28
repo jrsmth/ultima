@@ -1,15 +1,17 @@
+@import "colours";
+@import "spacing";
+
 * {
   font-family: Montserrat, sans-serif;
 }
 
-body {
-  background-color: #180405;
-  color: whitesmoke;
+html {
+  height: 100%;
+  overflow-y: hidden;
 }
 
-// Colours
-$aubergine: #2b0710;
-$creole: #180405;
-$pink: #E70453;
-$pink25: #E7045340;
-$pink75: #E70453BF; // 75% alpha
+body {
+  background-color: $creole;
+  color: $text-light;
+  height: 100%;
+}
