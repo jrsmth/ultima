@@ -77,6 +77,11 @@ header {
       background-color: $aubergine;
     }
 
+    &.active-True {
+      border: 1px solid $pink25;
+      background-color: $aubergine;
+    }
+
     .fa-user {
       margin-right: .5rem;
       color: $pink;

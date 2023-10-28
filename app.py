@@ -27,22 +27,33 @@ redis_client = FlaskRedis(app)
 @app.route("/game/<id>/<userId>")
 def game(id, userId):
     print("hit")
+    player_one_active = False
+    player_two_active = False
+
+    if get("whoseTurn") == 'player1':
+        player_one_active = True
+    else:
+        player_two_active = True
+
     return render_template(
         "game.html",
-        one=redis_client.get("1"),
-        two=redis_client.get("2"),
-        three=redis_client.get("3"),
-        four=redis_client.get("4"),
-        five=redis_client.get("5"),
-        six=redis_client.get("6"),
-        seven=redis_client.get("7"),
-        eight=redis_client.get("8"),
-        nine=redis_client.get("9"),
-        player1=redis_client.get("player1"),
-        player2=redis_client.get("player2"),
+        one=get("1"),
+        two=get("2"),
+        three=get("3"),
+        four=get("4"),
+        five=get("5"),
+        six=get("6"),
+        seven=get("7"),
+        eight=get("8"),
+        nine=get("9"),
+        player1=get("player1"),
+        player2=get("player2"),
+        playerOneActive=player_one_active,
+        playerTwoActive=player_two_active,
         thisUserId=userId,
-        thisUserSymbol=redis_client.get(userId),
-        version=__version__
+        thisUserSymbol=get(userId),
+        version=__version__,
+        whoseTurn=get("whoseTurn")
     )
 
 @app.route("/game/<id>/place-move/<userId>/<square>")
@@ -64,13 +75,13 @@ def login():
                  (4, 0), (5, 0), (6, 0),
                  (7, 0), (8, 0), (9, 0)]
         # first index is squareNo
-        # second index is the state: 0 for empty, 1 for circle, 2 for cross
+        # second index is the state: 0 for empty, 1 for cross, 2 for circle
         redis_client.set("1", 0)
-        redis_client.set("2", 1)
+        redis_client.set("2", 0)
         redis_client.set("3", 0)
-        redis_client.set("4", 2)
+        redis_client.set("4", 0)
         redis_client.set("5", 0)
-        redis_client.set("6", 2)
+        redis_client.set("6", 0)
         redis_client.set("7", 0)
         redis_client.set("8", 0)
         redis_client.set("9", 0)
@@ -79,11 +90,13 @@ def login():
     # TODO :: set redis obj as dict { $game_id: [player1: "", player2: ""] }
         if request.form["gameId"] == "":
             redis_client.set("player1", request.form["name"])
-            redis_client.set(request.form["name"], "1") # For now, set this player's symbol to circle
+            redis_client.set(request.form["name"], "1") # For now, set first player to cross
+            redis_client.set("whoseTurn", "player1")
             return redirect(url_for("game", id=generateGameId(), userId=request.form["name"]))
 
         elif isValidGameId(request.form["gameId"]):
             redis_client.set("player2", request.form["name"])
+            redis_client.set(request.form["name"], "2") # For now, set first player to circle
             return redirect(url_for("game", id=request.form["gameId"], userId=request.form["name"]))
 
         else:
@@ -106,6 +119,10 @@ def isValidGameId(id):
 
 def generateGameId():
     return "ab12-3cd4-e5f6-78gh"
+
+
+def get(key):
+    return redis_client.get(key).decode('utf-8')
 
 
 if __name__ == "__main__":
