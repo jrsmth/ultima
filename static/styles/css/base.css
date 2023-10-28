@@ -2,9 +2,15 @@
   font-family: Montserrat, sans-serif;
 }
 
+html {
+  height: 100%;
+  overflow-y: hidden;
+}
+
 body {
   background-color: #180405;
   color: whitesmoke;
+  height: 100%;
 }
 
 /*# sourceMappingURL=base.css.map */

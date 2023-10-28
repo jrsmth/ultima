@@ -2,21 +2,53 @@
 <html lang="">
     <head>
         <title>Ultima</title>
-        <link rel="icon" type="image/x-icon" href="../static/favicon/favicon.ico">
-        <link href='https://fonts.googleapis.com/css?family=Montserrat:200,400' rel='stylesheet'>
+        <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon/favicon.ico') }}">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:200,400" rel="styleshee">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" type="text/css">
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/css/game.css') }}">
     </head>
     <body>
+        <input id="this-user-id" type="hidden" value="{{ thisUserId }}">
+        <input id="this-user-symbol" type="hidden" value="{{ thisUserSymbol }}">
         <header>
-            <a href="https://github.com/JRSmiffy/ultima" target="_blank">
-                <img id="badge" alt="badge" src="../static/img/badge.png">
-            </a>
+            <div class="tooltip">
+                <a href="https://github.com/jrsmth/ultima" target="_blank"><img id="badge" alt="badge" src="{{ url_for('static', filename='img/badge.png') }}"></a>
+                <div class="tooltip-text"><span>{{ version }}</span></div>
+            </div>
             <h1>Ultima</h1>
-            <p>{{ version }}</p>
         </header>
-        <section class="side-bar left">
-            <p>{{ player1 }}</p>
-            <p>{{ player2 }}</p>
+        <section id="content">
+            <section class="side-bar left">
+                <div class="player" id="player1">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <span>{{ player1 }}</span>
+                    <i class="fa-regular fa-circle symbol this-user"></i>
+                </div>
+                <div class="player active" id="player2">
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                    <span>{{ player2 }}</span>
+                    <i class="fa fa-times symbol"></i>
+                </div>
+            </section>
+            <section class="main-bar">
+                <i id="whose-turn-actual" class="fa-regular fa-circle symbol this-user"></i>
+                <i id="whose-turn-shadow" class="fa-regular fa-circle symbol this-user"></i>
+                <div class="board">
+                    <div class="shadow-square" id="square-1"><div class="square" onclick="placeMove('1')">{{ one }}</div></div>
+                    <div class="shadow-square" id="square-2"><div class="square" onclick="placeMove('2')">{{ two }}</div></div>
+                    <div class="shadow-square" id="square-3"><div class="square" onclick="placeMove('3')">{{ three }}</div></div>
+                    <div class="shadow-square" id="square-4"><div class="square" onclick="placeMove('4')">{{ four }}</div></div>
+                    <div class="shadow-square" id="square-5"><div class="square" onclick="placeMove('5')">{{ five }}</div></div>
+                    <div class="shadow-square" id="square-6"><div class="square" onclick="placeMove('6')">{{ six }}</div></div>
+                    <div class="shadow-square" id="square-7"><div class="square" onclick="placeMove('7')">{{ seven }}</div></div>
+                    <div class="shadow-square" id="square-8"><div class="square" onclick="placeMove('8')">{{ eight }}</div></div>
+                    <div class="shadow-square" id="square-9"><div class="square" onclick="placeMove('9')">{{ nine }}</div></div>
+                </div>
+                <div class="notification"></div>
+            </section>
+            <section class="side-bar right"></section>
         </section>
     </body>
+    <script src="{{ url_for('static', filename='scripts/index.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </html>
