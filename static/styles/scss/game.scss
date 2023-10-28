@@ -49,15 +49,38 @@ header {
     width: 70%;
     text-align: center;
 
-    .this-user.symbol {
-      font-size: 5rem;
-    }
+    #whose-turn {
+      .symbol-active-True   { display: block; }
+      .symbol-active-False  { display: none; }
 
-    #whose-turn-shadow {
-      position: absolute;
-      transform: translateX(-5rem);
-      filter: blur(.5rem);
-      opacity: .5;
+      .symbol {
+        font-size: 5rem;
+      }
+
+      .whose-turn-shadow {
+        position: absolute;
+        opacity: .5;
+        filter: blur(.5rem);
+      }
+
+      #whose-turn-cross {
+        &.this-symbol-1  { color: $chartreuse; }
+        &.this-symbol-2  { color: $pink; }
+
+        .whose-turn-shadow {
+          transform: translateX(-3.75rem);
+
+        }
+      }
+
+      #whose-turn-circle {
+        &.this-symbol-1 { color: $pink; }
+        &.this-symbol-2 { color: $chartreuse; }
+
+        .whose-turn-shadow {
+          transform: translateX(-5rem);
+        }
+      }
     }
   }
 }
@@ -93,6 +116,15 @@ header {
       float: right;
       transform: translateY(1px);
     }
+
+    &#player1 > .this-symbol-1.active-True  { color: $chartreuse }
+    &#player1 > .this-symbol-1.active-False { color: $pink }
+    &#player1 > .this-symbol-2.active-True  { color: $pink }
+    &#player1 > .this-symbol-2.active-False { color: $pink }
+    &#player2 > .this-symbol-1.active-True  { color: $pink }
+    &#player2 > .this-symbol-1.active-False { color: $pink }
+    &#player2 > .this-symbol-2.active-True  { color: $chartreuse }
+    &#player2 > .this-symbol-2.active-False { color: $pink }
   }
 }
 
@@ -166,6 +198,9 @@ header {
       }
     }
   }
+
+  &.this-user-1.player-1-False { .square { border: 1px solid $pink25; cursor: default; } }
+  &.this-user-2.player-2-False { .square { border: 1px solid $pink25; cursor: default; } }
 }
 
 /** Notification */

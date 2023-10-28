@@ -28,6 +28,13 @@ function init() {
 function placeMove(square) {
     const gameId = "ab12-3cd4-e5f6-78gh";
 
+    const userSymbol = document.getElementById('this-user-symbol').value;
+    const playerOneActive = document.getElementById('player-one-active').value;
+    const playerTwoActive = document.getElementById('player-two-active').value;
+
+    if (userSymbol === '1' && playerTwoActive === 'True') return;
+    if (userSymbol === '2' && playerOneActive === 'True') return;
+
     if (document.getElementById(`square-${square}`).getElementsByClassName("square")[0].innerHTML !== '') {
         return;
     }

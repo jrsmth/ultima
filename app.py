@@ -56,14 +56,24 @@ def game(id, userId):
         whoseTurn=get("whoseTurn")
     )
 
-@app.route("/game/<id>/place-move/<userId>/<square>")
-def placeMove(id, userId, square):
+
+@app.route("/game/<id>/place-move/<user_id>/<square>")
+def place_move(id, user_id, square):
     print(id)
-    print(userId)
+    print(user_id)
     print(square)
 
-    redis_client.set(square, "1")
-    return redirect(url_for("game", id=id, userId=userId))
+    symbol = get(user_id)
+    redis_client.set(square, symbol)
+
+    # Switch user
+    if get("whoseTurn") == 'player1':
+        redis_client.set("whoseTurn", "player2")
+    elif get("whoseTurn") == 'player2':
+        redis_client.set("whoseTurn", "player1")
+
+    return redirect(url_for("game", id=id, userId=user_id))
+
 
 @app.route("/", methods=["GET", "POST"])
 def login():
