@@ -28,6 +28,10 @@ function init() {
 function placeMove(square) {
     const gameId = "ab12-3cd4-e5f6-78gh";
 
+    if (document.getElementById(`square-${square}`).getElementsByClassName("square")[0].innerHTML !== '') {
+        return;
+    }
+
     $.get(`/game/${gameId}/place-move/${thisUserId}/${square}`);
     location.reload();
 }

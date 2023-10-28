@@ -2,7 +2,7 @@ import os
 import sys
 from flask import Flask, render_template, redirect, url_for, request
 from flask_redis import FlaskRedis
-from config import Config, ProductionConfig
+from config import Config, DevConfig, ProductionConfig
 from version.version import __version__
 
 app = Flask(__name__)
@@ -13,6 +13,9 @@ if not env:
 elif env == "local":
     app.config.from_object(Config())
     print("Starting app in [local] mode")
+elif env == "dev":
+    app.config.from_object(DevConfig())
+    print("Starting app in [dev] mode")
 elif env == "prod":
     app.config.from_object(ProductionConfig())
     print("Starting app in [production] mode")
