@@ -143,7 +143,7 @@ def get(key):
 def is_game_complete(): # return Enum.Result.IN_PROGRESS/ONE_WINS/TWO_WINS/DRAW
     # TODO :: algorithm to detect if board is complete
     # Has drawn -> count "0" = zero
-    # "1" won -> see sheet
+    # "1" won -> get all "1" positions, does this array contain any of the winning_combos?
     # "2 won
     board = [
         get("1"), get("2"), get("3"),
