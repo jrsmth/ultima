@@ -206,5 +206,9 @@ header {
   background-color: $aubergine;
   height: 4rem;
   width: $boardLengthMin;
+
+  &.active-True  { display: block }
+  &.active-False { display: none  }
+
 }
 

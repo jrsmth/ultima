@@ -55,7 +55,9 @@
                     <div class="shadow-square" id="square-8"><div class="square" onclick="placeMove('8')">{{ eight }}</div></div>
                     <div class="shadow-square" id="square-9"><div class="square" onclick="placeMove('9')">{{ nine }}</div></div>
                 </div>
-                <div class="notification"></div>
+                <div class="notification active-{{ notificationActive }} {{ notificationType }}">
+                    {{ notificationMessage }}
+                </div>
             </section>
             <section class="side-bar right"></section>
         </section>

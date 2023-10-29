@@ -208,5 +208,11 @@ header h1 {
   height: 4rem;
   width: 400px;
 }
+.notification.active-True {
+  display: block;
+}
+.notification.active-False {
+  display: none;
+}
 
 /*# sourceMappingURL=game.css.map */

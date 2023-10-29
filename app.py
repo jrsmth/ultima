@@ -29,11 +29,15 @@ def game(id, userId):
     print("hit")
     player_one_active = False
     player_two_active = False
+    notification_active = False
 
     if get("whoseTurn") == 'player1':
         player_one_active = True
     else:
         player_two_active = True
+
+    if is_game_complete():
+        notification_active = True
 
     return render_template(
         "game.html",
@@ -46,6 +50,7 @@ def game(id, userId):
         seven=get("7"),
         eight=get("8"),
         nine=get("9"),
+        notificationActive=notification_active,
         player1=get("player1"),
         player2=get("player2"),
         playerOneActive=player_one_active,
@@ -133,6 +138,37 @@ def generateGameId():
 
 def get(key):
     return redis_client.get(key).decode('utf-8')
+
+
+def is_game_complete(): # return Enum.Result.IN_PROGRESS/ONE_WINS/TWO_WINS/DRAW
+    # TODO :: algorithm to detect if board is complete
+    # Has drawn -> count "0" = zero
+    # "1" won -> see sheet
+    # "2 won
+    board = [
+        get("1"), get("2"), get("3"),
+        get("4"), get("5"), get("6"),
+        get("7"), get("8"), get("9")
+    ]
+
+    winning_combos = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, 9],
+        [1, 4, 7],
+        [2, 5, 8],
+        [3, 6, 9],
+        [1, 5, 9],
+        [3, 5, 7],
+    ]
+
+    if board.count("0") == 0:
+        return True
+
+    # if get_player_moves("1", board):
+
+def get_player_moves(player, board):
+
 
 
 if __name__ == "__main__":
