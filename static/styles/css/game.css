@@ -117,29 +117,17 @@ header h1 {
   float: right;
   transform: translateY(1px);
 }
-.side-bar .player#player1 > .this-symbol-1.active-True {
+.side-bar .player#player1 > .this-symbol-1 {
   color: #d8ff00;
 }
-.side-bar .player#player1 > .this-symbol-1.active-False {
+.side-bar .player#player1 > .this-symbol-2 {
   color: #e70453;
 }
-.side-bar .player#player1 > .this-symbol-2.active-True {
+.side-bar .player#player2 > .this-symbol-1 {
   color: #e70453;
 }
-.side-bar .player#player1 > .this-symbol-2.active-False {
-  color: #e70453;
-}
-.side-bar .player#player2 > .this-symbol-1.active-True {
-  color: #e70453;
-}
-.side-bar .player#player2 > .this-symbol-1.active-False {
-  color: #e70453;
-}
-.side-bar .player#player2 > .this-symbol-2.active-True {
+.side-bar .player#player2 > .this-symbol-2 {
   color: #d8ff00;
-}
-.side-bar .player#player2 > .this-symbol-2.active-False {
-  color: #e70453;
 }
 
 /** Board */

@@ -117,14 +117,10 @@ header {
       transform: translateY(1px);
     }
 
-    &#player1 > .this-symbol-1.active-True  { color: $chartreuse }
-    &#player1 > .this-symbol-1.active-False { color: $pink }
-    &#player1 > .this-symbol-2.active-True  { color: $pink }
-    &#player1 > .this-symbol-2.active-False { color: $pink }
-    &#player2 > .this-symbol-1.active-True  { color: $pink }
-    &#player2 > .this-symbol-1.active-False { color: $pink }
-    &#player2 > .this-symbol-2.active-True  { color: $chartreuse }
-    &#player2 > .this-symbol-2.active-False { color: $pink }
+    &#player1 > .this-symbol-1 { color: $chartreuse }
+    &#player1 > .this-symbol-2 { color: $pink }
+    &#player2 > .this-symbol-1 { color: $pink }
+    &#player2 > .this-symbol-2 { color: $chartreuse }
   }
 }
 
