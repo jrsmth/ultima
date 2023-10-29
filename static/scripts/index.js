@@ -10,16 +10,16 @@ function init() {
         const state = square.innerHTML;
         if (state === thisSymbol) {
             square.parentElement.classList.add( "this-user");
-        } else if (state !== "b'0'") {
+        } else if (state !== "0") {
             square.parentElement.classList.add( "opponent-user");
         }
 
-        if (state === "b'0'") {
+        if (state === "0") {
             square.innerHTML = '';
-        } else if (state === "b'1'") {
-            square.innerHTML = '<i class="fa-regular fa-circle symbol"></i>'
-        } else if (state === "b'2'") {
+        } else if (state === "1") {
             square.innerHTML = '<i class="fa fa-times symbol"></i>'
+        } else if (state === "2") {
+            square.innerHTML = '<i class="fa-regular fa-circle symbol"></i>'
         }
     }
 
@@ -27,6 +27,13 @@ function init() {
 
 function placeMove(square) {
     const gameId = "ab12-3cd4-e5f6-78gh";
+
+    const userSymbol = document.getElementById('this-user-symbol').value;
+    const playerOneActive = document.getElementById('player-one-active').value;
+    const playerTwoActive = document.getElementById('player-two-active').value;
+
+    if (userSymbol === '1' && playerTwoActive === 'True') return;
+    if (userSymbol === '2' && playerOneActive === 'True') return;
 
     if (document.getElementById(`square-${square}`).getElementsByClassName("square")[0].innerHTML !== '') {
         return;

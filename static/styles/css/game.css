@@ -56,14 +56,37 @@ header h1 {
   width: 70%;
   text-align: center;
 }
-#content .main-bar .this-user.symbol {
+#content .main-bar #whose-turn .symbol-active-True {
+  display: block;
+}
+#content .main-bar #whose-turn .symbol-active-False {
+  display: none;
+}
+#content .main-bar #whose-turn .symbol {
   font-size: 5rem;
 }
-#content .main-bar #whose-turn-shadow {
+#content .main-bar #whose-turn .whose-turn-shadow {
   position: absolute;
-  transform: translateX(-5rem);
-  filter: blur(0.5rem);
   opacity: 0.5;
+  filter: blur(0.5rem);
+}
+#content .main-bar #whose-turn #whose-turn-cross.this-symbol-1 {
+  color: #d8ff00;
+}
+#content .main-bar #whose-turn #whose-turn-cross.this-symbol-2 {
+  color: #e70453;
+}
+#content .main-bar #whose-turn #whose-turn-cross .whose-turn-shadow {
+  transform: translateX(-3.75rem);
+}
+#content .main-bar #whose-turn #whose-turn-circle.this-symbol-1 {
+  color: #e70453;
+}
+#content .main-bar #whose-turn #whose-turn-circle.this-symbol-2 {
+  color: #d8ff00;
+}
+#content .main-bar #whose-turn #whose-turn-circle .whose-turn-shadow {
+  transform: translateX(-5rem);
 }
 
 /** Side Bar */
@@ -80,6 +103,10 @@ header h1 {
   border: 1px solid rgba(231, 4, 83, 0.2509803922);
   background-color: #2b0710;
 }
+.side-bar .player.active-True {
+  border: 1px solid rgba(231, 4, 83, 0.2509803922);
+  background-color: #2b0710;
+}
 .side-bar .player .fa-user {
   margin-right: 0.5rem;
   color: #e70453;
@@ -89,6 +116,18 @@ header h1 {
   margin-left: 0.5rem;
   float: right;
   transform: translateY(1px);
+}
+.side-bar .player#player1 > .this-symbol-1 {
+  color: #d8ff00;
+}
+.side-bar .player#player1 > .this-symbol-2 {
+  color: #e70453;
+}
+.side-bar .player#player2 > .this-symbol-1 {
+  color: #e70453;
+}
+.side-bar .player#player2 > .this-symbol-2 {
+  color: #d8ff00;
 }
 
 /** Board */
@@ -151,6 +190,14 @@ header h1 {
 }
 .board .shadow-square.opponent-user .square .symbol {
   color: #2b0710;
+}
+.board.this-user-1.player-1-False .square {
+  border: 1px solid rgba(231, 4, 83, 0.2509803922);
+  cursor: default;
+}
+.board.this-user-2.player-2-False .square {
+  border: 1px solid rgba(231, 4, 83, 0.2509803922);
+  cursor: default;
 }
 
 /** Notification */

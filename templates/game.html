@@ -10,6 +10,9 @@
     <body>
         <input id="this-user-id" type="hidden" value="{{ thisUserId }}">
         <input id="this-user-symbol" type="hidden" value="{{ thisUserSymbol }}">
+        <input id="player-one-active" type="hidden" value="{{ playerOneActive }}">
+        <input id="player-two-active" type="hidden" value="{{ playerTwoActive }}">
+<!--        <input id="whose-turn" type="hidden" value="{{ whoseTurn }}">-->
         <header>
             <div class="tooltip">
                 <a href="https://github.com/jrsmth/ultima" target="_blank"><img id="badge" alt="badge" src="{{ url_for('static', filename='img/badge.png') }}"></a>
@@ -19,21 +22,29 @@
         </header>
         <section id="content">
             <section class="side-bar left">
-                <div class="player" id="player1">
+                <div class="player active-{{ playerOneActive }}" id="player1">
                     <i class="fa fa-user" aria-hidden="true"></i>
                     <span>{{ player1 }}</span>
-                    <i class="fa-regular fa-circle symbol this-user"></i>
+                    <i class="fa fa-times symbol this-symbol-{{ thisUserSymbol }}"></i>
                 </div>
-                <div class="player active" id="player2">
+                <div class="player active-{{ playerTwoActive }}" id="player2">
                     <i class="fa fa-user" aria-hidden="true"></i>
                     <span>{{ player2 }}</span>
-                    <i class="fa fa-times symbol"></i>
+                    <i class="fa-regular fa-circle symbol this-symbol-{{ thisUserSymbol }}"></i>
                 </div>
             </section>
             <section class="main-bar">
-                <i id="whose-turn-actual" class="fa-regular fa-circle symbol this-user"></i>
-                <i id="whose-turn-shadow" class="fa-regular fa-circle symbol this-user"></i>
-                <div class="board">
+                <div id="whose-turn">
+                    <div id="whose-turn-cross" class="symbol-active-{{ playerOneActive }} this-symbol-{{ thisUserSymbol }}">
+                        <i class="whose-turn-actual fa fa-times symbol"></i>
+                        <i class="whose-turn-shadow fa fa-times symbol"></i>
+                    </div>
+                    <div id="whose-turn-circle" class="symbol-active-{{ playerTwoActive }} this-symbol-{{ thisUserSymbol }}">
+                        <i class="whose-turn-actual fa-regular fa-circle symbol"></i>
+                        <i class="whose-turn-shadow fa-regular fa-circle symbol"></i>
+                    </div>
+                </div>
+                <div class="board this-user-{{ thisUserSymbol }} player-1-{{ playerOneActive }} player-2-{{ playerTwoActive }}">
                     <div class="shadow-square" id="square-1"><div class="square" onclick="placeMove('1')">{{ one }}</div></div>
                     <div class="shadow-square" id="square-2"><div class="square" onclick="placeMove('2')">{{ two }}</div></div>
                     <div class="shadow-square" id="square-3"><div class="square" onclick="placeMove('3')">{{ three }}</div></div>
