@@ -199,6 +199,10 @@ header h1 {
   border: 1px solid rgba(231, 4, 83, 0.2509803922);
   cursor: default;
 }
+.board.game-complete-True .square {
+  border: 1px solid rgba(231, 4, 83, 0.2509803922) !important;
+  cursor: default !important;
+}
 
 /** Notification */
 .notification {
