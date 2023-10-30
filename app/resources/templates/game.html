@@ -2,7 +2,7 @@
 <html lang="">
     <head>
         <title>Ultima</title>
-        <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon/favicon.ico') }}">
+        <link rel="icon" type="image/x-icon" href="../static/favicon/favicon.ico">
         <link href="https://fonts.googleapis.com/css?family=Montserrat:200,400" rel="styleshee">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" type="text/css">
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/css/game.css') }}">
@@ -12,6 +12,7 @@
         <input id="this-user-symbol" type="hidden" value="{{ thisUserSymbol }}">
         <input id="player-one-active" type="hidden" value="{{ playerOneActive }}">
         <input id="player-two-active" type="hidden" value="{{ playerTwoActive }}">
+        <input id="game-complete" type="hidden" value="{{ gameComplete }}">
 <!--        <input id="whose-turn" type="hidden" value="{{ whoseTurn }}">-->
         <header>
             <div class="tooltip">
@@ -44,7 +45,7 @@
                         <i class="whose-turn-shadow fa-regular fa-circle symbol"></i>
                     </div>
                 </div>
-                <div class="board this-user-{{ thisUserSymbol }} player-1-{{ playerOneActive }} player-2-{{ playerTwoActive }}">
+                <div class="board this-user-{{ thisUserSymbol }} player-1-{{ playerOneActive }} player-2-{{ playerTwoActive }} game-complete-{{ gameComplete }}">
                     <div class="shadow-square" id="square-1"><div class="square" onclick="placeMove('1')">{{ one }}</div></div>
                     <div class="shadow-square" id="square-2"><div class="square" onclick="placeMove('2')">{{ two }}</div></div>
                     <div class="shadow-square" id="square-3"><div class="square" onclick="placeMove('3')">{{ three }}</div></div>
@@ -55,7 +56,9 @@
                     <div class="shadow-square" id="square-8"><div class="square" onclick="placeMove('8')">{{ eight }}</div></div>
                     <div class="shadow-square" id="square-9"><div class="square" onclick="placeMove('9')">{{ nine }}</div></div>
                 </div>
-                <div class="notification"></div>
+                <div class="notification active-{{ notificationActive }} {{ notificationType }}">
+                    {{ notificationMessage }}
+                </div>
             </section>
             <section class="side-bar right"></section>
         </section>

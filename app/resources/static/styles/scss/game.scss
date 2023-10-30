@@ -197,6 +197,7 @@ header {
 
   &.this-user-1.player-1-False { .square { border: 1px solid $pink25; cursor: default; } }
   &.this-user-2.player-2-False { .square { border: 1px solid $pink25; cursor: default; } }
+  &.game-complete-True { .square { border: 1px solid $pink25 !important; cursor: default !important; } }
 }
 
 /** Notification */
@@ -206,5 +207,9 @@ header {
   background-color: $aubergine;
   height: 4rem;
   width: $boardLengthMin;
+
+  &.active-True  { display: block }
+  &.active-False { display: none  }
+
 }
 

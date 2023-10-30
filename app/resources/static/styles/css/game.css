@@ -199,6 +199,10 @@ header h1 {
   border: 1px solid rgba(231, 4, 83, 0.2509803922);
   cursor: default;
 }
+.board.game-complete-True .square {
+  border: 1px solid rgba(231, 4, 83, 0.2509803922) !important;
+  cursor: default !important;
+}
 
 /** Notification */
 .notification {
@@ -207,6 +211,12 @@ header h1 {
   background-color: #2b0710;
   height: 4rem;
   width: 400px;
+}
+.notification.active-True {
+  display: block;
+}
+.notification.active-False {
+  display: none;
 }
 
 /*# sourceMappingURL=game.css.map */

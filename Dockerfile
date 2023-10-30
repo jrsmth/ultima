@@ -6,6 +6,6 @@ COPY . /code
 ENV PYTHONUNBUFFERED=0
 ENV FLASK_ENV=prod
 EXPOSE 8080
-ENTRYPOINT ["gunicorn", "-b", "0.0.0.0:8080", "app:app"]
+ENTRYPOINT ["gunicorn", "-b", "0.0.0.0:8080", "--chdir", "app", "app:app"]
 
 # Question :: when is the sass build going to happen?

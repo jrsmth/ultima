@@ -31,7 +31,9 @@ function placeMove(square) {
     const userSymbol = document.getElementById('this-user-symbol').value;
     const playerOneActive = document.getElementById('player-one-active').value;
     const playerTwoActive = document.getElementById('player-two-active').value;
+    const gameComplete = document.getElementById('game-complete').value;
 
+    if (gameComplete === 'True') return;
     if (userSymbol === '1' && playerTwoActive === 'True') return;
     if (userSymbol === '2' && playerOneActive === 'True') return;
 
