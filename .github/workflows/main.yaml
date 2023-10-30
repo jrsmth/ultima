@@ -17,7 +17,7 @@ jobs:
         run: pip3 install -r requirements.txt --no-cache-dir
       - name: Test 📋
         run: python3 -m unittest discover .
-  tag:
+  release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
