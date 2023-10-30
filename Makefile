@@ -7,7 +7,7 @@ make start:
 	# Make sure redis is running
 
 make test:
-	python3 -m unittest test
+	python3 -m unittest discover .
 
 make redis:
 	docker run --name ultima-redis -p 6379:6379 -d redis
