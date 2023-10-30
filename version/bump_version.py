@@ -1,7 +1,6 @@
 from version import __version__
 
-# Bump Version to Next Incremental and Add Snapshot:
-# python version/bump_version.py
+# Bump Version to Next Incremental and Add Snapshot: python version/bump_version.py
 handler = open("./version/version.py", "w")
 major = __version__.split(".")[0]
 minor = __version__.split(".")[1]
