@@ -1,6 +1,6 @@
 FROM python:3.9-slim
 WORKDIR /code
-COPY requirements.txt /code
+COPY app/requirements.txt /code
 RUN pip3 install -r requirements.txt --no-cache-dir
 COPY . /code
 ENV PYTHONUNBUFFERED=0
