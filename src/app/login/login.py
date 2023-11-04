@@ -1,7 +1,9 @@
 from flask import redirect, url_for, render_template, Blueprint, request
 
+from src.app.model.board.threeboard import ThreeBoard
 
-def construct_blueprint(client, messages):
+
+def construct_blueprint(redis, messages):
     login_page = Blueprint('login_page', __name__)
 
     @login_page.route('/', methods=['GET', 'POST'])
@@ -10,32 +12,31 @@ def construct_blueprint(client, messages):
         if request.method == "POST":
             print(request.form["name"])  # log me
             print(request.form["gameId"])
-            board = [(1, 0), (2, 0), (3, 0),
-                     (4, 0), (5, 0), (6, 0),
-                     (7, 0), (8, 0), (9, 0)]
+            board = ThreeBoard()
+            board_list = ThreeBoard.list(board)
             # first index is squareNo
             # second index is the state: 0 for empty, 1 for cross, 2 for circle
-            client.set("1", 0)
-            client.set("2", 0)
-            client.set("3", 0)
-            client.set("4", 0)
-            client.set("5", 0)
-            client.set("6", 0)
-            client.set("7", 0)
-            client.set("8", 0)
-            client.set("9", 0)
+            redis.set("0", board_list[0])
+            redis.set("1", board_list[1])
+            redis.set("2", board_list[2])
+            redis.set("3", board_list[3])
+            redis.set("4", board_list[4])
+            redis.set("5", board_list[5])
+            redis.set("6", board_list[6])
+            redis.set("7", board_list[7])
+            redis.set("8", board_list[8])
 
             # TODO :: set redis obj as dict { $game_id: [player1: "", player2: ""] }
             if request.form["gameId"] == "":
-                client.set("player1", request.form["name"])
-                client.set("player2", "")
-                client.set(request.form["name"], "1")  # For now, set first player to cross
-                client.set("whoseTurn", "player1")
+                redis.set("player1", request.form["name"])
+                redis.set("player2", "")
+                redis.set(request.form["name"], "1")  # For now, set first player to cross
+                redis.set("whoseTurn", "player1")
                 return redirect(url_for("game_page.game", game_id=generate_game_id(), user_id=request.form["name"]))
 
             elif has_valid_game_id(request.form["gameId"]):
-                client.set("player2", request.form["name"])
-                client.set(request.form["name"], "2")  # For now, set first player to circle
+                redis.set("player2", request.form["name"])
+                redis.set(request.form["name"], "2")  # For now, set first player to circle
                 return redirect(url_for("game_page.game", game_id=request.form["gameId"], user_id=request.form["name"]))
 
             else:
@@ -46,8 +47,8 @@ def construct_blueprint(client, messages):
     return login_page
 
 
-def has_valid_game_id(id):
-    if id != "-1":  # Does game id already exist?
+def has_valid_game_id(game_id):
+    if game_id != "-1":  # Does game id already exist?
         return True
     else:
         return False

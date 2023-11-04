@@ -1,13 +1,12 @@
 from flask import render_template, url_for, redirect, Blueprint
 from src.app.model.status import Status
-from src.app.util.redis import get
 from src.version.version import __version__
 
 
 # # # # # # # # # # # # # # # #
 # Game Routes
 # # # # # # # # # # # # # # # #
-def construct_blueprint(client, messages):
+def construct_blueprint(redis, messages):
     game_page = Blueprint('game_page', __name__)
 
     @game_page.route("/game/<game_id>/<user_id>")
@@ -18,12 +17,12 @@ def construct_blueprint(client, messages):
         game_complete = False
         notification_message = ""
 
-        if get(client, "whoseTurn") == 'player1':
+        if redis.get("whoseTurn") == 'player1':
             player_one_active = True
         else:
             player_two_active = True
 
-        game_state = get_game_state(client)
+        game_state = get_game_state(redis)
         print(game_state)
         if game_state != Status.IN_PROGRESS:
             notification_active = True
@@ -37,62 +36,64 @@ def construct_blueprint(client, messages):
 
         return render_template(
             "game.html",
-            one=get(client, "1"),
-            two=get(client, "2"),
-            three=get(client, "3"),
-            four=get(client, "4"),
-            five=get(client, "5"),
-            six=get(client, "6"),
-            seven=get(client, "7"),
-            eight=get(client, "8"),
-            nine=get(client, "9"),
+            zero=redis.get("0"),
+            one=redis.get("1"),
+            two=redis.get("2"),
+            three=redis.get("3"),
+            four=redis.get("4"),
+            five=redis.get("5"),
+            six=redis.get("6"),
+            seven=redis.get("7"),
+            eight=redis.get("8"),
             gameComplete=game_complete,
             notificationActive=notification_active,
             notificationMessage=notification_message,
-            player1=get(client, "player1"),
-            player2=get(client, "player2"),
+            player1=redis.get("player1"),
+            player2=redis.get("player2"),
             playerOneActive=player_one_active,
             playerTwoActive=player_two_active,
             thisUserId=user_id,
-            thisUserSymbol=get(client, user_id),
+            thisUserSymbol=redis.get(user_id),
             version=__version__,
-            whoseTurn=get(client, "whoseTurn")
+            whoseTurn=redis.get("whoseTurn")
         )
 
     @game_page.route("/game/<game_id>/place-move/<user_id>/<square>")
     def place_move(game_id, user_id, square):
         # Set player's move
-        symbol = get(client, user_id)
-        client.set(square, symbol)
+        symbol = redis.get(user_id)
+        redis.set(square, symbol)
 
         # Switch player turn
-        if get(client, "whoseTurn") == 'player1':
-            client.set("whoseTurn", "player2")
-        elif get(client, "whoseTurn") == 'player2':
-            client.set("whoseTurn", "player1")
+        if redis.get("whoseTurn") == 'player1':
+            redis.set("whoseTurn", "player2")
+        elif redis.get("whoseTurn") == 'player2':
+            redis.set("whoseTurn", "player1")
 
-        return redirect(url_for("game", game_id=game_id, user_id=user_id))
+        return redirect(url_for("game_page.game", game_id=game_id, user_id=user_id))
 
     return game_page
 
 
-def get_game_state(client):
+def get_game_state(redis):
     board = {
-        "1": get(client, "1"), "2": get(client, "2"), "3": get(client, "3"),
-        "4": get(client, "4"), "5": get(client, "5"), "6": get(client, "6"),
-        "7": get(client, "7"), "8": get(client, "8"), "9": get(client, "9"),
+        "0": redis.get("0"), "1": redis.get("1"), "2": redis.get("2"),
+        "3": redis.get("3"), "4": redis.get("4"), "5": redis.get("5"),
+        "6": redis.get("6"), "7": redis.get("7"), "8": redis.get("8"),
     }
 
     winning_combos = [
-        [1, 2, 3],
-        [4, 5, 6],
-        [7, 8, 9],
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
         [1, 4, 7],
         [2, 5, 8],
-        [3, 6, 9],
-        [1, 5, 9],
-        [3, 5, 7],
+        [0, 4, 8],
+        [2, 4, 6]
     ]
+
+    print(board)
 
     if list(board.values()).count("0") == 0:
         return Status.DRAW

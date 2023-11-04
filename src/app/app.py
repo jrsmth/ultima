@@ -4,8 +4,7 @@ from src.app.config.config import Config, DevConfig, ProductionConfig
 from src.app.game import game
 from src.app.login import login
 from src.app.util.messages import load_messages
-from src.app.util.redis import init_redis
-
+from src.app.util.redis import Redis
 
 # Initialise app
 templates = os.path.abspath("../resources/templates")
@@ -30,7 +29,7 @@ elif env == "prod":
 
 
 # Initialise redis client
-client = init_redis(app)
+redis = Redis(app)
 
 
 # Initialise message bundle
@@ -38,8 +37,8 @@ messages = load_messages()
 
 
 # Register routes
-app.register_blueprint(login.construct_blueprint(client, messages))
-app.register_blueprint(game.construct_blueprint(client, messages))
+app.register_blueprint(login.construct_blueprint(redis, messages))
+app.register_blueprint(game.construct_blueprint(redis, messages))
 
 
 # Let's go!
