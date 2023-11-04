@@ -3,6 +3,7 @@ from flask import redirect, url_for, render_template, Blueprint, request
 from src.app.model.board.threeboard import ThreeBoard
 
 
+# Login Logic
 def construct_blueprint(redis, messages):
     login_page = Blueprint('login_page', __name__)
 

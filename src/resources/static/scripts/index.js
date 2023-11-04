@@ -14,7 +14,6 @@ function init() {
             square.parentElement.classList.add("opponent-user");
         }
 
-        console.log(state)
         if (state === "0") {
             square.innerHTML = '';
         } else if (state === "1") {

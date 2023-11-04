@@ -3,9 +3,7 @@ from src.app.model.status import Status
 from src.version.version import __version__
 
 
-# # # # # # # # # # # # # # # #
-# Game Routes
-# # # # # # # # # # # # # # # #
+# Game Logic
 def construct_blueprint(redis, messages):
     game_page = Blueprint('game_page', __name__)
 

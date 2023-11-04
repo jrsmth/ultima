@@ -1,6 +1,7 @@
 from flask_redis import FlaskRedis
 
 
+# Wrapper functionality for the Flask Redis Client
 class Redis:
 
     def __init__(self, app):
