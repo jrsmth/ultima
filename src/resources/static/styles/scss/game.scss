@@ -102,6 +102,7 @@ header {
 
     &.active-True {
       border: 1px solid $pink25;
+      border-radius: .25rem;
       background-color: $aubergine;
     }
 
@@ -204,12 +205,27 @@ header {
 .notification {
   margin: 2rem auto 0 auto;
   border: 1px solid $pink25;
+  border-radius: .5rem;
   background-color: $aubergine;
-  height: 4rem;
+  height: 5rem;
   width: $boardLengthMin;
+  letter-spacing: .5px;
 
-  &.active-True  { display: block }
+  &.active-True  { display: flex }
   &.active-False { display: none  }
 
+  align-items: center;
+  justify-content: space-evenly;
+
+  h3 {
+    margin: 0 0 .5rem 0;
+    font-weight: 400;
+  }
+
+  p {
+    margin: 0;
+    font-size: .9rem;
+    font-weight: 200;
+  }
 }
 

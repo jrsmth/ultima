@@ -13,6 +13,7 @@ def construct_blueprint(redis, messages):
         player_two_active = False
         notification_active = False
         game_complete = False
+        notification_header = "Congratulations"
         notification_message = ""
 
         if redis.get("whoseTurn") == 'player1':
@@ -45,6 +46,7 @@ def construct_blueprint(redis, messages):
             eight=redis.get("8"),
             gameComplete=game_complete,
             notificationActive=notification_active,
+            notificationHeader=notification_header,
             notificationMessage=notification_message,
             player1=redis.get("player1"),
             player2=redis.get("player2"),

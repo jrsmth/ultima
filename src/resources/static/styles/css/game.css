@@ -105,6 +105,7 @@ header h1 {
 }
 .side-bar .player.active-True {
   border: 1px solid rgba(231, 4, 83, 0.2509803922);
+  border-radius: 0.25rem;
   background-color: #2b0710;
 }
 .side-bar .player .fa-user {
@@ -208,15 +209,28 @@ header h1 {
 .notification {
   margin: 2rem auto 0 auto;
   border: 1px solid rgba(231, 4, 83, 0.2509803922);
+  border-radius: 0.5rem;
   background-color: #2b0710;
-  height: 4rem;
+  height: 5rem;
   width: 400px;
+  letter-spacing: 0.5px;
+  align-items: center;
+  justify-content: space-evenly;
 }
 .notification.active-True {
-  display: block;
+  display: flex;
 }
 .notification.active-False {
   display: none;
+}
+.notification h3 {
+  margin: 0 0 0.5rem 0;
+  font-weight: 400;
+}
+.notification p {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 200;
 }
 
 /*# sourceMappingURL=game.css.map */
