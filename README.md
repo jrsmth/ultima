@@ -14,5 +14,5 @@
 - ℹ️ [More info](https://www.thegamegal.com/2018/09/01/ultimate-tic-tac-toe/)
 
 ## Run Locally
-- 🔧 `pip install -r src/requirements.txt`
+- 🔧 `pip install -r src/app/requirements.txt`
 - 🚀 `make start`
