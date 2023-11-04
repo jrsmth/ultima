@@ -1,10 +1,12 @@
 make build:
-	sass --update app/resources/static/styles/scss:app/resources/static/styles/css
+	sass --update src/resources/static/styles/scss:src/resources/static/styles/css
 
-env = "local" # local / dev / prod
+env = "dev"
+# local : make sure redis is running
+# dev   : ensure IP is whitelisted on render redis
+# prod  :
 make start:
-	export FLASK_ENV=$(env) && make build && gunicorn -b 0.0.0.0:8080 --chdir app app:app
-	# Make sure redis is running
+	export FLASK_ENV=$(env) && make build && gunicorn -b 0.0.0.0:8080 --chdir src/app app:app
 
 make test:
 	python3 -m unittest discover .
