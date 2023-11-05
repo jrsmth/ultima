@@ -6,6 +6,7 @@ from src.app.login import login
 from src.app.util.messages import load_messages
 from src.app.util.redis import Redis
 
+
 # Initialise app
 templates = os.path.abspath("../resources/templates")
 statics = "../resources/static"
@@ -33,6 +34,7 @@ redis = Redis(app)
 
 
 # Initialise message bundle
+# TODO :: as above, turn messages into a helper class with add variable...
 messages = load_messages()
 
 
