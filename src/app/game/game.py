@@ -37,8 +37,8 @@ def construct_blueprint(redis, messages):
                 notification_icon = messages["game.end.win.1.icon"]
             elif game_state == Status.PLAYER_TWO_WINS:
                 notification_header = str(messages["game.end.lose.header"]).replace("{}", redis.get("player1"))
-                notification_message = messages["game.end.lose.1.message"]
-                notification_icon = messages["game.end.lose.1.icon"]
+                notification_message = messages["game.end.lose.3.message"]
+                notification_icon = messages["game.end.lose.3.icon"]
 
         return render_template(
             "game.html",
