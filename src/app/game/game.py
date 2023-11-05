@@ -13,8 +13,9 @@ def construct_blueprint(redis, messages):
         player_two_active = False
         notification_active = False
         game_complete = False
-        notification_header = "Congratulations"
+        notification_header = ""
         notification_message = ""
+        notification_icon = ""
 
         if redis.get("whoseTurn") == 'player1':
             player_one_active = True
@@ -27,11 +28,17 @@ def construct_blueprint(redis, messages):
             notification_active = True
             game_complete = True
             if game_state == Status.DRAW:
-                notification_message = messages["end-game.draw"]
+                notification_header = messages["game.end.draw.header"]
+                notification_message = messages["game.end.draw.1.message"]
+                notification_icon = messages["game.end.draw.1.icon"]
             elif game_state == Status.PLAYER_ONE_WINS:
-                notification_message = messages["end-game.player-one"]
+                notification_header = str(messages["game.end.win.header"]).replace("{}", redis.get("player1"))
+                notification_message = messages["game.end.win.1.message"]
+                notification_icon = messages["game.end.win.1.icon"]
             elif game_state == Status.PLAYER_TWO_WINS:
-                notification_message = messages["end-game.player-two"]
+                notification_header = str(messages["game.end.lose.header"]).replace("{}", redis.get("player1"))
+                notification_message = messages["game.end.lose.1.message"]
+                notification_icon = messages["game.end.lose.1.icon"]
 
         return render_template(
             "game.html",
@@ -48,6 +55,7 @@ def construct_blueprint(redis, messages):
             notificationActive=notification_active,
             notificationHeader=notification_header,
             notificationMessage=notification_message,
+            notificationIcon=notification_icon,
             player1=redis.get("player1"),
             player2=redis.get("player2"),
             playerOneActive=player_one_active,

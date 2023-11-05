@@ -57,12 +57,11 @@
                     <div class="shadow-square" id="square-8"><div class="square" onclick="placeMove('8')">{{ eight }}</div></div>
                 </div>
                 <div class="notification active-{{ notificationActive }} {{ notificationType }}">
-                    <i class="whose-turn-actual fa-regular fa-circle symbol"></i>
+                    <i class="whose-turn-actual {{ notificationIcon }}"></i>
                     <div class="notification-content">
                         <h3>{{ notificationHeader }}</h3>
                         <p>{{ notificationMessage }}</p>
                     </div>
-                    <i class="whose-turn-actual fa-regular fa-circle symbol"></i>
                 </div>
             </section>
             <section class="side-bar right"></section>
