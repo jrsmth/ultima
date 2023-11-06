@@ -1,4 +1,6 @@
 from flask import render_template, url_for, redirect, Blueprint
+
+from src.app.model.mood import Mood
 from src.app.model.status import Status
 from src.version.version import __version__
 
@@ -16,6 +18,7 @@ def construct_blueprint(redis, messages):
         notification_header = ""
         notification_message = ""
         notification_icon = ""
+        notification_mood = Mood.NEUTRAL.value
 
         if redis.get("whoseTurn") == 'player1':
             player_one_active = True
@@ -24,21 +27,42 @@ def construct_blueprint(redis, messages):
 
         game_state = get_game_state(redis)
         print(game_state)
+        print("user id")
+        print(user_id)
+        print(redis.get("player1"))
+        print(redis.get("player2"))
         if game_state != Status.IN_PROGRESS:
             notification_active = True
             game_complete = True
+
             if game_state == Status.DRAW:
-                notification_header = messages["game.end.draw.header"]
-                notification_message = messages["game.end.draw.1.message"]
-                notification_icon = messages["game.end.draw.1.icon"]
+                notification_header = messages.load("game.end.draw.header")
+                notification_message = messages.load("game.end.draw.1.message")
+                notification_icon = messages.load("game.end.draw.1.icon")
+
             elif game_state == Status.PLAYER_ONE_WINS:
-                notification_header = str(messages["game.end.win.header"]).replace("{}", redis.get("player1"))
-                notification_message = messages["game.end.win.1.message"]
-                notification_icon = messages["game.end.win.1.icon"]
+                if redis.get("player1") == user_id:
+                    notification_header = messages.load_with_params("game.end.win.header", [redis.get("player1")])
+                    notification_message = messages.load("game.end.win.1.message")
+                    notification_icon = messages.load("game.end.win.1.icon")
+                    notification_mood = Mood.HAPPY.value
+                else:
+                    notification_header = messages.load_with_params("game.end.lose.header", [redis.get("player2")])
+                    notification_message = messages.load("game.end.lose.3.message")
+                    notification_icon = messages.load("game.end.lose.3.icon")
+                    notification_mood = Mood.SAD.value
+
             elif game_state == Status.PLAYER_TWO_WINS:
-                notification_header = str(messages["game.end.lose.header"]).replace("{}", redis.get("player1"))
-                notification_message = messages["game.end.lose.3.message"]
-                notification_icon = messages["game.end.lose.3.icon"]
+                if redis.get("player2") == user_id:
+                    notification_header = messages.load_with_params("game.end.win.header", [redis.get("player2")])
+                    notification_message = messages.load("game.end.win.3.message")
+                    notification_icon = messages.load("game.end.win.3.icon")
+                    notification_mood = Mood.HAPPY.value
+                else:
+                    notification_header = messages.load_with_params("game.end.lose.header", [redis.get("player1")])
+                    notification_message = messages.load("game.end.lose.1.message")
+                    notification_icon = messages.load("game.end.lose.1.icon")
+                    notification_mood = Mood.SAD.value
 
         return render_template(
             "game.html",
@@ -56,6 +80,7 @@ def construct_blueprint(redis, messages):
             notificationHeader=notification_header,
             notificationMessage=notification_message,
             notificationIcon=notification_icon,
+            notificationMood=notification_mood,
             player1=redis.get("player1"),
             player2=redis.get("player2"),
             playerOneActive=player_one_active,

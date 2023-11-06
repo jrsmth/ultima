@@ -210,17 +210,15 @@ header {
   height: 5rem;
   width: $boardLengthMin;
   letter-spacing: .5px;
+  align-items: center;
+  text-align: left;
 
   &.active-True  { display: flex }
   &.active-False { display: none  }
 
-  align-items: center;
-  justify-content: space-evenly;
-  text-align: left;
-
   i {
     font-size: 1.5rem;
-    margin: 0;
+    margin: 0 1.5rem;
   }
 
   h3 {
@@ -233,5 +231,30 @@ header {
     font-size: .7rem;
     font-weight: 200;
   }
+
+  &.happy {
+    color: $chartreuse;
+    border: 1px solid $chartreuse25;
+    background-color: $chartreuse05;
+
+    p {
+      color: $text-light;
+    }
+  }
+
+    &.sad {
+      color: $pink;
+      border: 1px solid $pink25;
+      background-color: $aubergine;
+
+      h3 {
+        color: $carnation;
+      }
+
+      p {
+        color: $text-light;
+      }
+  }
+
 }
 
