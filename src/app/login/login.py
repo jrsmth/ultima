@@ -41,7 +41,7 @@ def construct_blueprint(redis, messages):
                 return redirect(url_for("game_page.game", game_id=request.form["gameId"], user_id=request.form["name"]))
 
             else:
-                error = messages["login.error.invalid-game-id"]
+                error = messages.load("login.error.invalid-game-id")
 
         return render_template("login.html", error=error)
 

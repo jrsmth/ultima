@@ -3,7 +3,7 @@ from flask import Flask
 from src.app.config.config import Config, DevConfig, ProductionConfig
 from src.app.game import game
 from src.app.login import login
-from src.app.util.messages import load_messages
+from src.app.util.messages import Messages
 from src.app.util.redis import Redis
 
 
@@ -34,8 +34,7 @@ redis = Redis(app)
 
 
 # Initialise message bundle
-# TODO :: as above, turn messages into a helper class with add variable...
-messages = load_messages()
+messages = Messages('../resources/messages.properties')
 
 
 # Register routes
