@@ -8,7 +8,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      working-directory: .
+      working-directory: ./src/app
       FLASK_ENV: prod
     steps:
       - name: Checkout 🛎️
@@ -16,8 +16,8 @@ jobs:
       - name: Install 🔧
         run: pip3 install -r requirements.txt --no-cache-dir
       - name: Test 📋
-        run: python3 -m unittest test
-  tag:
+        run: python3 -m unittest discover .
+  release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout 🛎️
@@ -25,14 +25,16 @@ jobs:
       - name: Set-up User 🐵
         uses: fregante/setup-git-user@v2
       - name: Bump and Tag 🏷️
-        run: echo "VERSION=$(python version/release_snapshot.py)" >> $GITHUB_ENV
+        run: echo "VERSION=$(python src/version/release_snapshot.py)" >> $GITHUB_ENV
       - name: Release 📦
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ env.VERSION }}
       - name: Add -SNAPSHOT 📷
-        run: python version/bump_version.py
+        run: python src/version/bump_version.py
       - name: Commit -SNAPSHOT 💾
         uses: stefanzweifel/git-auto-commit-action@v4
 
+# TODO
 # SASS compile should happen with the start command on the docker container
+# Confirm this still works after project refactor...

@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.2.1] - ???
 - UMA-11: Allow players to make their turns
 - UMA-12: Display results to each player when the game is over
+- UMA-13: Apply finishing touches to 3 x 3 game and refactor
 
 ## [0.2.0] - 28/10/2023
 - UMA-10: Create interactive game board
