@@ -76,6 +76,7 @@ def construct_blueprint(redis, messages):
             seven=redis.get("7"),
             eight=redis.get("8"),
             gameComplete=game_complete,
+            gameId=game_id,
             notificationActive=notification_active,
             notificationHeader=notification_header,
             notificationMessage=notification_message,
