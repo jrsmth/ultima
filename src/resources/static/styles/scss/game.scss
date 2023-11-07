@@ -3,6 +3,7 @@
 /** Header */
 header {
   display: flex;
+  margin: .75rem .5rem;
 
   #badge {
     height: 2.25rem;
@@ -50,6 +51,9 @@ header {
     text-align: center;
 
     #whose-turn {
+      height: 5.125rem;
+      &.inactive-True       { display: none; }
+
       .symbol-active-True   { display: block; }
       .symbol-active-False  { display: none; }
 
@@ -87,13 +91,13 @@ header {
 
 /** Side Bar */
 .side-bar {
-  margin-top: 6rem;
+  margin-top: 6.5rem;
   width: 15%;
 
   .player {
     margin: 1rem;
     padding: 1rem;
-    width: 10rem;
+    width: 12rem;
 
     &.active {
       border: 1px solid $pink25;
@@ -203,7 +207,7 @@ header {
 
 /** Notification */
 .notification {
-  margin: 2rem auto 0 auto;
+  margin: 0 auto;
   border: 1px solid $pink25;
   border-radius: .5rem;
   background-color: $aubergine;
@@ -212,6 +216,15 @@ header {
   letter-spacing: .5px;
   align-items: center;
   text-align: left;
+
+  &.error {
+    margin: 2rem 1rem 0 1rem;
+    width: 14rem;
+
+    .notification-content {
+      margin: 1rem;
+    }
+  }
 
   &.active-True  { display: flex }
   &.active-False { display: none  }

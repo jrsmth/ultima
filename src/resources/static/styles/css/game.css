@@ -16,6 +16,7 @@ body {
 /** Header */
 header {
   display: flex;
+  margin: 0.75rem 0.5rem;
 }
 header #badge {
   height: 2.25rem;
@@ -56,6 +57,12 @@ header h1 {
   width: 70%;
   text-align: center;
 }
+#content .main-bar #whose-turn {
+  height: 5.125rem;
+}
+#content .main-bar #whose-turn.inactive-True {
+  display: none;
+}
 #content .main-bar #whose-turn .symbol-active-True {
   display: block;
 }
@@ -91,13 +98,13 @@ header h1 {
 
 /** Side Bar */
 .side-bar {
-  margin-top: 6rem;
+  margin-top: 6.5rem;
   width: 15%;
 }
 .side-bar .player {
   margin: 1rem;
   padding: 1rem;
-  width: 10rem;
+  width: 12rem;
 }
 .side-bar .player.active {
   border: 1px solid rgba(231, 4, 83, 0.2509803922);
@@ -207,7 +214,7 @@ header h1 {
 
 /** Notification */
 .notification {
-  margin: 2rem auto 0 auto;
+  margin: 0 auto;
   border: 1px solid rgba(231, 4, 83, 0.2509803922);
   border-radius: 0.5rem;
   background-color: #2b0710;
@@ -216,6 +223,13 @@ header h1 {
   letter-spacing: 0.5px;
   align-items: center;
   text-align: left;
+}
+.notification.error {
+  margin: 2rem 1rem 0 1rem;
+  width: 14rem;
+}
+.notification.error .notification-content {
+  margin: 1rem;
 }
 .notification.active-True {
   display: flex;
