@@ -14,7 +14,7 @@ jobs:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
       - name: Install 🔧
-        run: pip3 install -r requirements.txt --no-cache-dir
+        run: pwd && pip3 install -r requirements.txt --no-cache-dir
       - name: Test 📋
         run: python3 -m unittest discover .
   release:
