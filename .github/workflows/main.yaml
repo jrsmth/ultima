@@ -8,7 +8,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      working-directory: ./app
+      working-directory: ./src/app
       FLASK_ENV: prod
     steps:
       - name: Checkout 🛎️

@@ -9,7 +9,7 @@ make start:
 	export FLASK_ENV=$(env) && make build && gunicorn -b 0.0.0.0:8080 --chdir src/app app:app
 
 make test:
-	python3 -m unittest discover .
+	python3 -m unittest discover ./src/app
 
 make redis:
 	docker run --name ultima-redis -p 6379:6379 -d redis
