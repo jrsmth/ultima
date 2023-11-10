@@ -3,6 +3,7 @@
 /** Header */
 header {
   display: flex;
+  margin: .75rem .5rem;
 
   #badge {
     height: 2.25rem;
@@ -50,6 +51,9 @@ header {
     text-align: center;
 
     #whose-turn {
+      height: 5.125rem;
+      &.inactive-True       { display: none; }
+
       .symbol-active-True   { display: block; }
       .symbol-active-False  { display: none; }
 
@@ -65,7 +69,7 @@ header {
 
       #whose-turn-cross {
         &.this-symbol-1  { color: $chartreuse; }
-        &.this-symbol-2  { color: $pink; }
+        &.this-symbol-2  { color: $rose; }
 
         .whose-turn-shadow {
           transform: translateX(-3.75rem);
@@ -74,7 +78,7 @@ header {
       }
 
       #whose-turn-circle {
-        &.this-symbol-1 { color: $pink; }
+        &.this-symbol-1 { color: $rose; }
         &.this-symbol-2 { color: $chartreuse; }
 
         .whose-turn-shadow {
@@ -87,64 +91,68 @@ header {
 
 /** Side Bar */
 .side-bar {
-  margin-top: 6rem;
+  margin-top: 6.5rem;
   width: 15%;
 
   .player {
     margin: 1rem;
     padding: 1rem;
-    width: 10rem;
+    width: 12rem;
 
     &.active {
-      border: 1px solid $pink25;
+      border: 1px solid $rose25;
       background-color: $aubergine;
     }
 
     &.active-True {
-      border: 1px solid $pink25;
+      border: 1px solid $rose25;
       border-radius: .25rem;
       background-color: $aubergine;
     }
 
     .fa-user {
       margin-right: .5rem;
-      color: $pink;
+      color: $rose;
     }
 
     .symbol {
-      color: $pink;
+      color: $rose;
       margin-left: .5rem;
       float: right;
       transform: translateY(1px);
     }
 
     &#player1 > .this-symbol-1 { color: $chartreuse }
-    &#player1 > .this-symbol-2 { color: $pink }
-    &#player2 > .this-symbol-1 { color: $pink }
+    &#player1 > .this-symbol-2 { color: $rose }
+    &#player2 > .this-symbol-1 { color: $rose }
     &#player2 > .this-symbol-2 { color: $chartreuse }
   }
 }
 
 /** Board */
 .board {
+  &.threeboard.STANDARD { display: grid; }
+  &.threeboard.ULTIMATE { display: none; }
+  &.nineboard.STANDARD  { display: none; }
+  &.nineboard.ULTIMATE  { display: grid; }
+
   margin: 2rem auto 0 auto;
   height: $boardLengthDefault;
   aspect-ratio: 1 / 1;
   max-height: $boardLengthMax;
   min-height: $boardLengthMin;
-  display: grid;
   grid-template-columns: 33.3% 33.3% 33.3%;
 
   .shadow-square {
     margin: .5rem;
-    border: 1px solid $pink25;
+    border: 1px solid $rose25;
     background-color: $aubergine;
     border-radius: .5rem;
 
     .square {
       border-radius: inherit;
       transform: translate(-0.25rem, -0.25rem);
-      border: 1px solid $pink25;
+      border: 1px solid $rose25;
       background-color: $aubergine;
       transition: .5s;
       cursor: pointer;
@@ -182,11 +190,11 @@ header {
     }
 
     &.opponent-user {
-      border: 1px solid $pink;
+      border: 1px solid $rose;
 
       .square {
-        border: 1px solid $pink;
-        background-color: $pink;
+        border: 1px solid $rose;
+        background-color: $rose;
         cursor: default;
 
         .symbol {
@@ -196,15 +204,15 @@ header {
     }
   }
 
-  &.this-user-1.player-1-False { .square { border: 1px solid $pink25; cursor: default; } }
-  &.this-user-2.player-2-False { .square { border: 1px solid $pink25; cursor: default; } }
-  &.game-complete-True { .square { border: 1px solid $pink25 !important; cursor: default !important; } }
+  &.this-user-1.player-1-False { .square { border: 1px solid $rose25; cursor: default; } }
+  &.this-user-2.player-2-False { .square { border: 1px solid $rose25; cursor: default; } }
+  &.game-complete-True { .square { border: 1px solid $rose25 !important; cursor: default !important; } }
 }
 
 /** Notification */
 .notification {
-  margin: 2rem auto 0 auto;
-  border: 1px solid $pink25;
+  margin: 0 auto;
+  border: 1px solid $rose25;
   border-radius: .5rem;
   background-color: $aubergine;
   height: 5rem;
@@ -212,6 +220,15 @@ header {
   letter-spacing: .5px;
   align-items: center;
   text-align: left;
+
+  &.error {
+    margin: 2rem 1rem 0 1rem;
+    width: 14rem;
+
+    .notification-content {
+      margin: 1rem;
+    }
+  }
 
   &.active-True  { display: flex }
   &.active-False { display: none  }
@@ -238,13 +255,13 @@ header {
     background-color: $chartreuse05;
 
     p {
-      color: $text-light;
+      color: $text-lightest;
     }
   }
 
     &.sad {
-      color: $pink;
-      border: 1px solid $pink25;
+      color: $rose;
+      border: 1px solid $rose25;
       background-color: $aubergine;
 
       h3 {
@@ -252,7 +269,7 @@ header {
       }
 
       p {
-        color: $text-light;
+        color: $text-lightest;
       }
   }
 

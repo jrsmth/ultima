@@ -1,5 +1,4 @@
-@import "colours";
-@import "spacing";
+@import "variables";
 
 * {
   font-family: Montserrat, sans-serif;
@@ -12,6 +11,6 @@ html {
 
 body {
   background-color: $creole;
-  color: $text-light;
+  color: $text-lightest;
   height: 100%;
 }

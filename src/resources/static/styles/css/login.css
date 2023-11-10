@@ -13,66 +13,115 @@ body {
   height: 100%;
 }
 
-#logo {
-  width: 10rem;
-  position: absolute;
-  left: calc(50% - 5rem);
-  top: 15%;
-}
-
 section {
   position: absolute;
-  top: 45%;
-  width: 20rem;
-  left: calc(50% - 10rem);
-  background-color: #2b0710;
-  border: 1px solid rgba(231, 4, 83, 0.7490196078);
-  border-radius: 0.5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 36rem;
+  height: 20rem;
+  left: calc(50% - 18rem);
+  top: calc(50% - 20rem);
+  text-align: center;
+}
+section #logo {
+  width: 10rem;
+  margin-bottom: 2rem;
 }
 section form {
-  padding: 1rem;
-  width: 80%;
+  background: #2b0710;
+  color: #ccc;
+  box-shadow: 0px 13px 50px -13px rgba(0, 0, 0, 0.0980392157);
+  border: 1px solid rgba(155, 14, 64, 0.7490196078);
+  border-radius: 0.5rem;
+  letter-spacing: 0.5px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+section form div {
+  box-sizing: border-box;
+}
+section form h3 {
+  font-size: 1rem;
+  font-weight: normal;
+  margin: 2px 0;
+  color: #eee;
+}
+section form p {
+  font-size: 0.7rem;
+  margin: 2px 0;
+  color: #ccc;
+}
+section form .form-control {
+  display: flex;
+  height: 5rem;
+  padding: 2rem;
+  width: 100%;
+  align-items: center;
+}
+section form .form-control .field {
+  margin-left: auto;
+  display: flex;
+  height: 2rem;
+  align-items: center;
+  justify-content: center;
+}
+section form .form-control .field .selection {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  height: 2.25rem;
+  width: 8.5rem;
+  margin-left: -1px;
+  background-clip: border-box;
+  transform: scale3d(1, 1, 1);
+  background-color: rgba(231, 4, 83, 0.2509803922);
+  color: #ccc;
+  transition: 0.15s ease-in-out background-color;
+}
+section form .form-control .field .selection.selected {
+  background-color: rgba(231, 4, 83, 0.7490196078) !important;
+  color: whitesmoke !important;
+  z-index: 2;
+  cursor: text;
+}
+section form .form-control .field .selection:hover {
+  color: whitesmoke !important;
+  background-color: rgba(231, 4, 83, 0.7490196078);
+}
+section form .form-control.button {
+  display: flex;
+  justify-content: end;
+}
+section form .form-control.radio.hide {
+  display: none;
 }
 section form input {
-  margin-bottom: 1.5rem;
   border: none;
   border-bottom: 1px solid rgba(231, 4, 83, 0.2509803922);
   background: none;
   line-height: 2rem;
-  color: white;
+  color: whitesmoke;
   outline: none;
-  width: 100%;
-}
-section form input ::placeholder {
-  color: white;
+  width: 16.875rem;
+  margin: auto;
 }
 section form input:focus {
   border-bottom: 1px solid rgba(231, 4, 83, 0.7490196078);
 }
 section form button {
-  margin-bottom: 0.5rem;
-  width: 100%;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  background-color: #e70453;
+  width: 8.5rem;
+  background-color: rgba(231, 4, 83, 0.2509803922);
   border: none;
-  -webkit-box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.25);
-  -moz-box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.25);
-  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.25);
-  color: white;
+  color: whitesmoke;
+  transition: 0.15s ease-in-out background-color;
+  padding: 0.5rem;
+  cursor: pointer;
   letter-spacing: 1px;
+  box-shadow: 0px 13px 50px -13px rgba(0, 0, 0, 0.0980392157);
+  height: 2.25rem;
 }
-
-#shadow-section {
-  top: 3px;
-  left: 3px;
-  z-index: -1;
-  width: 100%;
-  height: 100%;
+section form button:hover {
+  background: rgba(231, 4, 83, 0.7490196078);
 }
 
 /*# sourceMappingURL=login.css.map */

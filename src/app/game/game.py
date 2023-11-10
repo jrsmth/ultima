@@ -38,30 +38,30 @@ def construct_blueprint(redis, messages):
             if game_state == Status.DRAW:
                 notification_header = messages.load("game.end.draw.header")
                 notification_message = messages.load("game.end.draw.1.message")
-                notification_icon = messages.load("game.end.draw.1.icon")
+                notification_icon = messages.load("game.end.draw.icon")
 
             elif game_state == Status.PLAYER_ONE_WINS:
                 if redis.get("player1") == user_id:
                     notification_header = messages.load_with_params("game.end.win.header", [redis.get("player1")])
+                    notification_icon = messages.load("game.end.win.icon")
                     notification_message = messages.load("game.end.win.1.message")
-                    notification_icon = messages.load("game.end.win.1.icon")
                     notification_mood = Mood.HAPPY.value
                 else:
                     notification_header = messages.load_with_params("game.end.lose.header", [redis.get("player2")])
+                    notification_icon = messages.load("game.end.lose.icon")
                     notification_message = messages.load("game.end.lose.3.message")
-                    notification_icon = messages.load("game.end.lose.3.icon")
                     notification_mood = Mood.SAD.value
 
             elif game_state == Status.PLAYER_TWO_WINS:
                 if redis.get("player2") == user_id:
                     notification_header = messages.load_with_params("game.end.win.header", [redis.get("player2")])
+                    notification_icon = messages.load("game.end.win.icon")
                     notification_message = messages.load("game.end.win.3.message")
-                    notification_icon = messages.load("game.end.win.3.icon")
                     notification_mood = Mood.HAPPY.value
                 else:
                     notification_header = messages.load_with_params("game.end.lose.header", [redis.get("player1")])
+                    notification_icon = messages.load("game.end.lose.icon")
                     notification_message = messages.load("game.end.lose.1.message")
-                    notification_icon = messages.load("game.end.lose.1.icon")
                     notification_mood = Mood.SAD.value
 
         return render_template(
@@ -77,6 +77,7 @@ def construct_blueprint(redis, messages):
             eight=redis.get("8"),
             gameComplete=game_complete,
             gameId=game_id,
+            gameMode=redis.get("gameMode"),
             notificationActive=notification_active,
             notificationHeader=notification_header,
             notificationMessage=notification_message,
@@ -131,6 +132,8 @@ def get_game_state(redis):
 
     if list(board.values()).count("0") == 0:
         return Status.DRAW
+        # FixMe :: this check needs to happen after test each player has won...
+        # Note :: There is probs a clean way to split this up so that you don't iterate when not nec...
 
     print("count: " + str(list(board.values()).count("1")))
     if (list(board.values()).count("1")) >= 3:

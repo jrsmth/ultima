@@ -1,68 +1,118 @@
 @import "base";
 
-#logo {
-  width: 10rem;
-  position: absolute;
-  left: calc(50% - 5rem);
-  top: 15%;
-}
-
 section {
   position: absolute;
-  top: 45%;
-  width: 20rem;
-  left: calc(50% - 10rem);
-  background-color: $aubergine;
-  border: 1px solid $pink75;
-  border-radius: .5rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: $loginWidth;
+  height: $loginHeight;
+  left: calc(50% - ($loginWidth * .5));
+  top: calc(50% - $loginHeight);
+  text-align: center;
+
+  #logo {
+    width: 10rem;
+    margin-bottom: 2rem;
+  }
 
   form {
-    padding: 1rem;
-    width: 80%;
+    background: $aubergine;
+    color: $text-light;
+    box-shadow: $drop-shadow;
+    border: 1px solid $cherry75;
+    border-radius: .5rem;
+    letter-spacing: .5px;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
 
-    input {
-      margin-bottom: 1.5rem;
-      border: none;
-      border-bottom: 1px solid $pink25;
-      background: none;
-      line-height: 2rem;
-      color: white;
-      outline: none;
+    div { box-sizing: border-box; }
+    h3  { font-size: 1rem; font-weight: normal; margin: 2px 0; color: $text-lighter}
+    p   { font-size: .7rem; margin: 2px 0; color: $text-light }
+
+    .form-control {
+      display: flex;
+      height: $form-control-height + ($gutter * 1.5);
+      padding: $gutter;
       width: 100%;
+      align-items: center;
 
-      ::placeholder {
-        color: white;
+      .field {
+        margin-left: auto;
+        display: flex;
+        height: $form-control-height;
+        align-items: center;
+        justify-content: center;
+
+        .selection {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          height: 2.25rem;
+          width: calc($field-width * .5);
+          margin-left: -1px;
+          background-clip: border-box;
+          transform: scale3d(1, 1, 1);
+
+          background-color: $rose25;
+          color: $text-light;
+          transition: .15s ease-in-out background-color;
+
+          &.selected {
+            background-color: $rose75 !important;
+            color: $text-lightest !important;
+            z-index: 2;
+            cursor: text;
+          }
+
+          &:hover {
+            color: $text-lightest !important;
+            background-color: $rose75;
+          }
+        }
       }
 
+      &.button {
+        display: flex;
+        justify-content: end;
+      }
+
+      &.radio.hide {
+        display: none;
+      }
+    }
+
+    input {
+      border: none;
+      border-bottom: 1px solid $rose25;
+      background: none;
+      line-height: 2rem;
+      color: $text-lightest;
+      outline: none;
+      width: 16.875rem;
+      margin: auto;
+
       &:focus {
-        border-bottom: 1px solid $pink75;
+        border-bottom: 1px solid $rose75;
       }
     }
 
     button {
-      margin-bottom: 0.5rem;
-      width: 100%;
-      padding: 0.5rem;
-      border-radius: 0.5rem;
-      cursor: pointer;
-      background-color: $pink;
+      width: calc($field-width * .5);
+      background-color: $rose25;
       border: none;
-      -webkit-box-shadow: 0 3px 6px 0 rgba(0,0,0,.25);
-      -moz-box-shadow: 0 3px 6px 0 rgba(0,0,0,.25);
-      box-shadow: 0 3px 6px 0 rgba(0,0,0,.25);
-      color: white;
+      color: $text-lightest;
+      transition: .15s ease-in-out background-color;
+      padding: .5rem;
+      cursor: pointer;
       letter-spacing: 1px;
-    }
-  }
-}
+      box-shadow: $drop-shadow;
+      height: 2.25rem;
 
-#shadow-section {
-  top: 3px;
-  left: 3px;
-  z-index: -1;
-  width: 100%;
-  height: 100%;
+      &:hover {
+        background: $rose75;
+      }
+    }
+
+  }
+
 }
