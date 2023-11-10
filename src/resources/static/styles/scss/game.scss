@@ -129,13 +129,16 @@ header {
   }
 }
 
-/** Board */
+/** Board **/
 .board {
   &.threeboard.STANDARD { display: grid; }
   &.threeboard.ULTIMATE { display: none; }
   &.nineboard.STANDARD  { display: none; }
   &.nineboard.ULTIMATE  { display: grid; }
+}
 
+/** Three Board */
+.threeboard {
   margin: 2rem auto 0 auto;
   height: $boardLengthDefault;
   aspect-ratio: 1 / 1;
@@ -202,11 +205,17 @@ header {
         }
       }
     }
+
   }
 
   &.this-user-1.player-1-False { .square { border: 1px solid $rose25; cursor: default; } }
   &.this-user-2.player-2-False { .square { border: 1px solid $rose25; cursor: default; } }
   &.game-complete-True { .square { border: 1px solid $rose25 !important; cursor: default !important; } }
+}
+
+/** Nine Board */
+.nineboard {
+
 }
 
 /** Notification */

@@ -61,18 +61,117 @@
                 </div>
                 <section class="boards">
                     <div class="board threeboard {{ gameMode }} this-user-{{ thisUserSymbol }} player-1-{{ playerOneActive }} player-2-{{ playerTwoActive }} game-complete-{{ gameComplete }}">
-                        <div class="shadow-square" id="square-0"><div class="square" onclick="placeMove('0')">{{ zero }}</div></div>
-                        <div class="shadow-square" id="square-1"><div class="square" onclick="placeMove('1')">{{ one }}</div></div>
-                        <div class="shadow-square" id="square-2"><div class="square" onclick="placeMove('2')">{{ two }}</div></div>
-                        <div class="shadow-square" id="square-3"><div class="square" onclick="placeMove('3')">{{ three }}</div></div>
-                        <div class="shadow-square" id="square-4"><div class="square" onclick="placeMove('4')">{{ four }}</div></div>
-                        <div class="shadow-square" id="square-5"><div class="square" onclick="placeMove('5')">{{ five }}</div></div>
-                        <div class="shadow-square" id="square-6"><div class="square" onclick="placeMove('6')">{{ six }}</div></div>
-                        <div class="shadow-square" id="square-7"><div class="square" onclick="placeMove('7')">{{ seven }}</div></div>
-                        <div class="shadow-square" id="square-8"><div class="square" onclick="placeMove('8')">{{ eight }}</div></div>
+                        <div class="shadow-square" id="three-square-0"><div class="square" onclick="placeMove('0')">{{ zero }}</div></div>
+                        <div class="shadow-square" id="three-square-1"><div class="square" onclick="placeMove('1')">{{ one }}</div></div>
+                        <div class="shadow-square" id="three-square-2"><div class="square" onclick="placeMove('2')">{{ two }}</div></div>
+                        <div class="shadow-square" id="three-square-3"><div class="square" onclick="placeMove('3')">{{ three }}</div></div>
+                        <div class="shadow-square" id="three-square-4"><div class="square" onclick="placeMove('4')">{{ four }}</div></div>
+                        <div class="shadow-square" id="three-square-5"><div class="square" onclick="placeMove('5')">{{ five }}</div></div>
+                        <div class="shadow-square" id="three-square-6"><div class="square" onclick="placeMove('6')">{{ six }}</div></div>
+                        <div class="shadow-square" id="three-square-7"><div class="square" onclick="placeMove('7')">{{ seven }}</div></div>
+                        <div class="shadow-square" id="three-square-8"><div class="square" onclick="placeMove('8')">{{ eight }}</div></div>
                     </div>
+                    <!-- TODO :: should I generate the board using js? -->
                     <div class="board nineboard {{ gameMode }}">
-                        <h1>Nine Board (Ultimate)</h1>
+                        <div class="shadow-square" id="nine-square-0"><div class="square outer">
+                                <div class="shadow-square" id="nine-square-0-0"><div class="square inner" onclick="placeMove('0', '0')">0</div></div>
+                                <div class="shadow-square" id="nine-square-0-1"><div class="square inner" onclick="placeMove('0','1')">0</div></div>
+                                <div class="shadow-square" id="nine-square-0-2"><div class="square inner" onclick="placeMove('0','2')">0</div></div>
+                                <div class="shadow-square" id="nine-square-0-3"><div class="square inner" onclick="placeMove('0','3')">0</div></div>
+                                <div class="shadow-square" id="nine-square-0-4"><div class="square inner" onclick="placeMove('0','4')">0</div></div>
+                                <div class="shadow-square" id="nine-square-0-5"><div class="square inner" onclick="placeMove('0','5')">0</div></div>
+                                <div class="shadow-square" id="nine-square-0-6"><div class="square inner" onclick="placeMove('0','6')">0</div></div>
+                                <div class="shadow-square" id="nine-square-0-7"><div class="square inner" onclick="placeMove('0','7')">0</div></div>
+                                <div class="shadow-square" id="nine-square-0-8"><div class="square inner" onclick="placeMove('0','8')">0</div></div>
+                        </div></div>
+                        <div class="shadow-square" id="nine-square-1"><div class="square outer">
+                            <div class="shadow-square" id="nine-square-1-0"><div class="square" onclick="placeMove('1', '0')">0</div></div>
+                            <div class="shadow-square" id="nine-square-1-1"><div class="square" onclick="placeMove('1','1')">0</div></div>
+                            <div class="shadow-square" id="nine-square-1-2"><div class="square" onclick="placeMove('1','2')">0</div></div>
+                            <div class="shadow-square" id="nine-square-1-3"><div class="square" onclick="placeMove('1','3')">0</div></div>
+                            <div class="shadow-square" id="nine-square-1-4"><div class="square" onclick="placeMove('1','4')">0</div></div>
+                            <div class="shadow-square" id="nine-square-1-5"><div class="square" onclick="placeMove('1','5')">0</div></div>
+                            <div class="shadow-square" id="nine-square-1-6"><div class="square" onclick="placeMove('1','6')">0</div></div>
+                            <div class="shadow-square" id="nine-square-1-7"><div class="square" onclick="placeMove('1','7')">0</div></div>
+                            <div class="shadow-square" id="nine-square-1-8"><div class="square" onclick="placeMove('1','8')">0</div></div>
+                        </div></div>
+                        <div class="shadow-square" id="nine-square-2"><div class="square outer">
+                            <div class="shadow-square" id="nine-square-2-0"><div class="square" onclick="placeMove('2', '0')">0</div></div>
+                            <div class="shadow-square" id="nine-square-2-1"><div class="square" onclick="placeMove('2','1')">0</div></div>
+                            <div class="shadow-square" id="nine-square-2-2"><div class="square" onclick="placeMove('2','2')">0</div></div>
+                            <div class="shadow-square" id="nine-square-2-3"><div class="square" onclick="placeMove('2','3')">0</div></div>
+                            <div class="shadow-square" id="nine-square-2-4"><div class="square" onclick="placeMove('2','4')">0</div></div>
+                            <div class="shadow-square" id="nine-square-2-5"><div class="square" onclick="placeMove('2','5')">0</div></div>
+                            <div class="shadow-square" id="nine-square-2-6"><div class="square" onclick="placeMove('2','6')">0</div></div>
+                            <div class="shadow-square" id="nine-square-2-7"><div class="square" onclick="placeMove('2','7')">0</div></div>
+                            <div class="shadow-square" id="nine-square-2-8"><div class="square" onclick="placeMove('2','8')">0</div></div>
+                        </div></div>
+                        <div class="shadow-square" id="nine-square-3"><div class="square outer">
+                            <div class="shadow-square" id="nine-square-3-0"><div class="square" onclick="placeMove('3', '0')">0</div></div>
+                            <div class="shadow-square" id="nine-square-3-1"><div class="square" onclick="placeMove('3','1')">0</div></div>
+                            <div class="shadow-square" id="nine-square-3-2"><div class="square" onclick="placeMove('3','2')">0</div></div>
+                            <div class="shadow-square" id="nine-square-3-3"><div class="square" onclick="placeMove('3','3')">0</div></div>
+                            <div class="shadow-square" id="nine-square-3-4"><div class="square" onclick="placeMove('3','4')">0</div></div>
+                            <div class="shadow-square" id="nine-square-3-5"><div class="square" onclick="placeMove('3','5')">0</div></div>
+                            <div class="shadow-square" id="nine-square-3-6"><div class="square" onclick="placeMove('3','6')">0</div></div>
+                            <div class="shadow-square" id="nine-square-3-7"><div class="square" onclick="placeMove('3','7')">0</div></div>
+                            <div class="shadow-square" id="nine-square-3-8"><div class="square" onclick="placeMove('3','8')">0</div></div>
+                        </div></div>
+                        <div class="shadow-square" id="nine-square-4"><div class="square outer">
+                            <div class="shadow-square" id="nine-square-4-0"><div class="square" onclick="placeMove('4', '0')">0</div></div>
+                            <div class="shadow-square" id="nine-square-4-1"><div class="square" onclick="placeMove('4','1')">0</div></div>
+                            <div class="shadow-square" id="nine-square-4-2"><div class="square" onclick="placeMove('4','2')">0</div></div>
+                            <div class="shadow-square" id="nine-square-4-3"><div class="square" onclick="placeMove('4','3')">0</div></div>
+                            <div class="shadow-square" id="nine-square-4-4"><div class="square" onclick="placeMove('4','4')">0</div></div>
+                            <div class="shadow-square" id="nine-square-4-5"><div class="square" onclick="placeMove('4','5')">0</div></div>
+                            <div class="shadow-square" id="nine-square-4-6"><div class="square" onclick="placeMove('4','6')">0</div></div>
+                            <div class="shadow-square" id="nine-square-4-7"><div class="square" onclick="placeMove('4','7')">0</div></div>
+                            <div class="shadow-square" id="nine-square-4-8"><div class="square" onclick="placeMove('4','8')">0</div></div>
+                        </div></div>
+                        <div class="shadow-square" id="nine-square-5"><div class="square outer">
+                            <div class="shadow-square" id="nine-square-5-0"><div class="square" onclick="placeMove('5', '0')">0</div></div>
+                            <div class="shadow-square" id="nine-square-5-1"><div class="square" onclick="placeMove('5','1')">0</div></div>
+                            <div class="shadow-square" id="nine-square-5-2"><div class="square" onclick="placeMove('5','2')">0</div></div>
+                            <div class="shadow-square" id="nine-square-5-3"><div class="square" onclick="placeMove('5','3')">0</div></div>
+                            <div class="shadow-square" id="nine-square-5-4"><div class="square" onclick="placeMove('5','4')">0</div></div>
+                            <div class="shadow-square" id="nine-square-5-5"><div class="square" onclick="placeMove('5','5')">0</div></div>
+                            <div class="shadow-square" id="nine-square-5-6"><div class="square" onclick="placeMove('5','6')">0</div></div>
+                            <div class="shadow-square" id="nine-square-5-7"><div class="square" onclick="placeMove('5','7')">0</div></div>
+                            <div class="shadow-square" id="nine-square-5-8"><div class="square" onclick="placeMove('5','8')">0</div></div>
+                        </div></div>
+                        <div class="shadow-square" id="nine-square-6"><div class="square outer">
+                            <div class="shadow-square" id="nine-square-6-0"><div class="square" onclick="placeMove('6', '0')">0</div></div>
+                            <div class="shadow-square" id="nine-square-6-1"><div class="square" onclick="placeMove('6','1')">0</div></div>
+                            <div class="shadow-square" id="nine-square-6-2"><div class="square" onclick="placeMove('6','2')">0</div></div>
+                            <div class="shadow-square" id="nine-square-6-3"><div class="square" onclick="placeMove('6','3')">0</div></div>
+                            <div class="shadow-square" id="nine-square-6-4"><div class="square" onclick="placeMove('6','4')">0</div></div>
+                            <div class="shadow-square" id="nine-square-6-5"><div class="square" onclick="placeMove('6','5')">0</div></div>
+                            <div class="shadow-square" id="nine-square-6-6"><div class="square" onclick="placeMove('6','6')">0</div></div>
+                            <div class="shadow-square" id="nine-square-6-7"><div class="square" onclick="placeMove('6','7')">0</div></div>
+                            <div class="shadow-square" id="nine-square-6-8"><div class="square" onclick="placeMove('6','8')">0</div></div>
+                        </div></div>
+                        <div class="shadow-square" id="nine-square-7"><div class="square outer">
+                            <div class="shadow-square" id="nine-square-7-0"><div class="square" onclick="placeMove('7', '0')">0</div></div>
+                            <div class="shadow-square" id="nine-square-7-1"><div class="square" onclick="placeMove('7','1')">0</div></div>
+                            <div class="shadow-square" id="nine-square-7-2"><div class="square" onclick="placeMove('7','2')">0</div></div>
+                            <div class="shadow-square" id="nine-square-7-3"><div class="square" onclick="placeMove('7','3')">0</div></div>
+                            <div class="shadow-square" id="nine-square-7-4"><div class="square" onclick="placeMove('7','4')">0</div></div>
+                            <div class="shadow-square" id="nine-square-7-5"><div class="square" onclick="placeMove('7','5')">0</div></div>
+                            <div class="shadow-square" id="nine-square-7-6"><div class="square" onclick="placeMove('7','6')">0</div></div>
+                            <div class="shadow-square" id="nine-square-7-7"><div class="square" onclick="placeMove('7','7')">0</div></div>
+                            <div class="shadow-square" id="nine-square-7-8"><div class="square" onclick="placeMove('7','8')">0</div></div>
+                        </div></div>
+                        <div class="shadow-square" id="nine-square-8"><div class="square outer">
+                            <div class="shadow-square" id="nine-square-8-0"><div class="square" onclick="placeMove('8', '0')">0</div></div>
+                            <div class="shadow-square" id="nine-square-8-1"><div class="square" onclick="placeMove('8','1')">0</div></div>
+                            <div class="shadow-square" id="nine-square-8-2"><div class="square" onclick="placeMove('8','2')">0</div></div>
+                            <div class="shadow-square" id="nine-square-8-3"><div class="square" onclick="placeMove('8','3')">0</div></div>
+                            <div class="shadow-square" id="nine-square-8-4"><div class="square" onclick="placeMove('8','4')">0</div></div>
+                            <div class="shadow-square" id="nine-square-8-5"><div class="square" onclick="placeMove('8','5')">0</div></div>
+                            <div class="shadow-square" id="nine-square-8-6"><div class="square" onclick="placeMove('8','6')">0</div></div>
+                            <div class="shadow-square" id="nine-square-8-7"><div class="square" onclick="placeMove('8','7')">0</div></div>
+                            <div class="shadow-square" id="nine-square-8-8"><div class="square" onclick="placeMove('8','8')">0</div></div>
+                        </div></div>
                     </div>
                 </section>
             </section>

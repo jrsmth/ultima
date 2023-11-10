@@ -15,7 +15,6 @@ $(document).ready(function() {
             $('.form-control.radio').removeClass('hide');
             $('#game-mode')[0].value = ""
 
-            console.log($('.field.radio > .selection'))
             $('.field.radio > .selection').removeClass('selected');
         }
 

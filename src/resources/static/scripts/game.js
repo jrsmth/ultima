@@ -6,7 +6,7 @@ function init() {
     thisSymbol = document.getElementById('this-user-symbol').value;
 
     for (let i = 0; i < 9; i++) {
-        const square = document.getElementById(`square-${i}`).getElementsByClassName("square")[0];
+        const square = document.getElementById(`three-square-${i}`).getElementsByClassName("square")[0];
         const state = square.innerHTML;
         if (state === thisSymbol) {
             square.parentElement.classList.add("this-user");
@@ -37,12 +37,16 @@ function placeMove(square) {
     if (userSymbol === '1' && playerTwoActive === 'True') return;
     if (userSymbol === '2' && playerOneActive === 'True') return;
 
-    if (document.getElementById(`square-${square}`).getElementsByClassName("square")[0].innerHTML !== '') {
+    if (document.getElementById(`three-square-${square}`).getElementsByClassName("square")[0].innerHTML !== '') {
         return;
     }
 
     $.get(`/game/${gameId}/place-move/${thisUserId}/${square}`);
     location.reload();
+}
+
+function placeMove(outerSquare, innerSquare) {
+
 }
 
 init();
