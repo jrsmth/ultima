@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.3.0] - ???
 - UMA-17: Give the user the option of standard or ultimate tic-tac-toe
-- UMA-18: Create interactive 9x9 board and allow player to make a turn
+- UMA-19: Create interactive 9x9 board and allow player to make a turn
 
 ## [0.2.1] - 07/11/2023
 - UMA-11: Allow players to make their turns
