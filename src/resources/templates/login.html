@@ -7,19 +7,50 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/css/login.css') }}">
     </head>
     <body>
-        <img id="logo" alt="logo" src="../static/img/logo.png">
         <section>
+            <img id="logo" alt="logo" src="../static/img/logo.png">
             <form action="" method="post">
-                <input type="text" placeholder="Name" name="name" value="{{ request.form.name }}" autocomplete="off">
-                <input type="text" placeholder="Game ID" name="gameId" value="{{ request.form.gameId }}" autocomplete="off">
-                <br>
-                <button type="submit">Play</button>
-                {% if error %}
-                    <p class="error"><strong>Error:</strong> {{ error }}</p>
-                {% endif %}
+                <div class="form-control">
+                    <div class="label">
+                        <h3>Player Name</h3>
+                    </div>
+                    <div class="field">
+                        <input type="text"
+                               placeholder="Name"
+                               name="name"
+                               value="{{ request.form.name }}"
+                               autocomplete="off">
+                    </div>
+                </div>
+                <div class="form-control">
+                    <div class="label">
+                        <h3>Game ID</h3>
+                        <p>Leave blank to start a new game</p>
+                    </div>
+                    <div class="field">
+                        <input type="text"
+                               placeholder="Game ID"
+                               name="gameId"
+                               value="{{ request.form.gameId }}"
+                               autocomplete="off">
+                    </div>
+                </div>
+                <div class="form-control">
+                    <input type="hidden" id="game-mode" name="gameMode" value="{{ request.form.gameMode }}">
+                    <div class="label">
+                        <h3>Game Mode</h3>
+                    </div>
+                    <div class="field radio">
+                        <p class="selection selected">Standard</p>
+                        <p class="selection">Ultimate</p>
+                    </div>
+                </div>
+                <div class="form-control button">
+                    <button type="submit">Play</button>
+                </div>
             </form>
-
-            <section id="shadow-section"></section>
         </section>
     </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="{{ url_for('static', filename='scripts/login.js') }}"></script>
 </html>

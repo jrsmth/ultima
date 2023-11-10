@@ -69,7 +69,7 @@ header {
 
       #whose-turn-cross {
         &.this-symbol-1  { color: $chartreuse; }
-        &.this-symbol-2  { color: $pink; }
+        &.this-symbol-2  { color: $rose; }
 
         .whose-turn-shadow {
           transform: translateX(-3.75rem);
@@ -78,7 +78,7 @@ header {
       }
 
       #whose-turn-circle {
-        &.this-symbol-1 { color: $pink; }
+        &.this-symbol-1 { color: $rose; }
         &.this-symbol-2 { color: $chartreuse; }
 
         .whose-turn-shadow {
@@ -100,31 +100,31 @@ header {
     width: 12rem;
 
     &.active {
-      border: 1px solid $pink25;
+      border: 1px solid $rose25;
       background-color: $aubergine;
     }
 
     &.active-True {
-      border: 1px solid $pink25;
+      border: 1px solid $rose25;
       border-radius: .25rem;
       background-color: $aubergine;
     }
 
     .fa-user {
       margin-right: .5rem;
-      color: $pink;
+      color: $rose;
     }
 
     .symbol {
-      color: $pink;
+      color: $rose;
       margin-left: .5rem;
       float: right;
       transform: translateY(1px);
     }
 
     &#player1 > .this-symbol-1 { color: $chartreuse }
-    &#player1 > .this-symbol-2 { color: $pink }
-    &#player2 > .this-symbol-1 { color: $pink }
+    &#player1 > .this-symbol-2 { color: $rose }
+    &#player2 > .this-symbol-1 { color: $rose }
     &#player2 > .this-symbol-2 { color: $chartreuse }
   }
 }
@@ -141,14 +141,14 @@ header {
 
   .shadow-square {
     margin: .5rem;
-    border: 1px solid $pink25;
+    border: 1px solid $rose25;
     background-color: $aubergine;
     border-radius: .5rem;
 
     .square {
       border-radius: inherit;
       transform: translate(-0.25rem, -0.25rem);
-      border: 1px solid $pink25;
+      border: 1px solid $rose25;
       background-color: $aubergine;
       transition: .5s;
       cursor: pointer;
@@ -186,11 +186,11 @@ header {
     }
 
     &.opponent-user {
-      border: 1px solid $pink;
+      border: 1px solid $rose;
 
       .square {
-        border: 1px solid $pink;
-        background-color: $pink;
+        border: 1px solid $rose;
+        background-color: $rose;
         cursor: default;
 
         .symbol {
@@ -200,15 +200,15 @@ header {
     }
   }
 
-  &.this-user-1.player-1-False { .square { border: 1px solid $pink25; cursor: default; } }
-  &.this-user-2.player-2-False { .square { border: 1px solid $pink25; cursor: default; } }
-  &.game-complete-True { .square { border: 1px solid $pink25 !important; cursor: default !important; } }
+  &.this-user-1.player-1-False { .square { border: 1px solid $rose25; cursor: default; } }
+  &.this-user-2.player-2-False { .square { border: 1px solid $rose25; cursor: default; } }
+  &.game-complete-True { .square { border: 1px solid $rose25 !important; cursor: default !important; } }
 }
 
 /** Notification */
 .notification {
   margin: 0 auto;
-  border: 1px solid $pink25;
+  border: 1px solid $rose25;
   border-radius: .5rem;
   background-color: $aubergine;
   height: 5rem;
@@ -251,13 +251,13 @@ header {
     background-color: $chartreuse05;
 
     p {
-      color: $text-light;
+      color: $text-lightest;
     }
   }
 
     &.sad {
-      color: $pink;
-      border: 1px solid $pink25;
+      color: $rose;
+      border: 1px solid $rose25;
       background-color: $aubergine;
 
       h3 {
@@ -265,7 +265,7 @@ header {
       }
 
       p {
-        color: $text-light;
+        color: $text-lightest;
       }
   }
 

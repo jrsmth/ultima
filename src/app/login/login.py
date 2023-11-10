@@ -27,6 +27,8 @@ def construct_blueprint(redis, messages):
             redis.set("7", board_list[7])
             redis.set("8", board_list[8])
 
+            redis.set("gameMode", request.form["gameMode"])
+
             # TODO :: set redis obj as dict { $game_id: [player1: "", player2: ""] }
             if request.form["gameId"] == "":
                 redis.set("player1", request.form["name"])
