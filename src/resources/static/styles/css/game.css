@@ -138,7 +138,7 @@ header h1 {
   color: #d8ff00;
 }
 
-/** Board */
+/** Board **/
 .board {
   margin: 2rem auto 0 auto;
   height: 50%;
@@ -159,13 +159,27 @@ header h1 {
 .board.nineboard.ULTIMATE {
   display: grid;
 }
-.board .shadow-square {
+.board.this-user-1.player-1-False .square {
+  border: 1px solid rgba(231, 4, 83, 0.2509803922);
+  cursor: default;
+}
+.board.this-user-2.player-2-False .square {
+  border: 1px solid rgba(231, 4, 83, 0.2509803922);
+  cursor: default;
+}
+.board.game-complete-True .square {
+  border: 1px solid rgba(231, 4, 83, 0.2509803922) !important;
+  cursor: default !important;
+}
+
+/** Three Board */
+.threeboard .shadow-square {
   margin: 0.5rem;
   border: 1px solid rgba(231, 4, 83, 0.2509803922);
   background-color: #2b0710;
   border-radius: 0.5rem;
 }
-.board .shadow-square .square {
+.threeboard .shadow-square .square {
   border-radius: inherit;
   transform: translate(-0.25rem, -0.25rem);
   border: 1px solid rgba(231, 4, 83, 0.2509803922);
@@ -179,52 +193,97 @@ header h1 {
   height: 100%;
   width: 100%;
 }
-.board .shadow-square .square:hover {
+.threeboard .shadow-square .square:hover {
   opacity: 1;
   border: 1px solid #d8ff00;
 }
-.board .shadow-square .square .symbol {
+.threeboard .shadow-square .square .symbol {
   font-size: 4rem;
   position: absolute;
   margin-top: calc(47.5% - 2rem);
 }
-.board .shadow-square .square.outer {
-  display: grid;
-  grid-template-columns: 33.3% 33.3% 33.3%;
-}
-.board .shadow-square.this-user {
+.threeboard .shadow-square.this-user {
   border: 1px solid #d8ff00;
 }
-.board .shadow-square.this-user .square {
+.threeboard .shadow-square.this-user .square {
   border: 1px solid #d8ff00;
   background-color: #d8ff00;
   cursor: default;
 }
-.board .shadow-square.this-user .square .symbol {
+.threeboard .shadow-square.this-user .square .symbol {
   color: #2b0710;
 }
-.board .shadow-square.opponent-user {
+.threeboard .shadow-square.opponent-user {
   border: 1px solid #e70453;
 }
-.board .shadow-square.opponent-user .square {
+.threeboard .shadow-square.opponent-user .square {
   border: 1px solid #e70453;
   background-color: #e70453;
   cursor: default;
 }
-.board .shadow-square.opponent-user .square .symbol {
+.threeboard .shadow-square.opponent-user .square .symbol {
   color: #2b0710;
 }
-.board.this-user-1.player-1-False .square {
+
+/** Nine Board */
+.nineboard .shadow-square.outer {
+  margin: 0.5rem;
+}
+.nineboard .shadow-square.outer .square {
+  display: grid;
+  grid-template-columns: 33.3% 33.33% 33.3%;
+  height: 100%;
+}
+.nineboard .shadow-square.inner {
+  margin: 0.375rem;
   border: 1px solid rgba(231, 4, 83, 0.2509803922);
+  background-color: #2b0710;
+  border-radius: 0.5rem;
+}
+.nineboard .shadow-square.inner .square {
+  border-radius: inherit;
+  transform: translate(-0.25rem, -0.25rem);
+  border: 1px solid rgba(231, 4, 83, 0.2509803922);
+  background-color: #2b0710;
+  transition: 0.5s;
+  cursor: pointer;
+  align-content: center;
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  width: 100%;
+}
+.nineboard .shadow-square.inner .square:hover {
+  opacity: 1;
+  border: 1px solid #d8ff00;
+}
+.nineboard .shadow-square.inner .square .symbol {
+  font-size: 4rem;
+  position: absolute;
+  margin-top: calc(47.5% - 2rem);
+}
+.nineboard .shadow-square.inner.this-user {
+  border: 1px solid #d8ff00;
+}
+.nineboard .shadow-square.inner.this-user .square {
+  border: 1px solid #d8ff00;
+  background-color: #d8ff00;
   cursor: default;
 }
-.board.this-user-2.player-2-False .square {
-  border: 1px solid rgba(231, 4, 83, 0.2509803922);
+.nineboard .shadow-square.inner.this-user .square .symbol {
+  color: #2b0710;
+}
+.nineboard .shadow-square.inner.opponent-user {
+  border: 1px solid #e70453;
+}
+.nineboard .shadow-square.inner.opponent-user .square {
+  border: 1px solid #e70453;
+  background-color: #e70453;
   cursor: default;
 }
-.board.game-complete-True .square {
-  border: 1px solid rgba(231, 4, 83, 0.2509803922) !important;
-  cursor: default !important;
+.nineboard .shadow-square.inner.opponent-user .square .symbol {
+  color: #2b0710;
 }
 
 /** Notification */

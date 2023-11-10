@@ -66,6 +66,7 @@ def construct_blueprint(redis, messages):
 
         return render_template(
             "game.html",
+            board=redis.get_complex("board"),
             zero=redis.get("0"),
             one=redis.get("1"),
             two=redis.get("2"),
@@ -94,10 +95,12 @@ def construct_blueprint(redis, messages):
         )
 
     @game_page.route("/game/<game_id>/place-move/<user_id>/<square>")
-    def place_move(game_id, user_id, square):
+    def place_standard_move(game_id, user_id, square):
         # Set player's move
         symbol = redis.get(user_id)
-        redis.set(square, symbol)
+        board_list = redis.get_complex("board")
+        board_list[int(square)] = symbol
+        redis.set_complex("board", board_list)
 
         # Switch player turn
         if redis.get("whoseTurn") == 'player1':
@@ -107,6 +110,24 @@ def construct_blueprint(redis, messages):
 
         return redirect(url_for("game_page.game", game_id=game_id, user_id=user_id))
 
+    @game_page.route("/game/<game_id>/place-move/<user_id>/<outer_square>/<inner_square>")
+    def place_ultimate_move(game_id, user_id, outer_square, inner_square):
+        # Set player's move
+        symbol = redis.get(user_id)
+        # redis.set(square, symbol)
+
+        print(outer_square)
+        print(inner_square)
+
+        # Switch player turn
+        if redis.get("whoseTurn") == 'player1':
+            redis.set("whoseTurn", "player2")
+        elif redis.get("whoseTurn") == 'player2':
+            redis.set("whoseTurn", "player1")
+
+        return redirect(url_for("game_page.game", game_id=game_id, user_id=user_id))
+
+    # Closing return
     return game_page
 
 

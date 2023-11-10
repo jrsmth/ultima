@@ -18,15 +18,16 @@ def construct_blueprint(redis, messages):
             board_list = ThreeBoard.list(board)
             # first index is squareNo
             # second index is the state: 0 for empty, 1 for cross, 2 for circle
-            redis.set("0", board_list[0])
-            redis.set("1", board_list[1])
-            redis.set("2", board_list[2])
-            redis.set("3", board_list[3])
-            redis.set("4", board_list[4])
-            redis.set("5", board_list[5])
-            redis.set("6", board_list[6])
-            redis.set("7", board_list[7])
-            redis.set("8", board_list[8])
+            # redis.set("0", board_list[0])
+            # redis.set("1", board_list[1])
+            # redis.set("2", board_list[2])
+            # redis.set("3", board_list[3])
+            # redis.set("4", board_list[4])
+            # redis.set("5", board_list[5])
+            # redis.set("6", board_list[6])
+            # redis.set("7", board_list[7])
+            # redis.set("8", board_list[8])
+            redis.set_complex("board", board_list)
 
             game_mode = request.form["gameMode"]
             if game_mode != "":
@@ -52,6 +53,7 @@ def construct_blueprint(redis, messages):
 
         return render_template("login.html", error=error)
 
+    # Closing return
     return login_page
 
 

@@ -25,7 +25,7 @@ function init() {
 
 }
 
-function placeMove(square) {
+function placeStandardMove(square) {
     const gameId = "ab12-3cd4-e5f6-78gh";
 
     const userSymbol = document.getElementById('this-user-symbol').value;
@@ -46,7 +46,23 @@ function placeMove(square) {
 }
 
 function placeMove(outerSquare, innerSquare) {
+    const gameId = "ab12-3cd4-e5f6-78gh";
 
+    const userSymbol = document.getElementById('this-user-symbol').value;
+    const playerOneActive = document.getElementById('player-one-active').value;
+    const playerTwoActive = document.getElementById('player-two-active').value;
+    const gameComplete = document.getElementById('game-complete').value;
+
+    if (gameComplete === 'True') return;
+    if (userSymbol === '1' && playerTwoActive === 'True') return;
+    if (userSymbol === '2' && playerOneActive === 'True') return;
+
+    if (document.getElementById(`nine-square-${outerSquare}-${innerSquare}`).getElementsByClassName("square")[0].innerHTML !== '') {
+        return;
+    }
+
+    $.get(`/game/${gameId}/place-move/${thisUserId}/${outerSquare}/${innerSquare}`);
+    location.reload();
 }
 
 init();
