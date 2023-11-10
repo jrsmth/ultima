@@ -145,8 +145,19 @@ header h1 {
   aspect-ratio: 1/1;
   max-height: 600px;
   min-height: 400px;
-  display: grid;
   grid-template-columns: 33.3% 33.3% 33.3%;
+}
+.board.threeboard.STANDARD {
+  display: grid;
+}
+.board.threeboard.ULTIMATE {
+  display: none;
+}
+.board.nineboard.STANDARD {
+  display: none;
+}
+.board.nineboard.ULTIMATE {
+  display: grid;
 }
 .board .shadow-square {
   margin: 0.5rem;

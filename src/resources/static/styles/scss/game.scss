@@ -131,12 +131,16 @@ header {
 
 /** Board */
 .board {
+  &.threeboard.STANDARD { display: grid; }
+  &.threeboard.ULTIMATE { display: none; }
+  &.nineboard.STANDARD  { display: none; }
+  &.nineboard.ULTIMATE  { display: grid; }
+
   margin: 2rem auto 0 auto;
   height: $boardLengthDefault;
   aspect-ratio: 1 / 1;
   max-height: $boardLengthMax;
   min-height: $boardLengthMin;
-  display: grid;
   grid-template-columns: 33.3% 33.3% 33.3%;
 
   .shadow-square {

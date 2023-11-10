@@ -13,6 +13,7 @@ def construct_blueprint(redis, messages):
         if request.method == "POST":
             print(request.form["name"])  # log me
             print(request.form["gameId"])
+            print(request.form["gameMode"])
             board = ThreeBoard()
             board_list = ThreeBoard.list(board)
             # first index is squareNo
@@ -27,7 +28,11 @@ def construct_blueprint(redis, messages):
             redis.set("7", board_list[7])
             redis.set("8", board_list[8])
 
-            redis.set("gameMode", request.form["gameMode"])
+            game_mode = request.form["gameMode"]
+            if game_mode != "":
+                redis.set("gameMode", game_mode)
+            else:
+                print("Game Mode already set [" + redis.get("gameMode") + "]");  # TODO :: err handle
 
             # TODO :: set redis obj as dict { $game_id: [player1: "", player2: ""] }
             if request.form["gameId"] == "":

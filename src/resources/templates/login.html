@@ -29,14 +29,18 @@
                     </div>
                     <div class="field">
                         <input type="text"
+                               id="game-id"
                                placeholder="Game ID"
                                name="gameId"
                                value="{{ request.form.gameId }}"
                                autocomplete="off">
                     </div>
                 </div>
-                <div class="form-control">
-                    <input type="hidden" id="game-mode" name="gameMode" value="{{ request.form.gameMode }}">
+                <div class="form-control radio">
+                    <input type="hidden"
+                           id="game-mode"
+                           name="gameMode"
+                           value="STANDARD">
                     <div class="label">
                         <h3>Game Mode</h3>
                     </div>

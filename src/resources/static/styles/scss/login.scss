@@ -75,6 +75,10 @@ section {
         display: flex;
         justify-content: end;
       }
+
+      &.radio.hide {
+        display: none;
+      }
     }
 
     input {

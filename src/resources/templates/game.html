@@ -13,7 +13,8 @@
         <input id="player-one-active" type="hidden" value="{{ playerOneActive }}">
         <input id="player-two-active" type="hidden" value="{{ playerTwoActive }}">
         <input id="game-complete" type="hidden" value="{{ gameComplete }}">
-<!--        <input id="whose-turn" type="hidden" value="{{ whoseTurn }}">-->
+        <input id="game-mode" type="hidden" value="{{ gameMode }}">
+        <!--        <input id="whose-turn" type="hidden" value="{{ whoseTurn }}">-->
         <header>
             <div class="tooltip">
                 <a href="https://github.com/jrsmth/ultima" target="_blank"><img id="badge" alt="badge" src="{{ url_for('static', filename='img/badge.png') }}"></a>
@@ -58,17 +59,22 @@
                         <i class="whose-turn-shadow fa-regular fa-circle symbol"></i>
                     </div>
                 </div>
-                <div class="board this-user-{{ thisUserSymbol }} player-1-{{ playerOneActive }} player-2-{{ playerTwoActive }} game-complete-{{ gameComplete }}">
-                    <div class="shadow-square" id="square-0"><div class="square" onclick="placeMove('0')">{{ zero }}</div></div>
-                    <div class="shadow-square" id="square-1"><div class="square" onclick="placeMove('1')">{{ one }}</div></div>
-                    <div class="shadow-square" id="square-2"><div class="square" onclick="placeMove('2')">{{ two }}</div></div>
-                    <div class="shadow-square" id="square-3"><div class="square" onclick="placeMove('3')">{{ three }}</div></div>
-                    <div class="shadow-square" id="square-4"><div class="square" onclick="placeMove('4')">{{ four }}</div></div>
-                    <div class="shadow-square" id="square-5"><div class="square" onclick="placeMove('5')">{{ five }}</div></div>
-                    <div class="shadow-square" id="square-6"><div class="square" onclick="placeMove('6')">{{ six }}</div></div>
-                    <div class="shadow-square" id="square-7"><div class="square" onclick="placeMove('7')">{{ seven }}</div></div>
-                    <div class="shadow-square" id="square-8"><div class="square" onclick="placeMove('8')">{{ eight }}</div></div>
-                </div>
+                <section class="boards">
+                    <div class="board threeboard {{ gameMode }} this-user-{{ thisUserSymbol }} player-1-{{ playerOneActive }} player-2-{{ playerTwoActive }} game-complete-{{ gameComplete }}">
+                        <div class="shadow-square" id="square-0"><div class="square" onclick="placeMove('0')">{{ zero }}</div></div>
+                        <div class="shadow-square" id="square-1"><div class="square" onclick="placeMove('1')">{{ one }}</div></div>
+                        <div class="shadow-square" id="square-2"><div class="square" onclick="placeMove('2')">{{ two }}</div></div>
+                        <div class="shadow-square" id="square-3"><div class="square" onclick="placeMove('3')">{{ three }}</div></div>
+                        <div class="shadow-square" id="square-4"><div class="square" onclick="placeMove('4')">{{ four }}</div></div>
+                        <div class="shadow-square" id="square-5"><div class="square" onclick="placeMove('5')">{{ five }}</div></div>
+                        <div class="shadow-square" id="square-6"><div class="square" onclick="placeMove('6')">{{ six }}</div></div>
+                        <div class="shadow-square" id="square-7"><div class="square" onclick="placeMove('7')">{{ seven }}</div></div>
+                        <div class="shadow-square" id="square-8"><div class="square" onclick="placeMove('8')">{{ eight }}</div></div>
+                    </div>
+                    <div class="board nineboard {{ gameMode }}">
+                        <h1>Nine Board (Ultimate)</h1>
+                    </div>
+                </section>
             </section>
             <section class="side-bar right"></section>
         </section>
