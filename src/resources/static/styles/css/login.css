@@ -15,9 +15,9 @@ body {
 
 section {
   position: absolute;
-  width: 40rem;
+  width: 36rem;
   height: 20rem;
-  left: calc(50% - 20rem);
+  left: calc(50% - 18rem);
   top: calc(50% - 20rem);
   text-align: center;
 }
@@ -26,7 +26,7 @@ section #logo {
   margin-bottom: 2rem;
 }
 section form {
-  background: rgba(155, 14, 64, 0.2509803922);
+  background: #2b0710;
   color: #ccc;
   box-shadow: 0px 13px 50px -13px rgba(0, 0, 0, 0.0980392157);
   border: 1px solid rgba(155, 14, 64, 0.7490196078);
@@ -46,7 +46,7 @@ section form h3 {
   color: #eee;
 }
 section form p {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   margin: 2px 0;
   color: #ccc;
 }
@@ -101,9 +101,6 @@ section form input {
   outline: none;
   width: 16.875rem;
   margin: auto;
-}
-section form input::placeholder {
-  color: #ccc;
 }
 section form input:focus {
   border-bottom: 1px solid rgba(231, 4, 83, 0.7490196078);

@@ -14,7 +14,7 @@ section {
   }
 
   form {
-    background: $cherry25;
+    background: $aubergine;
     color: $text-light;
     box-shadow: $drop-shadow;
     border: 1px solid $cherry75;
@@ -26,7 +26,7 @@ section {
 
     div { box-sizing: border-box; }
     h3  { font-size: 1rem; font-weight: normal; margin: 2px 0; color: $text-lighter}
-    p   { font-size: .75rem; margin: 2px 0; color: $text-light }
+    p   { font-size: .7rem; margin: 2px 0; color: $text-light }
 
     .form-control {
       display: flex;
@@ -86,10 +86,6 @@ section {
       outline: none;
       width: 16.875rem;
       margin: auto;
-
-      &::placeholder {
-        color: $text-light;
-      }
 
       &:focus {
         border-bottom: 1px solid $rose75;
