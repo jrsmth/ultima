@@ -9,15 +9,6 @@ header {
     height: 2.25rem;
     margin: .5rem;
   }
-
-  h1 {
-    margin: .5rem;
-    text-transform: uppercase;
-    letter-spacing: .25rem;
-    font-weight: 200;
-    font-size: 1.5rem;
-    line-height: 2.25rem;
-  }
 }
 
 /** Tooltip */
@@ -263,6 +254,10 @@ header {
         background-color: $rose !important;
         cursor: default !important;
       }
+    }
+
+    &.draw .shadow-square.inner {
+      opacity: .1;
     }
   }
 

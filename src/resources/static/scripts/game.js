@@ -39,11 +39,15 @@ function initUltimate(thisUserId, thisSymbol) {
 
     for (let i = 0; i < 9; i++) {
         const outerSquare = document.getElementById(`nine-square-${i}`);
-        if (playableSquare === "-1" || playableSquare === i.toString()) outerSquare.classList.add("playable")
 
         if (innerStates[i] === 2) { outerSquare.classList.add("draw") }
         if (innerStates[i] === 3) { outerSquare.classList.add(thisSymbol === '1' ? "this-user" : "opponent-user"); console.log(i) }
         if (innerStates[i] === 4) { outerSquare.classList.add(thisSymbol === '2' ? "this-user" : "opponent-user") }
+
+        if (
+            (playableSquare === "-1" || playableSquare === i.toString()) &&
+            (!outerSquare.classList.contains("this-user") && !outerSquare.classList.contains("opponent-user") && !outerSquare.classList.contains("draw"))
+        ) { outerSquare.classList.add("playable") }
 
         let outerBoard = []
         for (let j = 0; j < 9; j++) {

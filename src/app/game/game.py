@@ -1,5 +1,6 @@
 from flask import render_template, url_for, redirect, Blueprint
 
+from src.app.model.board.threeboard import ThreeBoard
 from src.app.model.mood import Mood
 from src.app.model.status import Status
 from src.version.version import __version__
@@ -128,7 +129,12 @@ def construct_blueprint(redis, messages):
         print(board)
 
         # Set next playable outer square
-        redis.set("playableSquare", inner_square)
+        if get_game_state(redis, board[int(inner_square)]) != Status.IN_PROGRESS:
+            redis.set("playableSquare", "-1")  # -1 is all squares...
+        else:
+            redis.set("playableSquare", inner_square)
+
+        print("[place_ultimate_move] playableSquare: " + redis.get("playableSquare"))
 
         # Switch player turn
         if redis.get("whoseTurn") == 'player1':
@@ -143,18 +149,6 @@ def construct_blueprint(redis, messages):
 
 
 def get_game_state(redis, board):
-
-    if isinstance(board[0], list):
-        print("[get_game_state] board[0]: " + str(board[0]))
-        outer_state = Status.IN_PROGRESS
-        inner_states = []
-        for outer_square in board:
-            inner_state = get_game_state(redis, outer_square)
-            inner_states.append(inner_state.value)
-            print("[get_game_state] inner_states: " + str(inner_states))
-        redis.set_complex("innerStates", inner_states)
-        return Status.IN_PROGRESS
-
     winning_combos = [
         [0, 1, 2],
         [3, 4, 5],
@@ -165,6 +159,19 @@ def get_game_state(redis, board):
         [0, 4, 8],
         [2, 4, 6]
     ]
+
+    if isinstance(board[0], list):
+        print("[get_game_state] board[0]: " + str(board[0]))
+        outer_state = Status.IN_PROGRESS
+        inner_states = []
+        for outer_square in board:
+            inner_state = get_game_state(redis, outer_square)
+            inner_states.append(inner_state.value)
+            print("[get_game_state] inner_states: " + str(inner_states))
+            if inner_states.count('1') == 0:
+                return Status.DRAW
+        redis.set_complex("innerStates", inner_states)
+        return get_game_state(redis, create_false_board(inner_states))
 
     if board.count(0) == 0:
         return Status.DRAW
@@ -196,3 +203,26 @@ def get_player_moves(player, board):
             player_moves.append(index)
 
     return player_moves
+
+
+def convert_states_to_symbols(state):
+    if state == 1: return 0
+    if state == 2: return 0
+    if state == 3: return 1
+    if state == 4: return 2
+
+
+def create_false_board(states):
+    board = ThreeBoard()
+    board.top_lhs = convert_states_to_symbols(states[0])
+    board.top_mid = convert_states_to_symbols(states[1])
+    board.top_rhs = convert_states_to_symbols(states[2])
+    board.mid_lhs = convert_states_to_symbols(states[3])
+    board.mid_mid = convert_states_to_symbols(states[4])
+    board.mid_rhs = convert_states_to_symbols(states[5])
+    board.bot_lhs = convert_states_to_symbols(states[6])
+    board.bot_mid = convert_states_to_symbols(states[7])
+    board.bot_rhs = convert_states_to_symbols(states[8])
+
+    print("[create_false_board] board: " + str(board.list()))
+    return board.list()
