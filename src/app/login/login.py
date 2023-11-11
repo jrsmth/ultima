@@ -2,6 +2,7 @@ from flask import redirect, url_for, render_template, Blueprint, request
 
 from src.app.model.board.nineboard import NineBoard
 from src.app.model.board.threeboard import ThreeBoard
+from src.app.model.status import Status
 
 
 # Login Logic
@@ -23,6 +24,7 @@ def construct_blueprint(redis, messages):
                 board_list = ThreeBoard.list(board)
                 # second index is the state: 0 for empty, 1 for cross, 2 for circle
                 redis.set_complex("board", board_list)
+                redis.set_complex("innerStates", [])
 
             elif game_mode == "ULTIMATE":
                 redis.set("gameMode", game_mode)
@@ -30,6 +32,13 @@ def construct_blueprint(redis, messages):
                 board_list = NineBoard.list(board)
                 # second index is the state: 0 for empty, 1 for cross, 2 for circle
                 redis.set_complex("board", board_list)
+                inner_states = [
+                    Status.IN_PROGRESS.value, Status.IN_PROGRESS.value, Status.IN_PROGRESS.value,
+                    Status.IN_PROGRESS.value, Status.IN_PROGRESS.value, Status.IN_PROGRESS.value,
+                    Status.IN_PROGRESS.value, Status.IN_PROGRESS.value, Status.IN_PROGRESS.value
+                ]
+                redis.set_complex("innerStates", inner_states)
+                redis.set("playableSquare", "-1")  # -1 is all squares...
 
             else:
                 print("Game Mode already set [" + redis.get("gameMode") + "]")  # TODO :: err handle

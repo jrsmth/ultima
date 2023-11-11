@@ -52,7 +52,7 @@ section {
 
           background-color: $rose25;
           color: $text-light;
-          transition: .15s ease-in-out background-color;
+          transition: $ease-in;
 
           &.selected {
             background-color: $rose75 !important;
@@ -90,6 +90,7 @@ section {
 
       &:focus {
         border-bottom: 1px solid $rose75;
+        transition: $ease-in;
       }
     }
 
@@ -98,7 +99,7 @@ section {
       background-color: $rose25;
       border: none;
       color: $text-lightest;
-      transition: .15s ease-in-out background-color;
+      transition: $ease-in;
       padding: .5rem;
       cursor: pointer;
       letter-spacing: 1px;

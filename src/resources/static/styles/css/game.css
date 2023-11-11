@@ -225,10 +225,36 @@ header h1 {
 .nineboard .shadow-square.outer {
   margin: 0.5rem;
 }
+.nineboard .shadow-square.outer:not(.playable, .this-user, .opponent-user) .inner:not(.playable, .this-user, .opponent-user) {
+  cursor: default !important;
+  opacity: 0.3;
+}
+.nineboard .shadow-square.outer:not(.playable, .this-user, .opponent-user) .inner:not(.playable, .this-user, .opponent-user) .square {
+  cursor: default !important;
+  border: 1px solid rgba(231, 4, 83, 0.2509803922) !important;
+}
 .nineboard .shadow-square.outer .square {
   display: grid;
   grid-template-columns: 33.3% 33.33% 33.3%;
   height: 100%;
+}
+.nineboard .shadow-square.outer.this-user .shadow-square.inner {
+  border: 1px solid #d8ff00 !important;
+  opacity: 1;
+}
+.nineboard .shadow-square.outer.this-user .shadow-square.inner .square {
+  border: 1px solid #d8ff00 !important;
+  background-color: #d8ff00 !important;
+  cursor: default !important;
+}
+.nineboard .shadow-square.outer.opponent-user .shadow-square.inner {
+  border: 1px solid #e70453 !important;
+  opacity: 1;
+}
+.nineboard .shadow-square.outer.opponent-user .shadow-square.inner .square {
+  border: 1px solid #e70453 !important;
+  background-color: #e70453 !important;
+  cursor: default !important;
 }
 .nineboard .shadow-square.inner {
   margin: 0.375rem;
