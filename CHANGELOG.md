@@ -18,8 +18,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 # Releases
 <!-- @LatestFirst -->
 
+## [0.3.2] - 11/11/23
+- UMA-18: Add replay button
+
 ## [0.3.1] - 11/11/23
-- [Bug] Draw Game Over message displayed on first load
+- UMA-26: [Bug] Draw Game Over message displayed on first load
 
 ## [0.3.0] - 11/11/23
 - UMA-17: Give the user the option of standard or ultimate tic-tac-toe
@@ -60,3 +63,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.2.1]: https://github.com/jrsmth/ultima/compare/0.2.0...0.2.1
 [0.3.0]: https://github.com/jrsmth/ultima/compare/0.2.1...0.3.0
 [0.3.1]: https://github.com/jrsmth/ultima/compare/0.3.0...0.3.1
+[0.3.2]: https://github.com/jrsmth/ultima/compare/0.3.1...0.3.2

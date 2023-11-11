@@ -162,7 +162,6 @@ def get_game_state(redis, board):
 
     if isinstance(board[0], list):
         print("[get_game_state] board[0]: " + str(board[0]))
-        outer_state = Status.IN_PROGRESS
         inner_states = []
         for outer_square in board:
             inner_state = get_game_state(redis, outer_square)

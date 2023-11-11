@@ -326,11 +326,8 @@ header {
 /** Notification */
 .notification {
   margin: 0 auto;
-  border: 1px solid $rose25;
-  border-radius: .5rem;
-  background-color: $aubergine;
   height: 5rem;
-  width: $boardLengthMin;
+  width: $boardLengthMax;
   letter-spacing: .5px;
   align-items: center;
   text-align: left;
@@ -365,8 +362,6 @@ header {
 
   &.happy {
     color: $chartreuse;
-    border: 1px solid $chartreuse25;
-    background-color: $chartreuse05;
 
     p {
       color: $text-lightest;
@@ -375,8 +370,6 @@ header {
 
     &.sad {
       color: $rose;
-      border: 1px solid $rose25;
-      background-color: $aubergine;
 
       h3 {
         color: $carnation;
@@ -387,5 +380,8 @@ header {
       }
   }
 
+  .restart {
+    cursor: pointer;
+  }
 }
 
