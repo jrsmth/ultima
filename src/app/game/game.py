@@ -25,7 +25,10 @@ def construct_blueprint(redis, messages):
         else:
             player_two_active = True
 
-        game_state = get_game_state(redis)
+        game_mode = redis.get("gameMode")
+        board = redis.get_complex("board")
+        game_state = get_game_state(board)
+
         print(game_state)
         print("user id")
         print(user_id)
@@ -66,6 +69,7 @@ def construct_blueprint(redis, messages):
 
         return render_template(
             "game.html",
+            board=board,
             zero=redis.get("0"),
             one=redis.get("1"),
             two=redis.get("2"),
@@ -77,7 +81,7 @@ def construct_blueprint(redis, messages):
             eight=redis.get("8"),
             gameComplete=game_complete,
             gameId=game_id,
-            gameMode=redis.get("gameMode"),
+            gameMode=game_mode,
             notificationActive=notification_active,
             notificationHeader=notification_header,
             notificationMessage=notification_message,
@@ -94,10 +98,12 @@ def construct_blueprint(redis, messages):
         )
 
     @game_page.route("/game/<game_id>/place-move/<user_id>/<square>")
-    def place_move(game_id, user_id, square):
+    def place_standard_move(game_id, user_id, square):
         # Set player's move
         symbol = redis.get(user_id)
-        redis.set(square, symbol)
+        board_list = redis.get_complex("board")
+        board_list[int(square)] = int(symbol)
+        redis.set_complex("board", board_list)
 
         # Switch player turn
         if redis.get("whoseTurn") == 'player1':
@@ -107,15 +113,38 @@ def construct_blueprint(redis, messages):
 
         return redirect(url_for("game_page.game", game_id=game_id, user_id=user_id))
 
+    @game_page.route("/game/<game_id>/place-move/<user_id>/<outer_square>/<inner_square>")
+    def place_ultimate_move(game_id, user_id, outer_square, inner_square):
+        # Set player's move
+        symbol = redis.get(user_id)
+        board = redis.get_complex("board")
+        board[int(outer_square)][int(inner_square)] = int(symbol)
+        redis.set_complex("board", board)
+
+        print("[place_ultimate_move] outer_square: " + outer_square)
+        print("[place_ultimate_move] inner_square: " + inner_square)
+        print(board)
+
+        # Switch player turn
+        if redis.get("whoseTurn") == 'player1':
+            redis.set("whoseTurn", "player2")
+        elif redis.get("whoseTurn") == 'player2':
+            redis.set("whoseTurn", "player1")
+
+        return redirect(url_for("game_page.game", game_id=game_id, user_id=user_id))
+
+    # Closing return
     return game_page
 
 
-def get_game_state(redis):
-    board = {
-        "0": redis.get("0"), "1": redis.get("1"), "2": redis.get("2"),
-        "3": redis.get("3"), "4": redis.get("4"), "5": redis.get("5"),
-        "6": redis.get("6"), "7": redis.get("7"), "8": redis.get("8"),
-    }
+def get_game_state(board):
+
+    if isinstance(board[0], list):
+        outer_state = Status.IN_PROGRESS
+        for outer_square in board:
+            inner_state = get_game_state(outer_square)
+            print(inner_state)
+        return Status.IN_PROGRESS
 
     winning_combos = [
         [0, 1, 2],
@@ -128,24 +157,22 @@ def get_game_state(redis):
         [2, 4, 6]
     ]
 
-    print(board)
-
-    if list(board.values()).count("0") == 0:
+    if board.count(0) == 0:
         return Status.DRAW
         # FixMe :: this check needs to happen after test each player has won...
         # Note :: There is probs a clean way to split this up so that you don't iterate when not nec...
 
-    print("count: " + str(list(board.values()).count("1")))
-    if (list(board.values()).count("1")) >= 3:
-        player_moves = get_player_moves("1", board)
+    print("count: " + str(board.count(1)))
+    if (board.count(1)) >= 3:
+        player_moves = get_player_moves(1, board)
         print(player_moves)
         for combo in winning_combos:
             print(combo)
             if set(combo).issubset(set(player_moves)):
                 return Status.PLAYER_ONE_WINS
 
-    if (list(board.values()).count("2")) >= 3:
-        player_moves = get_player_moves("2", board)
+    if (board.count(2)) >= 3:
+        player_moves = get_player_moves(2, board)
         for combo in winning_combos:
             if set(combo).issubset(set(player_moves)):
                 return Status.PLAYER_TWO_WINS
@@ -154,4 +181,9 @@ def get_game_state(redis):
 
 
 def get_player_moves(player, board):
-    return [int(k) for k, v in board.items() if v == player]
+    player_moves = []
+    for index in range(len(board)):
+        if board[index] == player:
+            player_moves.append(index)
+
+    return player_moves

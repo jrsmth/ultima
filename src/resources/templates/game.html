@@ -59,21 +59,28 @@
                         <i class="whose-turn-shadow fa-regular fa-circle symbol"></i>
                     </div>
                 </div>
-                <section class="boards">
-                    <div class="board threeboard {{ gameMode }} this-user-{{ thisUserSymbol }} player-1-{{ playerOneActive }} player-2-{{ playerTwoActive }} game-complete-{{ gameComplete }}">
-                        <div class="shadow-square" id="square-0"><div class="square" onclick="placeMove('0')">{{ zero }}</div></div>
-                        <div class="shadow-square" id="square-1"><div class="square" onclick="placeMove('1')">{{ one }}</div></div>
-                        <div class="shadow-square" id="square-2"><div class="square" onclick="placeMove('2')">{{ two }}</div></div>
-                        <div class="shadow-square" id="square-3"><div class="square" onclick="placeMove('3')">{{ three }}</div></div>
-                        <div class="shadow-square" id="square-4"><div class="square" onclick="placeMove('4')">{{ four }}</div></div>
-                        <div class="shadow-square" id="square-5"><div class="square" onclick="placeMove('5')">{{ five }}</div></div>
-                        <div class="shadow-square" id="square-6"><div class="square" onclick="placeMove('6')">{{ six }}</div></div>
-                        <div class="shadow-square" id="square-7"><div class="square" onclick="placeMove('7')">{{ seven }}</div></div>
-                        <div class="shadow-square" id="square-8"><div class="square" onclick="placeMove('8')">{{ eight }}</div></div>
+                <section class="boards this-user-{{ thisUserSymbol }} player-1-{{ playerOneActive }} player-2-{{ playerTwoActive }} game-complete-{{ gameComplete }}">
+                    <div class="board threeboard {{ gameMode }}">
+                        {% for square in board %}
+                            <div class="shadow-square" id="three-square-{{ loop.index0 }}"><div class="square" onclick="placeStandardMove('{{ loop.index0 }}')">{{ square }}</div></div>
+                        {% endfor %}
                     </div>
+                    {% if gameMode == "ULTIMATE" %} <!-- TODO :: where appropriate, replace css hiding tricks w/ template conditions -->
                     <div class="board nineboard {{ gameMode }}">
-                        <h1>Nine Board (Ultimate)</h1>
+                        {% for outer_square in board %}
+                            <div class="shadow-square outer" id="nine-square-{{ loop.index0 }}">
+                                <div class="square">
+                                {% set outer_index = loop.index0 %}
+                                {% for inner_square in outer_square %}
+                                    <div class="shadow-square inner" id="nine-square-{{ outer_index }}-{{ loop.index0 }}">
+                                        <div class="square" onclick="placeMove('{{ outer_index }}', '{{ loop.index0 }}')">{{ inner_square }}</div>
+                                    </div>
+                                {% endfor %}
+                                </div>
+                            </div>
+                        {% endfor %}
                     </div>
+                    {% endif %}
                 </section>
             </section>
             <section class="side-bar right"></section>

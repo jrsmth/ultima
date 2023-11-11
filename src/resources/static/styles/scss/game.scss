@@ -129,20 +129,35 @@ header {
   }
 }
 
-/** Board */
-.board {
-  &.threeboard.STANDARD { display: grid; }
-  &.threeboard.ULTIMATE { display: none; }
-  &.nineboard.STANDARD  { display: none; }
-  &.nineboard.ULTIMATE  { display: grid; }
+/** Boards **/
+.boards {
+  .threeboard.STANDARD { display: grid; }
+  .threeboard.ULTIMATE { display: none; }
+  .nineboard.STANDARD  { display: none; }
+  .nineboard.ULTIMATE  { display: grid; }
 
+  &.this-user-1.player-1-False,
+  &.this-user-2.player-2-False,
+  &.game-complete-True {
+    .threeboard .shadow-square .square,
+    .nineboard .shadow-square.inner .square {
+      border: 1px solid $rose25 !important;
+      cursor: default !important;
+    }
+  }
+}
+
+.board {
   margin: 2rem auto 0 auto;
   height: $boardLengthDefault;
   aspect-ratio: 1 / 1;
   max-height: $boardLengthMax;
   min-height: $boardLengthMin;
   grid-template-columns: 33.3% 33.3% 33.3%;
+}
 
+/** Three Board */
+.threeboard {
   .shadow-square {
     margin: .5rem;
     border: 1px solid $rose25;
@@ -203,10 +218,80 @@ header {
       }
     }
   }
+}
 
-  &.this-user-1.player-1-False { .square { border: 1px solid $rose25; cursor: default; } }
-  &.this-user-2.player-2-False { .square { border: 1px solid $rose25; cursor: default; } }
-  &.game-complete-True { .square { border: 1px solid $rose25 !important; cursor: default !important; } }
+/** Nine Board */
+.nineboard {
+  .shadow-square.outer {
+    margin: .5rem;
+
+    .square {
+      display: grid;
+      grid-template-columns: 33.3% 33.33% 33.3%;
+      height: 100%;
+    }
+  }
+
+  .shadow-square.inner {
+    margin: .375rem;
+    border: 1px solid $rose25;
+    background-color: $aubergine;
+    border-radius: .5rem;
+
+    .square {
+      border-radius: inherit;
+      transform: translate(-0.25rem, -0.25rem);
+      border: 1px solid $rose25;
+      background-color: $aubergine;
+      transition: .5s;
+      cursor: pointer;
+      align-content: center;
+      justify-content: center;
+      display: flex;
+      flex-wrap: wrap;
+      height: 100%;
+      width: 100%;
+
+      &:hover {
+        opacity: 1;
+        border: 1px solid $chartreuse;
+      }
+
+      .symbol {
+        font-size: 1.5rem;
+        position: absolute;
+        margin-top: calc(50% - .75rem);
+      }
+    }
+
+    &.this-user {
+      border: 1px solid $chartreuse;
+
+      .square {
+        border: 1px solid $chartreuse;
+        background-color: $chartreuse;
+        cursor: default;
+
+        .symbol {
+          color: $aubergine;
+        }
+      }
+    }
+
+    &.opponent-user {
+      border: 1px solid $rose;
+
+      .square {
+        border: 1px solid $rose;
+        background-color: $rose;
+        cursor: default;
+
+        .symbol {
+          color: $aubergine;
+        }
+      }
+    }
+  }
 }
 
 /** Notification */

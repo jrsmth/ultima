@@ -26,11 +26,8 @@ section #logo {
   margin-bottom: 2rem;
 }
 section form {
-  background: #2b0710;
   color: #ccc;
   box-shadow: 0px 13px 50px -13px rgba(0, 0, 0, 0.0980392157);
-  border: 1px solid rgba(155, 14, 64, 0.7490196078);
-  border-radius: 0.5rem;
   letter-spacing: 0.5px;
   display: flex;
   flex-direction: column;
