@@ -4,7 +4,7 @@ make build:
 env = "dev"
 # local : make sure redis is running
 # dev   : ensure IP is whitelisted on render redis
-# prod  :
+# prod
 make start:
 	export FLASK_ENV=$(env) && make build && gunicorn -b 0.0.0.0:8080 --chdir src/app app:app
 
