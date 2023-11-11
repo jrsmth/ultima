@@ -11,11 +11,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `0.0.x` : End-to-end Flask PoC
 - `0.1.x` : GitHub Actions
 - `0.2.x` : Simple Tic Tac Toe (3 x 3)
+- `0.3.x` : Implement ultimate edition (9 x 9)
 
 <br>
 
 # Releases
 <!-- @LatestFirst -->
+
+## [0.3.0] - ???
+- UMA-17: Give the user the option of standard or ultimate tic-tac-toe
+- UMA-19: Create interactive 9x9 board and allow player to make a turn
+- UMA-20: Force ultimate players to play in the correct square after a move is placed
+- UMA-21: Make game completable through correct outer square selection and evaluation
 
 ## [0.2.1] - 07/11/2023
 - UMA-11: Allow players to make their turns
@@ -48,3 +55,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.1.2]: https://github.com/jrsmth/ultima/compare/0.1.1...0.1.2
 [0.2.0]: https://github.com/jrsmth/ultima/compare/0.1.2...0.2.0
 [0.2.1]: https://github.com/jrsmth/ultima/compare/0.2.0...0.2.1
+[0.3.0]: https://github.com/jrsmth/ultima/compare/0.2.1...0.3.0

@@ -1,6 +1,8 @@
 from flask import redirect, url_for, render_template, Blueprint, request
 
+from src.app.model.board.nineboard import NineBoard
 from src.app.model.board.threeboard import ThreeBoard
+from src.app.model.status import Status
 
 
 # Login Logic
@@ -13,19 +15,35 @@ def construct_blueprint(redis, messages):
         if request.method == "POST":
             print(request.form["name"])  # log me
             print(request.form["gameId"])
-            board = ThreeBoard()
-            board_list = ThreeBoard.list(board)
-            # first index is squareNo
-            # second index is the state: 0 for empty, 1 for cross, 2 for circle
-            redis.set("0", board_list[0])
-            redis.set("1", board_list[1])
-            redis.set("2", board_list[2])
-            redis.set("3", board_list[3])
-            redis.set("4", board_list[4])
-            redis.set("5", board_list[5])
-            redis.set("6", board_list[6])
-            redis.set("7", board_list[7])
-            redis.set("8", board_list[8])
+            print(request.form["gameMode"])
+
+            game_mode = request.form["gameMode"]
+            if game_mode == "STANDARD":
+                redis.set("gameMode", game_mode)
+                board = ThreeBoard()
+                board_list = ThreeBoard.list(board)
+                # second index is the state: 0 for empty, 1 for cross, 2 for circle
+                redis.set_complex("board", board_list)
+                redis.set_complex("innerStates", [])
+
+            elif game_mode == "ULTIMATE":
+                redis.set("gameMode", game_mode)
+                board = NineBoard()
+                board_list = NineBoard.list(board)
+                # second index is the state: 0 for empty, 1 for cross, 2 for circle
+                redis.set_complex("board", board_list)
+                inner_states = [
+                    Status.IN_PROGRESS.value, Status.IN_PROGRESS.value, Status.IN_PROGRESS.value,
+                    Status.IN_PROGRESS.value, Status.IN_PROGRESS.value, Status.IN_PROGRESS.value,
+                    Status.IN_PROGRESS.value, Status.IN_PROGRESS.value, Status.IN_PROGRESS.value
+                ]
+                redis.set_complex("innerStates", inner_states)
+                redis.set("playableSquare", "-1")  # -1 is all squares...
+
+            else:
+                print("Game Mode already set [" + redis.get("gameMode") + "]")  # TODO :: err handle
+
+            print(redis.get_complex("board"))
 
             # TODO :: set redis obj as dict { $game_id: [player1: "", player2: ""] }
             if request.form["gameId"] == "":
@@ -45,6 +63,7 @@ def construct_blueprint(redis, messages):
 
         return render_template("login.html", error=error)
 
+    # Closing return
     return login_page
 
 

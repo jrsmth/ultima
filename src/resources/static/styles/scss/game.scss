@@ -3,19 +3,11 @@
 /** Header */
 header {
   display: flex;
+  margin: .75rem .5rem;
 
   #badge {
     height: 2.25rem;
     margin: .5rem;
-  }
-
-  h1 {
-    margin: .5rem;
-    text-transform: uppercase;
-    letter-spacing: .25rem;
-    font-weight: 200;
-    font-size: 1.5rem;
-    line-height: 2.25rem;
   }
 }
 
@@ -50,6 +42,9 @@ header {
     text-align: center;
 
     #whose-turn {
+      height: 5.125rem;
+      &.inactive-True       { display: none; }
+
       .symbol-active-True   { display: block; }
       .symbol-active-False  { display: none; }
 
@@ -65,7 +60,7 @@ header {
 
       #whose-turn-cross {
         &.this-symbol-1  { color: $chartreuse; }
-        &.this-symbol-2  { color: $pink; }
+        &.this-symbol-2  { color: $rose; }
 
         .whose-turn-shadow {
           transform: translateX(-3.75rem);
@@ -74,7 +69,7 @@ header {
       }
 
       #whose-turn-circle {
-        &.this-symbol-1 { color: $pink; }
+        &.this-symbol-1 { color: $rose; }
         &.this-symbol-2 { color: $chartreuse; }
 
         .whose-turn-shadow {
@@ -87,64 +82,83 @@ header {
 
 /** Side Bar */
 .side-bar {
-  margin-top: 6rem;
+  margin-top: 6.5rem;
   width: 15%;
 
   .player {
     margin: 1rem;
     padding: 1rem;
-    width: 10rem;
+    width: 12rem;
 
     &.active {
-      border: 1px solid $pink25;
+      border: 1px solid $rose25;
       background-color: $aubergine;
     }
 
     &.active-True {
-      border: 1px solid $pink25;
+      border: 1px solid $rose25;
       border-radius: .25rem;
       background-color: $aubergine;
     }
 
     .fa-user {
       margin-right: .5rem;
-      color: $pink;
+      color: $rose;
     }
 
     .symbol {
-      color: $pink;
+      color: $rose;
       margin-left: .5rem;
       float: right;
       transform: translateY(1px);
     }
 
     &#player1 > .this-symbol-1 { color: $chartreuse }
-    &#player1 > .this-symbol-2 { color: $pink }
-    &#player2 > .this-symbol-1 { color: $pink }
+    &#player1 > .this-symbol-2 { color: $rose }
+    &#player2 > .this-symbol-1 { color: $rose }
     &#player2 > .this-symbol-2 { color: $chartreuse }
   }
 }
 
-/** Board */
+/** Boards **/
+.boards {
+  .threeboard.STANDARD { display: grid; }
+  .threeboard.ULTIMATE { display: none; }
+  .nineboard.STANDARD  { display: none; }
+  .nineboard.ULTIMATE  { display: grid; }
+
+  &.this-user-1.player-1-False,
+  &.this-user-2.player-2-False,
+  &.game-complete-True {
+    .threeboard .shadow-square .square,
+    .nineboard .shadow-square.inner .square {
+      border: 1px solid $rose25 !important;
+      cursor: default !important;
+    }
+  }
+}
+
 .board {
   margin: 2rem auto 0 auto;
   height: $boardLengthDefault;
   aspect-ratio: 1 / 1;
   max-height: $boardLengthMax;
   min-height: $boardLengthMin;
-  display: grid;
   grid-template-columns: 33.3% 33.3% 33.3%;
+}
 
+/** Three Board */
+.threeboard {
   .shadow-square {
     margin: .5rem;
-    border: 1px solid $pink25;
+    border: 1px solid $rose25;
     background-color: $aubergine;
     border-radius: .5rem;
 
     .square {
       border-radius: inherit;
       transform: translate(-0.25rem, -0.25rem);
-      border: 1px solid $pink25;
+      border: 1px solid $rose25;
       background-color: $aubergine;
       transition: .5s;
       cursor: pointer;
@@ -182,11 +196,11 @@ header {
     }
 
     &.opponent-user {
-      border: 1px solid $pink;
+      border: 1px solid $rose;
 
       .square {
-        border: 1px solid $pink;
-        background-color: $pink;
+        border: 1px solid $rose;
+        background-color: $rose;
         cursor: default;
 
         .symbol {
@@ -195,16 +209,124 @@ header {
       }
     }
   }
+}
 
-  &.this-user-1.player-1-False { .square { border: 1px solid $pink25; cursor: default; } }
-  &.this-user-2.player-2-False { .square { border: 1px solid $pink25; cursor: default; } }
-  &.game-complete-True { .square { border: 1px solid $pink25 !important; cursor: default !important; } }
+/** Nine Board */
+.nineboard {
+  .shadow-square.outer {
+    margin: .5rem;
+
+    &:not(.playable, .this-user, .opponent-user) {
+      .inner:not(.playable, .this-user, .opponent-user) {
+        cursor: default !important;
+        opacity: .3;
+
+        .square {
+          cursor: default !important;
+          border: 1px solid $rose25 !important;
+        }
+      }
+    }
+
+    .square {
+      display: grid;
+      grid-template-columns: 33.3% 33.33% 33.3%;
+      height: 100%;
+    }
+
+    &.this-user .shadow-square.inner {
+      border: 1px solid $chartreuse !important;
+      opacity: 1;
+
+      .square {
+        border: 1px solid $chartreuse !important;
+        background-color: $chartreuse !important;
+        cursor: default !important;
+      }
+    }
+
+    &.opponent-user .shadow-square.inner {
+      border: 1px solid $rose !important;
+      opacity: 1;
+
+      .square {
+        border: 1px solid $rose !important;
+        background-color: $rose !important;
+        cursor: default !important;
+      }
+    }
+
+    &.draw .shadow-square.inner {
+      opacity: .1;
+    }
+  }
+
+  .shadow-square.inner {
+    margin: .375rem;
+    border: 1px solid $rose25;
+    background-color: $aubergine;
+    border-radius: .5rem;
+
+    .square {
+      border-radius: inherit;
+      transform: translate(-0.25rem, -0.25rem);
+      border: 1px solid $rose25;
+      background-color: $aubergine;
+      transition: .5s;
+      cursor: pointer;
+      align-content: center;
+      justify-content: center;
+      display: flex;
+      flex-wrap: wrap;
+      height: 100%;
+      width: 100%;
+
+      &:hover {
+        opacity: 1;
+        border: 1px solid $chartreuse;
+      }
+
+      .symbol {
+        font-size: 1.5rem;
+        position: absolute;
+        margin-top: calc(50% - .75rem);
+      }
+    }
+
+    &.this-user {
+      border: 1px solid $chartreuse;
+
+      .square {
+        border: 1px solid $chartreuse;
+        background-color: $chartreuse;
+        cursor: default;
+
+        .symbol {
+          color: $aubergine;
+        }
+      }
+    }
+
+    &.opponent-user {
+      border: 1px solid $rose;
+
+      .square {
+        border: 1px solid $rose;
+        background-color: $rose;
+        cursor: default;
+
+        .symbol {
+          color: $aubergine;
+        }
+      }
+    }
+  }
 }
 
 /** Notification */
 .notification {
-  margin: 2rem auto 0 auto;
-  border: 1px solid $pink25;
+  margin: 0 auto;
+  border: 1px solid $rose25;
   border-radius: .5rem;
   background-color: $aubergine;
   height: 5rem;
@@ -212,6 +334,15 @@ header {
   letter-spacing: .5px;
   align-items: center;
   text-align: left;
+
+  &.error {
+    margin: 2rem 1rem 0 1rem;
+    width: 14rem;
+
+    .notification-content {
+      margin: 1rem;
+    }
+  }
 
   &.active-True  { display: flex }
   &.active-False { display: none  }
@@ -238,13 +369,13 @@ header {
     background-color: $chartreuse05;
 
     p {
-      color: $text-light;
+      color: $text-lightest;
     }
   }
 
     &.sad {
-      color: $pink;
-      border: 1px solid $pink25;
+      color: $rose;
+      border: 1px solid $rose25;
       background-color: $aubergine;
 
       h3 {
@@ -252,7 +383,7 @@ header {
       }
 
       p {
-        color: $text-light;
+        color: $text-lightest;
       }
   }
 

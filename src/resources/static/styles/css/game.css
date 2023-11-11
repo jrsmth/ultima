@@ -16,18 +16,11 @@ body {
 /** Header */
 header {
   display: flex;
+  margin: 0.75rem 0.5rem;
 }
 header #badge {
   height: 2.25rem;
   margin: 0.5rem;
-}
-header h1 {
-  margin: 0.5rem;
-  text-transform: uppercase;
-  letter-spacing: 0.25rem;
-  font-weight: 200;
-  font-size: 1.5rem;
-  line-height: 2.25rem;
 }
 
 /** Tooltip */
@@ -55,6 +48,12 @@ header h1 {
 #content .main-bar {
   width: 70%;
   text-align: center;
+}
+#content .main-bar #whose-turn {
+  height: 5.125rem;
+}
+#content .main-bar #whose-turn.inactive-True {
+  display: none;
 }
 #content .main-bar #whose-turn .symbol-active-True {
   display: block;
@@ -91,13 +90,13 @@ header h1 {
 
 /** Side Bar */
 .side-bar {
-  margin-top: 6rem;
+  margin-top: 6.5rem;
   width: 15%;
 }
 .side-bar .player {
   margin: 1rem;
   padding: 1rem;
-  width: 10rem;
+  width: 12rem;
 }
 .side-bar .player.active {
   border: 1px solid rgba(231, 4, 83, 0.2509803922);
@@ -131,23 +130,44 @@ header h1 {
   color: #d8ff00;
 }
 
-/** Board */
+/** Boards **/
+.boards .threeboard.STANDARD {
+  display: grid;
+}
+.boards .threeboard.ULTIMATE {
+  display: none;
+}
+.boards .nineboard.STANDARD {
+  display: none;
+}
+.boards .nineboard.ULTIMATE {
+  display: grid;
+}
+.boards.this-user-1.player-1-False .threeboard .shadow-square .square,
+.boards.this-user-1.player-1-False .nineboard .shadow-square.inner .square, .boards.this-user-2.player-2-False .threeboard .shadow-square .square,
+.boards.this-user-2.player-2-False .nineboard .shadow-square.inner .square, .boards.game-complete-True .threeboard .shadow-square .square,
+.boards.game-complete-True .nineboard .shadow-square.inner .square {
+  border: 1px solid rgba(231, 4, 83, 0.2509803922) !important;
+  cursor: default !important;
+}
+
 .board {
   margin: 2rem auto 0 auto;
   height: 50%;
   aspect-ratio: 1/1;
   max-height: 600px;
   min-height: 400px;
-  display: grid;
   grid-template-columns: 33.3% 33.3% 33.3%;
 }
-.board .shadow-square {
+
+/** Three Board */
+.threeboard .shadow-square {
   margin: 0.5rem;
   border: 1px solid rgba(231, 4, 83, 0.2509803922);
   background-color: #2b0710;
   border-radius: 0.5rem;
 }
-.board .shadow-square .square {
+.threeboard .shadow-square .square {
   border-radius: inherit;
   transform: translate(-0.25rem, -0.25rem);
   border: 1px solid rgba(231, 4, 83, 0.2509803922);
@@ -161,53 +181,131 @@ header h1 {
   height: 100%;
   width: 100%;
 }
-.board .shadow-square .square:hover {
+.threeboard .shadow-square .square:hover {
   opacity: 1;
   border: 1px solid #d8ff00;
 }
-.board .shadow-square .square .symbol {
+.threeboard .shadow-square .square .symbol {
   font-size: 4rem;
   position: absolute;
   margin-top: calc(47.5% - 2rem);
 }
-.board .shadow-square.this-user {
+.threeboard .shadow-square.this-user {
   border: 1px solid #d8ff00;
 }
-.board .shadow-square.this-user .square {
+.threeboard .shadow-square.this-user .square {
   border: 1px solid #d8ff00;
   background-color: #d8ff00;
   cursor: default;
 }
-.board .shadow-square.this-user .square .symbol {
+.threeboard .shadow-square.this-user .square .symbol {
   color: #2b0710;
 }
-.board .shadow-square.opponent-user {
+.threeboard .shadow-square.opponent-user {
   border: 1px solid #e70453;
 }
-.board .shadow-square.opponent-user .square {
+.threeboard .shadow-square.opponent-user .square {
   border: 1px solid #e70453;
   background-color: #e70453;
   cursor: default;
 }
-.board .shadow-square.opponent-user .square .symbol {
+.threeboard .shadow-square.opponent-user .square .symbol {
   color: #2b0710;
 }
-.board.this-user-1.player-1-False .square {
-  border: 1px solid rgba(231, 4, 83, 0.2509803922);
-  cursor: default;
+
+/** Nine Board */
+.nineboard .shadow-square.outer {
+  margin: 0.5rem;
 }
-.board.this-user-2.player-2-False .square {
-  border: 1px solid rgba(231, 4, 83, 0.2509803922);
-  cursor: default;
-}
-.board.game-complete-True .square {
-  border: 1px solid rgba(231, 4, 83, 0.2509803922) !important;
+.nineboard .shadow-square.outer:not(.playable, .this-user, .opponent-user) .inner:not(.playable, .this-user, .opponent-user) {
   cursor: default !important;
+  opacity: 0.3;
+}
+.nineboard .shadow-square.outer:not(.playable, .this-user, .opponent-user) .inner:not(.playable, .this-user, .opponent-user) .square {
+  cursor: default !important;
+  border: 1px solid rgba(231, 4, 83, 0.2509803922) !important;
+}
+.nineboard .shadow-square.outer .square {
+  display: grid;
+  grid-template-columns: 33.3% 33.33% 33.3%;
+  height: 100%;
+}
+.nineboard .shadow-square.outer.this-user .shadow-square.inner {
+  border: 1px solid #d8ff00 !important;
+  opacity: 1;
+}
+.nineboard .shadow-square.outer.this-user .shadow-square.inner .square {
+  border: 1px solid #d8ff00 !important;
+  background-color: #d8ff00 !important;
+  cursor: default !important;
+}
+.nineboard .shadow-square.outer.opponent-user .shadow-square.inner {
+  border: 1px solid #e70453 !important;
+  opacity: 1;
+}
+.nineboard .shadow-square.outer.opponent-user .shadow-square.inner .square {
+  border: 1px solid #e70453 !important;
+  background-color: #e70453 !important;
+  cursor: default !important;
+}
+.nineboard .shadow-square.outer.draw .shadow-square.inner {
+  opacity: 0.1;
+}
+.nineboard .shadow-square.inner {
+  margin: 0.375rem;
+  border: 1px solid rgba(231, 4, 83, 0.2509803922);
+  background-color: #2b0710;
+  border-radius: 0.5rem;
+}
+.nineboard .shadow-square.inner .square {
+  border-radius: inherit;
+  transform: translate(-0.25rem, -0.25rem);
+  border: 1px solid rgba(231, 4, 83, 0.2509803922);
+  background-color: #2b0710;
+  transition: 0.5s;
+  cursor: pointer;
+  align-content: center;
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  height: 100%;
+  width: 100%;
+}
+.nineboard .shadow-square.inner .square:hover {
+  opacity: 1;
+  border: 1px solid #d8ff00;
+}
+.nineboard .shadow-square.inner .square .symbol {
+  font-size: 1.5rem;
+  position: absolute;
+  margin-top: calc(50% - 0.75rem);
+}
+.nineboard .shadow-square.inner.this-user {
+  border: 1px solid #d8ff00;
+}
+.nineboard .shadow-square.inner.this-user .square {
+  border: 1px solid #d8ff00;
+  background-color: #d8ff00;
+  cursor: default;
+}
+.nineboard .shadow-square.inner.this-user .square .symbol {
+  color: #2b0710;
+}
+.nineboard .shadow-square.inner.opponent-user {
+  border: 1px solid #e70453;
+}
+.nineboard .shadow-square.inner.opponent-user .square {
+  border: 1px solid #e70453;
+  background-color: #e70453;
+  cursor: default;
+}
+.nineboard .shadow-square.inner.opponent-user .square .symbol {
+  color: #2b0710;
 }
 
 /** Notification */
 .notification {
-  margin: 2rem auto 0 auto;
+  margin: 0 auto;
   border: 1px solid rgba(231, 4, 83, 0.2509803922);
   border-radius: 0.5rem;
   background-color: #2b0710;
@@ -216,6 +314,13 @@ header h1 {
   letter-spacing: 0.5px;
   align-items: center;
   text-align: left;
+}
+.notification.error {
+  margin: 2rem 1rem 0 1rem;
+  width: 14rem;
+}
+.notification.error .notification-content {
+  margin: 1rem;
 }
 .notification.active-True {
   display: flex;
