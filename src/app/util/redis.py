@@ -1,5 +1,5 @@
-from flask_redis import FlaskRedis
 import json
+from flask_redis import FlaskRedis
 
 
 # Wrapper functionality for the Flask Redis Client
@@ -17,7 +17,12 @@ class Redis:
         # Set a key-value element
 
     def set_complex(self, key, complex_value):
-        json_value = json.dumps(complex_value)
+        json_value = json.dumps(
+            complex_value,
+            default=lambda o: o.__dict__,
+            sort_keys=True,
+            indent=4
+        )
         return self.client.set(key, json_value)
     # Set a complex key-value element by converting to json string
 

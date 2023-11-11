@@ -99,7 +99,7 @@ def construct_blueprint(redis, messages):
         # Set player's move
         symbol = redis.get(user_id)
         board_list = redis.get_complex("board")
-        board_list[int(square)] = symbol
+        board_list[int(square)] = int(symbol)
         redis.set_complex("board", board_list)
 
         # Switch player turn
@@ -132,11 +132,13 @@ def construct_blueprint(redis, messages):
 
 
 def get_game_state(redis):
-    board = {
-        "0": redis.get("0"), "1": redis.get("1"), "2": redis.get("2"),
-        "3": redis.get("3"), "4": redis.get("4"), "5": redis.get("5"),
-        "6": redis.get("6"), "7": redis.get("7"), "8": redis.get("8"),
-    }
+    # board = {
+    #     "0": redis.get("0"), "1": redis.get("1"), "2": redis.get("2"),
+    #     "3": redis.get("3"), "4": redis.get("4"), "5": redis.get("5"),
+    #     "6": redis.get("6"), "7": redis.get("7"), "8": redis.get("8"),
+    # }
+
+    board = redis.get_complex("board")
 
     winning_combos = [
         [0, 1, 2],
@@ -151,13 +153,13 @@ def get_game_state(redis):
 
     print(board)
 
-    if list(board.values()).count("0") == 0:
+    if board.count(0) == 0:
         return Status.DRAW
         # FixMe :: this check needs to happen after test each player has won...
         # Note :: There is probs a clean way to split this up so that you don't iterate when not nec...
 
-    print("count: " + str(list(board.values()).count("1")))
-    if (list(board.values()).count("1")) >= 3:
+    print("count: " + str(board.count(1)))
+    if (board.count(1)) >= 3:
         player_moves = get_player_moves("1", board)
         print(player_moves)
         for combo in winning_combos:
@@ -165,7 +167,7 @@ def get_game_state(redis):
             if set(combo).issubset(set(player_moves)):
                 return Status.PLAYER_ONE_WINS
 
-    if (list(board.values()).count("2")) >= 3:
+    if (board.count(2)) >= 3:
         player_moves = get_player_moves("2", board)
         for combo in winning_combos:
             if set(combo).issubset(set(player_moves)):
@@ -175,4 +177,5 @@ def get_game_state(redis):
 
 
 def get_player_moves(player, board):
+    # FixMe :: check board structure and update below when a user has had 3 or more moves
     return [int(k) for k, v in board.items() if v == player]

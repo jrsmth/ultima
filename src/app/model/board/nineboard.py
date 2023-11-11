@@ -14,4 +14,6 @@ class NineBoard(Board):
     bot_rhs = ThreeBoard()
 
     def list(self):
-        return
+        return [self.top_lhs, self.top_mid, self.top_rhs,
+                self.mid_lhs, self.mid_mid, self.mid_rhs,
+                self.bot_lhs, self.bot_mid, self.bot_rhs]

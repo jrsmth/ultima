@@ -159,18 +159,6 @@ header h1 {
 .board.nineboard.ULTIMATE {
   display: grid;
 }
-.board.this-user-1.player-1-False .square {
-  border: 1px solid rgba(231, 4, 83, 0.2509803922);
-  cursor: default;
-}
-.board.this-user-2.player-2-False .square {
-  border: 1px solid rgba(231, 4, 83, 0.2509803922);
-  cursor: default;
-}
-.board.game-complete-True .square {
-  border: 1px solid rgba(231, 4, 83, 0.2509803922) !important;
-  cursor: default !important;
-}
 
 /** Three Board */
 .threeboard .shadow-square {
@@ -223,6 +211,18 @@ header h1 {
 }
 .threeboard .shadow-square.opponent-user .square .symbol {
   color: #2b0710;
+}
+.threeboard.this-user-1.player-1-False .square {
+  border: 1px solid rgba(231, 4, 83, 0.2509803922);
+  cursor: default;
+}
+.threeboard.this-user-2.player-2-False .square {
+  border: 1px solid rgba(231, 4, 83, 0.2509803922);
+  cursor: default;
+}
+.threeboard.game-complete-True .square {
+  border: 1px solid rgba(231, 4, 83, 0.2509803922) !important;
+  cursor: default !important;
 }
 
 /** Nine Board */
@@ -284,6 +284,18 @@ header h1 {
 }
 .nineboard .shadow-square.inner.opponent-user .square .symbol {
   color: #2b0710;
+}
+.nineboard.this-user-1.player-1-False .square {
+  border: 1px solid rgba(231, 4, 83, 0.2509803922);
+  cursor: default;
+}
+.nineboard.this-user-2.player-2-False .square {
+  border: 1px solid rgba(231, 4, 83, 0.2509803922);
+  cursor: default;
+}
+.nineboard.game-complete-True .square {
+  border: 1px solid rgba(231, 4, 83, 0.2509803922) !important;
+  cursor: default !important;
 }
 
 /** Notification */

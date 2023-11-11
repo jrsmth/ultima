@@ -142,10 +142,6 @@ header {
   max-height: $boardLengthMax;
   min-height: $boardLengthMin;
   grid-template-columns: 33.3% 33.3% 33.3%;
-
-  &.this-user-1.player-1-False { .square { border: 1px solid $rose25; cursor: default; } }
-  &.this-user-2.player-2-False { .square { border: 1px solid $rose25; cursor: default; } }
-  &.game-complete-True { .square { border: 1px solid $rose25 !important; cursor: default !important; } }
 }
 
 /** Three Board */
@@ -209,8 +205,11 @@ header {
         }
       }
     }
-
   }
+
+  &.this-user-1.player-1-False { .square { border: 1px solid $rose25; cursor: default; } }
+  &.this-user-2.player-2-False { .square { border: 1px solid $rose25; cursor: default; } }
+  &.game-complete-True { .square { border: 1px solid $rose25 !important; cursor: default !important; } }
 }
 
 /** Nine Board */
@@ -284,9 +283,11 @@ header {
         }
       }
     }
-
   }
 
+  &.this-user-1.player-1-False { .square { border: 1px solid $rose25; cursor: default; } }
+  &.this-user-2.player-2-False { .square { border: 1px solid $rose25; cursor: default; } }
+  &.game-complete-True { .square { border: 1px solid $rose25 !important; cursor: default !important; } }
 }
 
 /** Notification */
