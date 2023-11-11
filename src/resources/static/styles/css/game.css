@@ -138,7 +138,27 @@ header h1 {
   color: #d8ff00;
 }
 
-/** Board **/
+/** Boards **/
+.boards .threeboard.STANDARD {
+  display: grid;
+}
+.boards .threeboard.ULTIMATE {
+  display: none;
+}
+.boards .nineboard.STANDARD {
+  display: none;
+}
+.boards .nineboard.ULTIMATE {
+  display: grid;
+}
+.boards.this-user-1.player-1-False .threeboard .shadow-square .square,
+.boards.this-user-1.player-1-False .nineboard .shadow-square.inner .square, .boards.this-user-2.player-2-False .threeboard .shadow-square .square,
+.boards.this-user-2.player-2-False .nineboard .shadow-square.inner .square, .boards.game-complete-True .threeboard .shadow-square .square,
+.boards.game-complete-True .nineboard .shadow-square.inner .square {
+  border: 1px solid rgba(231, 4, 83, 0.2509803922) !important;
+  cursor: default !important;
+}
+
 .board {
   margin: 2rem auto 0 auto;
   height: 50%;
@@ -146,18 +166,6 @@ header h1 {
   max-height: 600px;
   min-height: 400px;
   grid-template-columns: 33.3% 33.3% 33.3%;
-}
-.board.threeboard.STANDARD {
-  display: grid;
-}
-.board.threeboard.ULTIMATE {
-  display: none;
-}
-.board.nineboard.STANDARD {
-  display: none;
-}
-.board.nineboard.ULTIMATE {
-  display: grid;
 }
 
 /** Three Board */
@@ -212,18 +220,6 @@ header h1 {
 .threeboard .shadow-square.opponent-user .square .symbol {
   color: #2b0710;
 }
-.threeboard.this-user-1.player-1-False .square {
-  border: 1px solid rgba(231, 4, 83, 0.2509803922);
-  cursor: default;
-}
-.threeboard.this-user-2.player-2-False .square {
-  border: 1px solid rgba(231, 4, 83, 0.2509803922);
-  cursor: default;
-}
-.threeboard.game-complete-True .square {
-  border: 1px solid rgba(231, 4, 83, 0.2509803922) !important;
-  cursor: default !important;
-}
 
 /** Nine Board */
 .nineboard .shadow-square.outer {
@@ -259,9 +255,9 @@ header h1 {
   border: 1px solid #d8ff00;
 }
 .nineboard .shadow-square.inner .square .symbol {
-  font-size: 4rem;
+  font-size: 1.5rem;
   position: absolute;
-  margin-top: calc(47.5% - 2rem);
+  margin-top: calc(50% - 0.75rem);
 }
 .nineboard .shadow-square.inner.this-user {
   border: 1px solid #d8ff00;
@@ -284,18 +280,6 @@ header h1 {
 }
 .nineboard .shadow-square.inner.opponent-user .square .symbol {
   color: #2b0710;
-}
-.nineboard.this-user-1.player-1-False .square {
-  border: 1px solid rgba(231, 4, 83, 0.2509803922);
-  cursor: default;
-}
-.nineboard.this-user-2.player-2-False .square {
-  border: 1px solid rgba(231, 4, 83, 0.2509803922);
-  cursor: default;
-}
-.nineboard.game-complete-True .square {
-  border: 1px solid rgba(231, 4, 83, 0.2509803922) !important;
-  cursor: default !important;
 }
 
 /** Notification */

@@ -1,10 +1,17 @@
 let thisUserId;
 let thisSymbol;
 
-function init() {
+function init() { // TODO :: convert to JQuery?
     thisUserId = document.getElementById('this-user-id').value;
     thisSymbol = document.getElementById('this-user-symbol').value;
+    const gameMode = document.getElementById('game-mode').value;
 
+    if (gameMode === "STANDARD") initStandard(thisUserId, thisSymbol);
+    if (gameMode === "ULTIMATE") initUltimate(thisUserId, thisSymbol);
+
+}
+
+function initStandard(thisUserId, thisSymbol) {
     for (let i = 0; i < 9; i++) {
         const square = document.getElementById(`three-square-${i}`).getElementsByClassName("square")[0];
         const state = square.innerHTML;
@@ -22,7 +29,31 @@ function init() {
             square.innerHTML = '<i class="fa-regular fa-circle symbol"></i>'
         }
     }
+}
 
+function initUltimate(thisUserId, thisSymbol) {
+    for (let i = 0; i < 9; i++) {
+        const outerSquare = document.getElementById(`nine-square-${i}`).getElementsByClassName("square")[0];
+
+        for (let j = 0; j < 9; j++) {
+            const innerSquare = document.getElementById(`nine-square-${i}-${j}`).getElementsByClassName("square")[0];
+
+            const innerState = innerSquare.innerHTML;
+            if (innerState === thisSymbol) {
+                innerSquare.parentElement.classList.add("this-user");
+            } else if (innerState !== "0") {
+                innerSquare.parentElement.classList.add("opponent-user");
+            }
+
+            if (innerState === "0") {
+                innerSquare.innerHTML = '';
+            } else if (innerState === "1") {
+                innerSquare.innerHTML = '<i class="fa fa-times symbol"></i>'
+            } else if (innerState === "2") {
+                innerSquare.innerHTML = '<i class="fa-regular fa-circle symbol"></i>'
+            }
+        }
+    }
 }
 
 function placeStandardMove(square) {

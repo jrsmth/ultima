@@ -34,6 +34,8 @@ def construct_blueprint(redis, messages):
             else:
                 print("Game Mode already set [" + redis.get("gameMode") + "]")  # TODO :: err handle
 
+            print(redis.get_complex("board"))
+
             # TODO :: set redis obj as dict { $game_id: [player1: "", player2: ""] }
             if request.form["gameId"] == "":
                 redis.set("player1", request.form["name"])

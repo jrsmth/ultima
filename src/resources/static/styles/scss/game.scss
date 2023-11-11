@@ -129,13 +129,25 @@ header {
   }
 }
 
-/** Board **/
-.board {
-  &.threeboard.STANDARD { display: grid; }
-  &.threeboard.ULTIMATE { display: none; }
-  &.nineboard.STANDARD  { display: none; }
-  &.nineboard.ULTIMATE  { display: grid; }
+/** Boards **/
+.boards {
+  .threeboard.STANDARD { display: grid; }
+  .threeboard.ULTIMATE { display: none; }
+  .nineboard.STANDARD  { display: none; }
+  .nineboard.ULTIMATE  { display: grid; }
 
+  &.this-user-1.player-1-False,
+  &.this-user-2.player-2-False,
+  &.game-complete-True {
+    .threeboard .shadow-square .square,
+    .nineboard .shadow-square.inner .square {
+      border: 1px solid $rose25 !important;
+      cursor: default !important;
+    }
+  }
+}
+
+.board {
   margin: 2rem auto 0 auto;
   height: $boardLengthDefault;
   aspect-ratio: 1 / 1;
@@ -206,10 +218,6 @@ header {
       }
     }
   }
-
-  &.this-user-1.player-1-False { .square { border: 1px solid $rose25; cursor: default; } }
-  &.this-user-2.player-2-False { .square { border: 1px solid $rose25; cursor: default; } }
-  &.game-complete-True { .square { border: 1px solid $rose25 !important; cursor: default !important; } }
 }
 
 /** Nine Board */
@@ -250,9 +258,9 @@ header {
       }
 
       .symbol {
-        font-size: 4rem;
+        font-size: 1.5rem;
         position: absolute;
-        margin-top: calc(47.5% - 2rem);
+        margin-top: calc(50% - .75rem);
       }
     }
 
@@ -284,10 +292,6 @@ header {
       }
     }
   }
-
-  &.this-user-1.player-1-False { .square { border: 1px solid $rose25; cursor: default; } }
-  &.this-user-2.player-2-False { .square { border: 1px solid $rose25; cursor: default; } }
-  &.game-complete-True { .square { border: 1px solid $rose25 !important; cursor: default !important; } }
 }
 
 /** Notification */
