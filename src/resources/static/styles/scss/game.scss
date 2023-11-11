@@ -225,10 +225,44 @@ header {
   .shadow-square.outer {
     margin: .5rem;
 
+    &:not(.playable, .this-user, .opponent-user) {
+      .inner:not(.playable, .this-user, .opponent-user) {
+        cursor: default !important;
+        opacity: .3;
+
+        .square {
+          cursor: default !important;
+          border: 1px solid $rose25 !important;
+        }
+      }
+    }
+
     .square {
       display: grid;
       grid-template-columns: 33.3% 33.33% 33.3%;
       height: 100%;
+    }
+
+    &.this-user .shadow-square.inner {
+      border: 1px solid $chartreuse !important;
+      opacity: 1;
+
+      .square {
+        border: 1px solid $chartreuse !important;
+        background-color: $chartreuse !important;
+        cursor: default !important;
+      }
+    }
+
+    &.opponent-user .shadow-square.inner {
+      border: 1px solid $rose !important;
+      opacity: 1;
+
+      .square {
+        border: 1px solid $rose !important;
+        background-color: $rose !important;
+        cursor: default !important;
+      }
     }
   }
 

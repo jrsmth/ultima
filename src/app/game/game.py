@@ -27,7 +27,7 @@ def construct_blueprint(redis, messages):
 
         game_mode = redis.get("gameMode")
         board = redis.get_complex("board")
-        game_state = get_game_state(board)
+        game_state = get_game_state(redis, board)
 
         print(game_state)
         print("user id")
@@ -70,6 +70,8 @@ def construct_blueprint(redis, messages):
         return render_template(
             "game.html",
             board=board,
+            playableSquare=redis.get("playableSquare"),
+            innerStates=redis.get_complex("innerStates"),
             zero=redis.get("0"),
             one=redis.get("1"),
             two=redis.get("2"),
@@ -125,6 +127,9 @@ def construct_blueprint(redis, messages):
         print("[place_ultimate_move] inner_square: " + inner_square)
         print(board)
 
+        # Set next playable outer square
+        redis.set("playableSquare", inner_square)
+
         # Switch player turn
         if redis.get("whoseTurn") == 'player1':
             redis.set("whoseTurn", "player2")
@@ -137,13 +142,17 @@ def construct_blueprint(redis, messages):
     return game_page
 
 
-def get_game_state(board):
+def get_game_state(redis, board):
 
     if isinstance(board[0], list):
+        print("[get_game_state] board[0]: " + str(board[0]))
         outer_state = Status.IN_PROGRESS
+        inner_states = []
         for outer_square in board:
-            inner_state = get_game_state(outer_square)
-            print(inner_state)
+            inner_state = get_game_state(redis, outer_square)
+            inner_states.append(inner_state.value)
+            print("[get_game_state] inner_states: " + str(inner_states))
+        redis.set_complex("innerStates", inner_states)
         return Status.IN_PROGRESS
 
     winning_combos = [

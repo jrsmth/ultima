@@ -73,7 +73,7 @@ section form .form-control .field .selection {
   transform: scale3d(1, 1, 1);
   background-color: rgba(231, 4, 83, 0.2509803922);
   color: #ccc;
-  transition: 0.15s ease-in-out background-color;
+  transition: 0.15s ease-in-out;
 }
 section form .form-control .field .selection.selected {
   background-color: rgba(231, 4, 83, 0.7490196078) !important;
@@ -104,13 +104,14 @@ section form input {
 }
 section form input:focus {
   border-bottom: 1px solid rgba(231, 4, 83, 0.7490196078);
+  transition: 0.15s ease-in-out;
 }
 section form button {
   width: 8.5rem;
   background-color: rgba(231, 4, 83, 0.2509803922);
   border: none;
   color: whitesmoke;
-  transition: 0.15s ease-in-out background-color;
+  transition: 0.15s ease-in-out;
   padding: 0.5rem;
   cursor: pointer;
   letter-spacing: 1px;
