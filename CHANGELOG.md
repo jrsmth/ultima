@@ -12,13 +12,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `0.1.x` : GitHub Actions
 - `0.2.x` : Simple Tic Tac Toe (3 x 3)
 - `0.3.x` : Implement ultimate edition (9 x 9)
+- `0.4.x` : Add single player mode
+- `0.5.x` : Implement push notifications
 
 <br>
 
 # Releases
 <!-- @LatestFirst -->
 
-## [0.3.0] - ???
+## [0.4.0] - ???
+- UMA-25: Add single player option to log in
+
+## [0.3.0] - 11/11/23
 - UMA-17: Give the user the option of standard or ultimate tic-tac-toe
 - UMA-19: Create interactive 9x9 board and allow player to make a turn
 - UMA-20: Force ultimate players to play in the correct square after a move is placed
@@ -56,3 +61,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.2.0]: https://github.com/jrsmth/ultima/compare/0.1.2...0.2.0
 [0.2.1]: https://github.com/jrsmth/ultima/compare/0.2.0...0.2.1
 [0.3.0]: https://github.com/jrsmth/ultima/compare/0.2.1...0.3.0
+[0.4.0]: https://github.com/jrsmth/ultima/compare/0.3.0...0.4.0
