@@ -24,9 +24,9 @@ class Redis:
             indent=4
         )
         return self.client.set(key, json_value)
-    # Set a complex key-value element by converting to json string
+        # Set a complex key-value element by converting to json string
 
     def get_complex(self, key):
         json_value = self.client.get(key).decode('utf-8')
         return json.loads(json_value)
-    # Get a complex key-value element by converting from json string
+        # Get a complex key-value element by converting from json string
