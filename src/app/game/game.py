@@ -111,6 +111,9 @@ def construct_blueprint(redis, messages):
         # Switch player turn
         if redis.get("whoseTurn") == 'player1':
             redis.set("whoseTurn", "player2")
+            if redis.get("playerMode") == "SINGLE":
+                print("Computer's move")
+
         elif redis.get("whoseTurn") == 'player2':
             redis.set("whoseTurn", "player1")
 
