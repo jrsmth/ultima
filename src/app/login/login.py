@@ -16,6 +16,7 @@ def construct_blueprint(redis, messages):
             print(request.form["name"])  # log me
             print(request.form["gameId"])
             print(request.form["gameMode"])
+            print(bool(request.form["restart"]))
 
             game_mode = request.form["gameMode"]
             if game_mode == "STANDARD":
@@ -44,6 +45,10 @@ def construct_blueprint(redis, messages):
                 print("Game Mode already set [" + redis.get("gameMode") + "]")  # TODO :: err handle
 
             print(redis.get_complex("board"))
+
+            if bool(request.form["restart"]):
+                redis.set("whoseTurn", "player1")
+                return redirect(url_for("game_page.game", game_id=request.form["gameId"], user_id=request.form["name"]))
 
             # TODO :: set redis obj as dict { $game_id: [player1: "", player2: ""] }
             if request.form["gameId"] == "":

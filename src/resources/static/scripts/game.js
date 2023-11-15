@@ -146,8 +146,9 @@ function restart() {
     const gameId = "ab12-3cd4-e5f6-78gh";
     const formData = {
         name: document.getElementById("this-user-id").value,
-        gameId: "gameId",
-        gameMode: document.getElementById("game-mode").value
+        gameId: gameId,
+        gameMode: document.getElementById("game-mode").value,
+        restart: true
     }
 
     $.post('/', formData);
