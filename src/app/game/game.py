@@ -162,13 +162,12 @@ def get_game_state(redis, board):
 
     if isinstance(board[0], list):
         print("[get_game_state] board[0]: " + str(board[0]))
-        outer_state = Status.IN_PROGRESS
         inner_states = []
         for outer_square in board:
             inner_state = get_game_state(redis, outer_square)
             inner_states.append(inner_state.value)
             print("[get_game_state] inner_states: " + str(inner_states))
-            if inner_states.count('1') == 0:
+            if len(inner_states) == 9 and inner_states.count(1) == 0:
                 return Status.DRAW
         redis.set_complex("innerStates", inner_states)
         return get_game_state(redis, create_false_board(inner_states))

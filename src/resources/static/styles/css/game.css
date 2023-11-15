@@ -306,11 +306,8 @@ header #badge {
 /** Notification */
 .notification {
   margin: 0 auto;
-  border: 1px solid rgba(231, 4, 83, 0.2509803922);
-  border-radius: 0.5rem;
-  background-color: #2b0710;
   height: 5rem;
-  width: 400px;
+  width: 600px;
   letter-spacing: 0.5px;
   align-items: center;
   text-align: left;
@@ -343,22 +340,21 @@ header #badge {
 }
 .notification.happy {
   color: #d8ff00;
-  border: 1px solid rgba(216, 255, 0, 0.2509803922);
-  background-color: rgba(216, 255, 0, 0.0509803922);
 }
 .notification.happy p {
   color: whitesmoke;
 }
 .notification.sad {
   color: #e70453;
-  border: 1px solid rgba(231, 4, 83, 0.2509803922);
-  background-color: #2b0710;
 }
 .notification.sad h3 {
   color: #ff2c63;
 }
 .notification.sad p {
   color: whitesmoke;
+}
+.notification .restart {
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=game.css.map */
