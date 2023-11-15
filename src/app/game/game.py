@@ -1,5 +1,5 @@
+import random
 from flask import render_template, url_for, redirect, Blueprint
-
 from src.app.model.board.threeboard import ThreeBoard
 from src.app.model.mood import Mood
 from src.app.model.status import Status
@@ -112,7 +112,13 @@ def construct_blueprint(redis, messages):
         if redis.get("whoseTurn") == 'player1':
             redis.set("whoseTurn", "player2")
             if redis.get("playerMode") == "SINGLE":
-                print("Computer's move")
+                print("[SINGLE] Computer is placing move")
+                # Of the remaining available squares, select one at random
+                current_board = redis.get_complex("board")
+                print("[SINGLE] Board: " + str(current_board))
+                available_squares = [index for index, square in enumerate(current_board) if square == 0]
+                print("[SINGLE] Available: " + str(available_squares))
+                place_standard_move(game_id, "Computer", random.choice(available_squares))
 
         elif redis.get("whoseTurn") == 'player2':
             redis.set("whoseTurn", "player1")
