@@ -16,6 +16,7 @@ def construct_blueprint(redis, messages):
             print(request.form["name"])  # log me
             print(request.form["gameId"])
             print(request.form["gameMode"])
+            print(request.form["playerMode"])
             print(bool(request.form["restart"]))
 
             game_mode = request.form["gameMode"]
@@ -56,12 +57,25 @@ def construct_blueprint(redis, messages):
                 redis.set("player2", "")
                 redis.set(request.form["name"], "1")  # For now, set first player to cross
                 redis.set("whoseTurn", "player1")
+                redis.set("playerMode", request.form["playerMode"])
+
+                if redis.get("playerMode") == "SINGLE":
+                    redis.set("player2", "Computer")
+                    redis.set("Computer", "2")  # For now, set second player to circle
+
                 return redirect(url_for("game_page.game", game_id=generate_game_id(), user_id=request.form["name"]))
 
             elif has_valid_game_id(request.form["gameId"]):
-                redis.set("player2", request.form["name"])
-                redis.set(request.form["name"], "2")  # For now, set first player to circle
-                return redirect(url_for("game_page.game", game_id=request.form["gameId"], user_id=request.form["name"]))
+                print("Testing playMode [" + request.form["playerMode"] + "]")
+                if redis.get("playerMode") == "SINGLE":
+                    print("Player Mode set to [SINGLE] for game id [" + redis.get("playerMode") + "]")
+                    error = messages.load("login.error.single-player-only")
+
+                else:
+                    redis.set("player2", request.form["name"])
+                    redis.set(request.form["name"], "2")  # For now, set second player to circle
+                    return redirect(url_for(
+                        "game_page.game", game_id=request.form["gameId"], user_id=request.form["name"]))
 
             else:
                 error = messages.load("login.error.invalid-game-id")
