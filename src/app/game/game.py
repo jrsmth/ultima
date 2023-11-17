@@ -85,6 +85,7 @@ def construct_blueprint(redis, messages):
             gameComplete=game_complete,
             gameId=game_id,
             gameMode=game_mode,
+            playerMode=redis.get("playerMode"),
             notificationActive=notification_active,
             notificationHeader=notification_header,
             notificationMessage=notification_message,
@@ -110,6 +111,7 @@ def construct_blueprint(redis, messages):
 
         # Switch player turn
         if redis.get("whoseTurn") == 'player1':
+            # TODO :: I need to test the game state here to prevent the Computer from placing after I win...
             redis.set("whoseTurn", "player2")
             if redis.get("playerMode") == "SINGLE":
                 print("[SINGLE] Computer is placing move")
@@ -118,7 +120,8 @@ def construct_blueprint(redis, messages):
                 print("[SINGLE] Board: " + str(current_board))
                 available_squares = [index for index, square in enumerate(current_board) if square == 0]
                 print("[SINGLE] Available: " + str(available_squares))
-                place_standard_move(game_id, "Computer", random.choice(available_squares))
+                if available_squares:
+                    place_standard_move(game_id, "Computer", random.choice(available_squares))
 
         elif redis.get("whoseTurn") == 'player2':
             redis.set("whoseTurn", "player1")
