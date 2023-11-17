@@ -2,7 +2,7 @@ make build:
 	sass --update src/resources/static/styles/scss:src/resources/static/styles/css
 
 env = "dev"
-# local : make sure redis is running
+# local : make sure local redis is running
 # dev   : ensure IP is whitelisted on render redis
 # prod
 make start:
