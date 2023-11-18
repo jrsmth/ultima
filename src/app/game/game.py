@@ -155,12 +155,20 @@ def construct_blueprint(redis, messages):
             if redis.get("playerMode") == "SINGLE":
                 print("[SINGLE][ULTIMATE] Computer is placing move")
                 # Of the remaining available squares, select one at random
-                current_board = redis.get_complex("board")[int(inner_square)]
+
+                # Prevent computer from placing in an already completed outer square
+                chosen_outer_square = int(inner_square)
+                if redis.get("playableSquare") == "-1":
+                    inner_states = redis.get_complex("innerStates")
+                    available_outers = [index for index, state in enumerate(inner_states) if state == 1]
+                    chosen_outer_square = random.choice(available_outers)
+
+                current_board = redis.get_complex("board")[chosen_outer_square]
                 print("[SINGLE][ULTIMATE] Board: " + str(current_board))
                 available_squares = [index for index, square in enumerate(current_board) if square == 0]
                 print("[SINGLE][ULTIMATE] Available: " + str(available_squares))
                 if available_squares:
-                    place_ultimate_move(game_id, "Computer", int(inner_square), random.choice(available_squares))
+                    place_ultimate_move(game_id, "Computer", chosen_outer_square, random.choice(available_squares))
 
         elif redis.get("whoseTurn") == 'player2':
             redis.set("whoseTurn", "player1")
