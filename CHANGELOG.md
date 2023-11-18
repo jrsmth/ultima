@@ -14,6 +14,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `0.3.x` : Implement ultimate edition (9 x 9)
 - `0.4.x` : Add single player mode
 - `0.5.x` : Implement push notifications
+- `0.6.x` : UI Revamp
+- `0.7.x` : Misc Improvements
+- `1.0.x` : Initial release after user-tests
 
 <br>
 
@@ -23,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.4.0] - ???
 - UMA-25: Add single player option to log in
 - UMA-27: In standard mode, play computer's move after user has placed
+- UMA-28: In ultimate mode, play computer's move after user has placed
 
 ## [0.3.2] - 15/11/23
 - UMA-18: Add replay button
