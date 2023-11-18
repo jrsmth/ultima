@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 # Releases
 <!-- @LatestFirst -->
 
-## [0.4.0] - ???
+## [0.4.0] - 18/11/23
 - UMA-25: Add single player option to log in
 - UMA-27: In standard mode, play computer's move after user has placed
 - UMA-28: In ultimate mode, play computer's move after user has placed
