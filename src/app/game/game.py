@@ -1,5 +1,5 @@
+import random
 from flask import render_template, url_for, redirect, Blueprint
-
 from src.app.model.board.threeboard import ThreeBoard
 from src.app.model.mood import Mood
 from src.app.model.status import Status
@@ -85,6 +85,7 @@ def construct_blueprint(redis, messages):
             gameComplete=game_complete,
             gameId=game_id,
             gameMode=game_mode,
+            playerMode=redis.get("playerMode"),
             notificationActive=notification_active,
             notificationHeader=notification_header,
             notificationMessage=notification_message,
@@ -110,7 +111,18 @@ def construct_blueprint(redis, messages):
 
         # Switch player turn
         if redis.get("whoseTurn") == 'player1':
+            # TODO :: I need to test the game state here to prevent the Computer from placing after I win...
             redis.set("whoseTurn", "player2")
+            if redis.get("playerMode") == "SINGLE":
+                print("[SINGLE] Computer is placing move")
+                # Of the remaining available squares, select one at random
+                current_board = redis.get_complex("board")
+                print("[SINGLE] Board: " + str(current_board))
+                available_squares = [index for index, square in enumerate(current_board) if square == 0]
+                print("[SINGLE] Available: " + str(available_squares))
+                if available_squares:
+                    place_standard_move(game_id, "Computer", random.choice(available_squares))
+
         elif redis.get("whoseTurn") == 'player2':
             redis.set("whoseTurn", "player1")
 
@@ -124,8 +136,8 @@ def construct_blueprint(redis, messages):
         board[int(outer_square)][int(inner_square)] = int(symbol)
         redis.set_complex("board", board)
 
-        print("[place_ultimate_move] outer_square: " + outer_square)
-        print("[place_ultimate_move] inner_square: " + inner_square)
+        print("[place_ultimate_move] outer_square: " + str(outer_square))
+        print("[place_ultimate_move] inner_square: " + str(inner_square))
         print(board)
 
         # Set next playable outer square
@@ -138,7 +150,18 @@ def construct_blueprint(redis, messages):
 
         # Switch player turn
         if redis.get("whoseTurn") == 'player1':
+            # TODO :: I need to test the game state here to prevent the Computer from placing after I win...
             redis.set("whoseTurn", "player2")
+            if redis.get("playerMode") == "SINGLE":
+                print("[SINGLE][ULTIMATE] Computer is placing move")
+                # Of the remaining available squares, select one at random
+                current_board = redis.get_complex("board")[int(inner_square)]
+                print("[SINGLE][ULTIMATE] Board: " + str(current_board))
+                available_squares = [index for index, square in enumerate(current_board) if square == 0]
+                print("[SINGLE][ULTIMATE] Available: " + str(available_squares))
+                if available_squares:
+                    place_ultimate_move(game_id, "Computer", int(inner_square), random.choice(available_squares))
+
         elif redis.get("whoseTurn") == 'player2':
             redis.set("whoseTurn", "player1")
 

@@ -148,6 +148,7 @@ function restart() {
         name: document.getElementById("this-user-id").value,
         gameId: gameId,
         gameMode: document.getElementById("game-mode").value,
+        playerMode: document.getElementById("player-mode").value,
         restart: true
     }
 
