@@ -4,10 +4,40 @@
 header {
   display: flex;
   margin: .75rem .5rem;
+  gap: 2rem;
+  align-items: center;
+
+  i {
+    margin-right: .5rem;
+  }
 
   #badge {
     height: 2.25rem;
     margin: .5rem;
+  }
+
+  #copy-game-id {
+    cursor: pointer;
+    opacity: .8;
+    transition: 500ms;
+    display: flex;
+
+    .fa-check {
+      display: none;
+    }
+
+    .ticked {
+      display: block;
+      animation-name: fade-in-out;
+      animation-duration: 1500ms;
+      color: #13ECBA; // FixMe
+    }
+
+    .fade-in {
+      display: block;
+      animation-name: fade-in;
+      animation-duration: 500ms;
+    }
   }
 }
 

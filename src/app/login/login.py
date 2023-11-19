@@ -1,3 +1,4 @@
+import shortuuid
 from flask import redirect, url_for, render_template, Blueprint, request
 
 from src.app.model.board.nineboard import NineBoard
@@ -94,4 +95,5 @@ def has_valid_game_id(game_id):
 
 
 def generate_game_id():
-    return "ab12-3cd4-e5f6-78gh"
+    return shortuuid.uuid()[:12]
+    # return "ab12-3cd4-e5f6-78gh"

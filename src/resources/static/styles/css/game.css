@@ -1,3 +1,22 @@
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fade-in-out {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 * {
   font-family: Montserrat, sans-serif;
 }
@@ -17,10 +36,35 @@ body {
 header {
   display: flex;
   margin: 0.75rem 0.5rem;
+  gap: 2rem;
+  align-items: center;
+}
+header i {
+  margin-right: 0.5rem;
 }
 header #badge {
   height: 2.25rem;
   margin: 0.5rem;
+}
+header #copy-game-id {
+  cursor: pointer;
+  opacity: 0.8;
+  transition: 500ms;
+  display: flex;
+}
+header #copy-game-id .fa-check {
+  display: none;
+}
+header #copy-game-id .ticked {
+  display: block;
+  animation-name: fade-in-out;
+  animation-duration: 1500ms;
+  color: #13ECBA;
+}
+header #copy-game-id .fade-in {
+  display: block;
+  animation-name: fade-in;
+  animation-duration: 500ms;
 }
 
 /** Tooltip */

@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/css/game.css') }}">
     </head>
     <body>
+        <input id="game-id" type="hidden" value="{{ gameId }}">
         <input id="this-user-id" type="hidden" value="{{ thisUserId }}">
         <input id="this-user-symbol" type="hidden" value="{{ thisUserSymbol }}">
         <input id="player-one-active" type="hidden" value="{{ playerOneActive }}">
@@ -24,6 +25,13 @@
                 <div class="tooltip-text">
                     <span>{{ version }}</span>
                 </div>
+            </div>
+            <div id="copy-game-id">
+                <div class="icon">
+                    <i class="fa-solid fa-copy"></i>
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <span>{{ gameId }}</span>
             </div>
         </header>
         <section id="content">

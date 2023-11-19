@@ -1,14 +1,35 @@
 let thisUserId;
 let thisSymbol;
+let gameId;
 
 function init() { // TODO :: convert to JQuery?
     thisUserId = document.getElementById('this-user-id').value;
     thisSymbol = document.getElementById('this-user-symbol').value;
+    gameId = document.getElementById('game-id').value;
     const gameMode = document.getElementById('game-mode').value;
 
     if (gameMode === "STANDARD") initStandard(thisUserId, thisSymbol);
     if (gameMode === "ULTIMATE") initUltimate(thisUserId, thisSymbol);
 
+    const copyGameId = document.getElementById("copy-game-id");
+    const span = copyGameId.querySelector("span");
+    span.onclick = function() { document.execCommand("copy"); }
+    span.addEventListener("copy", function(event) {
+        event.preventDefault();
+        if (event.clipboardData) {
+            event.clipboardData.setData("text/plain", span.textContent);
+            const copy = copyGameId.getElementsByClassName("fa-copy")[0];
+            const check = copyGameId.getElementsByClassName("fa-check")[0];
+
+            copy.style.display = 'none';
+            $(check).addClass("ticked");
+            setTimeout((function() {
+                $(check).removeClass('ticked');
+                copy.style.display = 'block';
+                $(copy).addClass("fade-in");
+            }), 1000);
+        }
+    });
 }
 
 function initStandard(thisUserId, thisSymbol) {
@@ -32,7 +53,6 @@ function initStandard(thisUserId, thisSymbol) {
 }
 
 function initUltimate(thisUserId, thisSymbol) {
-    const gameId = "ab12-3cd4-e5f6-78gh";
     const innerStates = JSON.parse(document.getElementById("inner-states").value);
     const playableSquare = document.getElementById("playable-square").value;
     console.log(playableSquare)
@@ -93,8 +113,6 @@ function initUltimate(thisUserId, thisSymbol) {
 }
 
 function placeStandardMove(square) {
-    const gameId = "ab12-3cd4-e5f6-78gh";
-
     const userSymbol = document.getElementById('this-user-symbol').value;
     const playerOneActive = document.getElementById('player-one-active').value;
     const playerTwoActive = document.getElementById('player-two-active').value;
@@ -113,8 +131,6 @@ function placeStandardMove(square) {
 }
 
 function placeMove(outerSquare, innerSquare) {
-    const gameId = "ab12-3cd4-e5f6-78gh";
-
     const userSymbol = document.getElementById('this-user-symbol').value;
     const playerOneActive = document.getElementById('player-one-active').value;
     const playerTwoActive = document.getElementById('player-two-active').value;
@@ -143,7 +159,6 @@ function placeMove(outerSquare, innerSquare) {
 }
 
 function restart() {
-    const gameId = "ab12-3cd4-e5f6-78gh";
     const formData = {
         name: document.getElementById("this-user-id").value,
         gameId: gameId,
