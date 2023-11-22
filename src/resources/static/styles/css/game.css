@@ -86,49 +86,41 @@ header #copy-game-id .fade-in {
   display: flex;
   height: 100%;
 }
-#content .this-user {
+#content .this-symbol {
   color: #d8ff00;
 }
 #content .main-bar {
   width: 70%;
   text-align: center;
 }
-#content .main-bar #whose-turn {
+#content .main-bar #player-turn {
   height: 5.125rem;
+  color: #e70453;
 }
-#content .main-bar #whose-turn.inactive-True {
+#content .main-bar #player-turn.hide {
   display: none;
 }
-#content .main-bar #whose-turn .symbol-active-True {
+#content .main-bar #player-turn div {
+  display: none;
+}
+#content .main-bar #player-turn div.active {
   display: block;
 }
-#content .main-bar #whose-turn .symbol-active-False {
-  display: none;
+#content .main-bar #player-turn div.this-user {
+  color: #d8ff00;
 }
-#content .main-bar #whose-turn .symbol {
+#content .main-bar #player-turn div .symbol {
   font-size: 5rem;
 }
-#content .main-bar #whose-turn .whose-turn-shadow {
+#content .main-bar #player-turn div .symbol.shadow {
   position: absolute;
   opacity: 0.5;
   filter: blur(0.5rem);
 }
-#content .main-bar #whose-turn #whose-turn-cross.this-symbol-1 {
-  color: #d8ff00;
-}
-#content .main-bar #whose-turn #whose-turn-cross.this-symbol-2 {
-  color: #e70453;
-}
-#content .main-bar #whose-turn #whose-turn-cross .whose-turn-shadow {
+#content .main-bar #player-turn #cross .shadow {
   transform: translateX(-3.75rem);
 }
-#content .main-bar #whose-turn #whose-turn-circle.this-symbol-1 {
-  color: #e70453;
-}
-#content .main-bar #whose-turn #whose-turn-circle.this-symbol-2 {
-  color: #d8ff00;
-}
-#content .main-bar #whose-turn #whose-turn-circle .whose-turn-shadow {
+#content .main-bar #player-turn #circle .shadow {
   transform: translateX(-5rem);
 }
 
@@ -142,15 +134,6 @@ header #copy-game-id .fade-in {
   padding: 1rem;
   width: 12rem;
 }
-.side-bar .player.active {
-  border: 1px solid rgba(231, 4, 83, 0.2509803922);
-  background-color: #2b0710;
-}
-.side-bar .player.active-True {
-  border: 1px solid rgba(231, 4, 83, 0.2509803922);
-  border-radius: 0.25rem;
-  background-color: #2b0710;
-}
 .side-bar .player .fa-user {
   margin-right: 0.5rem;
   color: #e70453;
@@ -161,36 +144,32 @@ header #copy-game-id .fade-in {
   float: right;
   transform: translateY(1px);
 }
-.side-bar .player#player1 > .this-symbol-1 {
-  color: #d8ff00;
+.side-bar .player.active {
+  border: 1px solid rgba(231, 4, 83, 0.2509803922);
+  border-radius: 0.25rem;
+  background-color: #2b0710;
 }
-.side-bar .player#player1 > .this-symbol-2 {
-  color: #e70453;
-}
-.side-bar .player#player2 > .this-symbol-1 {
-  color: #e70453;
-}
-.side-bar .player#player2 > .this-symbol-2 {
+.side-bar .player.active.this-user > .symbol {
   color: #d8ff00;
 }
 
 /** Boards **/
-.boards .threeboard.STANDARD {
+#board-section .threeboard.STANDARD {
   display: grid;
 }
-.boards .threeboard.ULTIMATE {
+#board-section .threeboard.ULTIMATE {
   display: none;
 }
-.boards .nineboard.STANDARD {
+#board-section .nineboard.STANDARD {
   display: none;
 }
-.boards .nineboard.ULTIMATE {
+#board-section .nineboard.ULTIMATE {
   display: grid;
 }
-.boards.this-user-1.player-1-False .threeboard .shadow-square .square,
-.boards.this-user-1.player-1-False .nineboard .shadow-square.inner .square, .boards.this-user-2.player-2-False .threeboard .shadow-square .square,
-.boards.this-user-2.player-2-False .nineboard .shadow-square.inner .square, .boards.game-complete-True .threeboard .shadow-square .square,
-.boards.game-complete-True .nineboard .shadow-square.inner .square {
+#board-section.this-user-1.player-1-False .threeboard .shadow-square .square,
+#board-section.this-user-1.player-1-False .nineboard .shadow-square.inner .square, #board-section.this-user-2.player-2-False .threeboard .shadow-square .square,
+#board-section.this-user-2.player-2-False .nineboard .shadow-square.inner .square, #board-section.game-complete-True .threeboard .shadow-square .square,
+#board-section.game-complete-True .nineboard .shadow-square.inner .square {
   border: 1px solid rgba(231, 4, 83, 0.2509803922) !important;
   cursor: default !important;
 }

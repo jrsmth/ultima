@@ -1,4 +1,4 @@
-import json
+import jsons
 from flask_redis import FlaskRedis
 
 
@@ -17,16 +17,11 @@ class Redis:
         # Set a key-value element
 
     def set_complex(self, key, complex_value):
-        json_value = json.dumps(
-            complex_value,
-            default=lambda o: o.__dict__,
-            sort_keys=True,
-            indent=4
-        )
+        json_value = str(jsons.dump(complex_value))
         return self.client.set(key, json_value)
         # Set a complex key-value element by converting to json string
 
     def get_complex(self, key):
-        json_value = self.client.get(key).decode('utf-8')
-        return json.loads(json_value)
+        json_value = self.client.get(key).decode('utf-8').replace("\'", "\"")  # FixMe :: bit dodgy
+        return jsons.loads(json_value)
         # Get a complex key-value element by converting from json string

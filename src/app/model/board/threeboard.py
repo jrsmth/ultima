@@ -1,17 +1,17 @@
 from src.app.model.board.board import Board
-from src.app.model.square import Square
+from src.app.model.symbol import Symbol
 
 
 class ThreeBoard(Board):
-    top_lhs = Square.NEUTRAL.value
-    top_mid = Square.NEUTRAL.value
-    top_rhs = Square.NEUTRAL.value
-    mid_lhs = Square.NEUTRAL.value
-    mid_mid = Square.NEUTRAL.value
-    mid_rhs = Square.NEUTRAL.value
-    bot_lhs = Square.NEUTRAL.value
-    bot_mid = Square.NEUTRAL.value
-    bot_rhs = Square.NEUTRAL.value
+    top_lhs = Symbol.NEUTRAL.value
+    top_mid = Symbol.NEUTRAL.value
+    top_rhs = Symbol.NEUTRAL.value
+    mid_lhs = Symbol.NEUTRAL.value
+    mid_mid = Symbol.NEUTRAL.value
+    mid_rhs = Symbol.NEUTRAL.value
+    bot_lhs = Symbol.NEUTRAL.value
+    bot_mid = Symbol.NEUTRAL.value
+    bot_rhs = Symbol.NEUTRAL.value
 
     def list(self):
         return [self.top_lhs, self.top_mid, self.top_rhs,

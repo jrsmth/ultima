@@ -3,11 +3,13 @@ from flask import redirect, url_for, render_template, Blueprint, request
 
 from src.app.model.board.nineboard import NineBoard
 from src.app.model.board.threeboard import ThreeBoard
+from src.app.model.game import Game
+from src.app.model.mode.gamemode import GameMode
 from src.app.model.status import Status
 
 
 # Login Logic
-def construct_blueprint(redis, messages):
+def construct_blueprint(messages, socket, redis):
     login_page = Blueprint('login_page', __name__)
 
     @login_page.route('/', methods=['GET', 'POST'])
@@ -19,52 +21,29 @@ def construct_blueprint(redis, messages):
             print(request.form["gameMode"])
             print(request.form["playerMode"])
             print(bool(request.form["restart"]))
-
+            game_id = request.form["gameId"]
+            user_id = request.form["name"]
             game_mode = request.form["gameMode"]
-            if game_mode == "STANDARD":
-                redis.set("gameMode", game_mode)
-                board = ThreeBoard()
-                board_list = ThreeBoard.list(board)
-                # second index is the state: 0 for empty, 1 for cross, 2 for circle
-                redis.set_complex("board", board_list)
-                redis.set_complex("innerStates", [])
-
-            elif game_mode == "ULTIMATE":
-                redis.set("gameMode", game_mode)
-                board = NineBoard()
-                board_list = NineBoard.list(board)
-                # second index is the state: 0 for empty, 1 for cross, 2 for circle
-                redis.set_complex("board", board_list)
-                inner_states = [
-                    Status.IN_PROGRESS.value, Status.IN_PROGRESS.value, Status.IN_PROGRESS.value,
-                    Status.IN_PROGRESS.value, Status.IN_PROGRESS.value, Status.IN_PROGRESS.value,
-                    Status.IN_PROGRESS.value, Status.IN_PROGRESS.value, Status.IN_PROGRESS.value
-                ]
-                redis.set_complex("innerStates", inner_states)
-                redis.set("playableSquare", "-1")  # -1 is all squares...
-
-            else:
-                print("Game Mode already set [" + redis.get("gameMode") + "]")  # TODO :: err handle
-
-            print(redis.get_complex("board"))
 
             if bool(request.form["restart"]):
                 redis.set("whoseTurn", "player1")
                 return redirect(url_for("game_page.game", game_id=request.form["gameId"], user_id=request.form["name"]))
 
-            # TODO :: set redis obj as dict { $game_id: [player1: "", player2: ""] }
+            # Set up player one - Question :: extract?
             if request.form["gameId"] == "":
-                redis.set("player1", request.form["name"])
-                redis.set("player2", "")
-                redis.set(request.form["name"], "1")  # For now, set first player to cross
-                redis.set("whoseTurn", "player1")
-                redis.set("playerMode", request.form["playerMode"])
+                game_id = generate_game_id()
+                game = Game()
+                game.game_id = game_id
+                game.game_mode = game_mode
+                game.player_one.name = request.form["name"]
+                game.board = generate_board(game_mode)
 
                 if redis.get("playerMode") == "SINGLE":
-                    redis.set("player2", "Computer")
-                    redis.set("Computer", "2")  # For now, set second player to circle
+                    game.player_two.name = "Computer"
 
-                return redirect(url_for("game_page.game", game_id=generate_game_id(), user_id=request.form["name"]))
+                print("[login] Setting game object: " + game.to_string())
+                redis.set_complex(game_id, game)
+                return redirect(url_for("game_page.game", game_id=game_id, user_id=user_id))
 
             elif has_valid_game_id(request.form["gameId"]):
                 print("Testing playMode [" + request.form["playerMode"] + "]")
@@ -73,10 +52,12 @@ def construct_blueprint(redis, messages):
                     error = messages.load("login.error.single-player-only")
 
                 else:
-                    redis.set("player2", request.form["name"])
-                    redis.set(request.form["name"], "2")  # For now, set second player to circle
-                    return redirect(url_for(
-                        "game_page.game", game_id=request.form["gameId"], user_id=request.form["name"]))
+                    game = redis.get_complex(game_id)
+                    game['player_two']['name'] = request.form["name"]  # TODO :: marshal dict into Game obj
+                    print("[login] Setting game object: " + str(game))
+                    # print("[login] Setting game object: " + game.to_string())
+                    redis.set_complex(game_id, game)
+                    return redirect(url_for("game_page.game", game_id=game_id, user_id=user_id))
 
             else:
                 error = messages.load("login.error.invalid-game-id")
@@ -97,3 +78,13 @@ def has_valid_game_id(game_id):
 def generate_game_id():
     return shortuuid.uuid()[:12]
     # return "ab12-3cd4-e5f6-78gh"
+
+
+def generate_board(game_mode):
+    if game_mode == GameMode.STANDARD.value:
+        return ThreeBoard().list()
+    elif game_mode == GameMode.ULTIMATE.value:
+        return NineBoard().list()
+
+    else:
+        print("Game Mode already set [" + game_mode + "]")  # TODO :: err handle

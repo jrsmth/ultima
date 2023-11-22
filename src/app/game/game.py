@@ -1,5 +1,8 @@
+import json
 import random
-from flask import render_template, url_for, redirect, Blueprint
+
+from flask import render_template, url_for, redirect, Blueprint, Response
+
 from src.app.model.board.threeboard import ThreeBoard
 from src.app.model.mood import Mood
 from src.app.model.status import Status
@@ -7,7 +10,7 @@ from src.version.version import __version__
 
 
 # Game Logic
-def construct_blueprint(redis, messages):
+def construct_blueprint(messages, socket, redis):
     game_page = Blueprint('game_page', __name__)
 
     @game_page.route("/game/<game_id>/<user_id>")
@@ -21,6 +24,8 @@ def construct_blueprint(redis, messages):
         notification_icon = ""
         notification_mood = Mood.NEUTRAL.value
 
+        update_game_state(game_id, user_id + ' has joined the game')
+
         if redis.get("whoseTurn") == 'player1':
             player_one_active = True
         else:
@@ -30,11 +35,6 @@ def construct_blueprint(redis, messages):
         board = redis.get_complex("board")
         game_state = get_game_state(redis, board)
 
-        print(game_state)
-        print("user id")
-        print(user_id)
-        print(redis.get("player1"))
-        print(redis.get("player2"))
         if game_state != Status.IN_PROGRESS:
             notification_active = True
             game_complete = True
@@ -70,35 +70,35 @@ def construct_blueprint(redis, messages):
 
         return render_template(
             "game.html",
-            board=board,
-            playableSquare=redis.get("playableSquare"),
-            innerStates=redis.get_complex("innerStates"),
-            zero=redis.get("0"),
-            one=redis.get("1"),
-            two=redis.get("2"),
-            three=redis.get("3"),
-            four=redis.get("4"),
-            five=redis.get("5"),
-            six=redis.get("6"),
-            seven=redis.get("7"),
-            eight=redis.get("8"),
-            gameComplete=game_complete,
             gameId=game_id,
             gameMode=game_mode,
-            playerMode=redis.get("playerMode"),
-            notificationActive=notification_active,
-            notificationHeader=notification_header,
-            notificationMessage=notification_message,
-            notificationIcon=notification_icon,
-            notificationMood=notification_mood,
-            player1=redis.get("player1"),
-            player2=redis.get("player2"),
-            playerOneActive=player_one_active,
-            playerTwoActive=player_two_active,
-            thisUserId=user_id,
-            thisUserSymbol=redis.get(user_id),
+            userId=user_id,
             version=__version__,
-            whoseTurn=redis.get("whoseTurn")
+
+
+            # Question :: Should I have an ~overloaded method for simply .get()?
+            # zero=redis.get("0"),
+            # one=redis.get("1"),
+            # two=redis.get("2"),
+            # three=redis.get("3"),
+            # four=redis.get("4"),
+            # five=redis.get("5"),
+            # six=redis.get("6"),
+            # seven=redis.get("7"),
+            # eight=redis.get("8"),
+            # gameComplete=game_complete,
+            # gameMode=game_mode,
+            # playerMode=redis.get("playerMode"),
+            # notificationActive=notification_active,
+            # notificationHeader=notification_header,
+            # notificationMessage=notification_message,
+            # notificationIcon=notification_icon,
+            # notificationMood=notification_mood,
+            # playerOneActive=player_one_active,
+            # playerTwoActive=player_two_active,
+            # thisUserId=user_id,
+            # thisUserSymbol=redis.get(user_id),
+            # whoseTurn=redis.get("whoseTurn")
         )
 
     @game_page.route("/game/<game_id>/place-move/<user_id>/<square>")
@@ -126,7 +126,9 @@ def construct_blueprint(redis, messages):
         elif redis.get("whoseTurn") == 'player2':
             redis.set("whoseTurn", "player1")
 
-        return redirect(url_for("game_page.game", game_id=game_id, user_id=user_id))
+        update_game_state(game_id, 'move placement')
+        return Response(status=204)
+        # return redirect(url_for("game_page.game", game_id=game_id, user_id=user_id))
 
     @game_page.route("/game/<game_id>/place-move/<user_id>/<outer_square>/<inner_square>")
     def place_ultimate_move(game_id, user_id, outer_square, inner_square):
@@ -174,6 +176,18 @@ def construct_blueprint(redis, messages):
             redis.set("whoseTurn", "player1")
 
         return redirect(url_for("game_page.game", game_id=game_id, user_id=user_id))
+
+    @game_page.route('/game/state/<game_id>')
+    def retrieve_game_state(game_id):  # TODO :: rename -> get_game_state?
+        game_state = redis.get_complex(game_id)
+        print('[retrieve_game_state] Retrieving game state: ' + str(game_state))
+        return Response(status=200, content_type='application/json', response=json.dumps(game_state))
+        # Question :: Custom Response class?
+
+    def update_game_state(game_id, description):
+        print('[update_game_state] Game state update: ' + description)
+        print('[update_game_state] Game state updated for game id: ' + game_id)
+        socket.emit('update_game_state', redis.get_complex(game_id))
 
     # Closing return
     return game_page

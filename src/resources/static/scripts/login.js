@@ -4,8 +4,8 @@ $(document).ready(function() {
         $(this).siblings().removeClass('selected');
         $(this).addClass('selected');
 
-        $('#game-mode')[0].value = $('.selected')[0].innerHTML.toUpperCase();
-        $('#player-mode')[0].value = $('.selected')[1].innerHTML.toUpperCase();
+        $('#game-mode')[0].value = $('.selected')[0].innerHTML.toLowerCase();
+        $('#player-mode')[0].value = $('.selected')[1].innerHTML.toLowerCase();
     });
 
     // Toggle game mode display
