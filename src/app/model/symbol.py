@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class Square(Enum):
+class Symbol(Enum):
     NEUTRAL = 0
     CROSS = 1
     CIRCLE = 2

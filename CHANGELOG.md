@@ -24,7 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <!-- @LatestFirst -->
 
 ## [0.5.0] - ???
-- ???
+- UMA-30: Add the ability to display a message from the backend via message topic
 
 ## [0.4.1] - 18/11/23
 - UMA-29: [BUG] Computer incorrectly places in already completed outer-squares (Ultimate)

@@ -8,7 +8,8 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/css/game.css') }}">
     </head>
     <body>
-        <input id="this-user-id" type="hidden" value="{{ thisUserId }}">
+        <input id="game-id" type="hidden" value="{{ gameId }}">
+        <input id="user-id" type="hidden" value="{{ userId }}">
         <input id="this-user-symbol" type="hidden" value="{{ thisUserSymbol }}">
         <input id="player-one-active" type="hidden" value="{{ playerOneActive }}">
         <input id="player-two-active" type="hidden" value="{{ playerTwoActive }}">
@@ -17,7 +18,7 @@
         <input id="player-mode" type="hidden" value="{{ playerMode }}">
         <input id="inner-states" type="hidden" value="{{ innerStates }}">
         <input id="playable-square" type="hidden" value="{{ playableSquare }}">
-        <!--        <input id="whose-turn" type="hidden" value="{{ whoseTurn }}">-->
+        <!--        <input id="player-turn" type="hidden" value="{{ whoseTurn }}">-->
         <header>
             <div class="tooltip">
                 <a href="https://github.com/jrsmth/ultima" target="_blank"><img id="badge" alt="badge" src="{{ url_for('static', filename='img/badge.png') }}"></a>
@@ -25,59 +26,69 @@
                     <span>{{ version }}</span>
                 </div>
             </div>
+            <div id="copy-game-id">
+                <div class="icon">
+                    <i class="fa-solid fa-copy"></i>
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <span>{{ gameId }}</span>
+            </div>
         </header>
         <section id="content">
             <section class="side-bar left">
-                <div class="player active-{{ playerOneActive }}" id="player1">
+                <div class="player" id="player-one">
                     <i class="fa fa-user" aria-hidden="true"></i>
-                    <span>{{ player1 }}</span>
-                    <i class="fa fa-times symbol this-symbol-{{ thisUserSymbol }}"></i>
+                    <span id="player-one-name"></span>
+                    <i class="symbol fa fa-times" id="player-one-symbol"></i>
                 </div>
-                <div class="player active-{{ playerTwoActive }}" id="player2">
+                <div class="player" id="player-two">
                     <i class="fa fa-user" aria-hidden="true"></i>
-                    <span>{{ player2 }}</span>
-                    <i class="fa-regular fa-circle symbol this-symbol-{{ thisUserSymbol }}"></i>
+                    <span id="player-two-name"></span>
+                    <i class="symbol fa-regular fa-circle" id="player-two-symbol"></i>
                 </div>
-                <div class="notification error active-{{ notificationActive }} sad">
-                    <div class="notification-content">
-                        <h3>Invalid Move</h3>
-                        <p>Play in the highlighted square</p>
-                    </div>
-                </div>
+<!--                <div class="notification error active-{{ notificationActive }} sad">-->
+<!--                    <div class="notification-content">-->
+<!--                        <h3>Invalid Move</h3>-->
+<!--                        <p>Play in the highlighted square</p>-->
+<!--                    </div>-->
+<!--                </div>-->
             </section>
             <section class="main-bar">
-                <div class="notification active-{{ notificationActive }} {{ notificationMood }}">
-                    <i class="fa-solid fa-arrow-rotate-left restart" onclick="restart()"></i>
-                    <div class="notification-content">
-                        <h3>{{ notificationHeader }}</h3>
-                        <p>{{ notificationMessage }}</p>
+<!--                <div class="notification active-{{ notificationActive }} {{ notificationMood }}">-->
+<!--                    <i class="fa-solid fa-arrow-rotate-left restart" onclick="restart()"></i>-->
+<!--                    <div class="notification-content">-->
+<!--                        <h3>{{ notificationHeader }}</h3>-->
+<!--                        <p>{{ notificationMessage }}</p>-->
+<!--                    </div>-->
+<!--                </div>-->
+                <div id="player-turn">
+                    <div id="cross">
+                        <i class="fa fa-times symbol"></i>
+                        <i class="fa fa-times symbol shadow"></i>
+                    </div>
+                    <div id="circle">
+                        <i class="fa-regular fa-circle symbol"></i>
+                        <i class="fa-regular fa-circle symbol shadow"></i>
                     </div>
                 </div>
-                <div id="whose-turn" class="inactive-{{ notificationActive }}">
-                    <div id="whose-turn-cross" class="symbol-active-{{ playerOneActive }} this-symbol-{{ thisUserSymbol }}">
-                        <i class="whose-turn-actual fa fa-times symbol"></i>
-                        <i class="whose-turn-shadow fa fa-times symbol"></i>
-                    </div>
-                    <div id="whose-turn-circle" class="symbol-active-{{ playerTwoActive }} this-symbol-{{ thisUserSymbol }}">
-                        <i class="whose-turn-actual fa-regular fa-circle symbol"></i>
-                        <i class="whose-turn-shadow fa-regular fa-circle symbol"></i>
-                    </div>
-                </div>
-                <section class="boards this-user-{{ thisUserSymbol }} player-1-{{ playerOneActive }} player-2-{{ playerTwoActive }} game-complete-{{ gameComplete }}">
-                    <div class="board threeboard {{ gameMode }}">
+                <section id="board-section">
+                    {% if gameMode == "STANDARD" %}
+                    <div class="board threeboard">
                         {% for square in board %}
                             <div class="shadow-square" id="three-square-{{ loop.index0 }}"><div class="square" onclick="placeStandardMove('{{ loop.index0 }}')">{{ square }}</div></div>
                         {% endfor %}
                     </div>
-                    {% if gameMode == "ULTIMATE" %} <!-- TODO :: where appropriate, replace css hiding tricks w/ template conditions -->
-                    <div class="board nineboard {{ gameMode }}">
+                    {% endif %}
+
+                    {% if gameMode == "ULTIMATE" %}
+                    <div class="board nineboard">
                         {% for outer_square in board %}
                             <div class="shadow-square outer" id="nine-square-{{ loop.index0 }}">
                                 <div class="square">
                                 {% set outer_index = loop.index0 %}
                                 {% for inner_square in outer_square %}
                                     <div class="shadow-square inner" id="nine-square-{{ outer_index }}-{{ loop.index0 }}">
-                                        <div class="square" onclick="placeMove('{{ outer_index }}', '{{ loop.index0 }}')">{{ inner_square }}</div>
+                                        <div class="square" onclick="placeUltimateMove('{{ outer_index }}', '{{ loop.index0 }}')">{{ inner_square }}</div>
                                     </div>
                                 {% endfor %}
                                 </div>
@@ -91,5 +102,9 @@
         </section>
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
     <script src="{{ url_for('static', filename='scripts/game.js') }}"></script>
+    <script>
+        init("{{ gameId }}")
+    </script>
 </html>

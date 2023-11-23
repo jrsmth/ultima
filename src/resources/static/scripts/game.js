@@ -1,17 +1,89 @@
-let thisUserId;
+let userId;
 let thisSymbol;
+let gameId;
 
-function init() { // TODO :: convert to JQuery?
-    thisUserId = document.getElementById('this-user-id').value;
+async function init(gameId) { // TODO :: convert all to JQuery?
+    let gameState;
+    userId = $('#user-id')[0].value; // Question :: better way?
+
+    // Retrieve game state
+    await $.get(`/game/state/${gameId}`).then(res => {
+        console.debug("Initialising game state");
+        console.debug(res);
+        gameState = res;
+
+    }).catch(err => {
+        console.error(err);
+    });
+
+    // Init user info
+    const thisUser = [gameState['player_one'], gameState['player_two']].filter(obj => {
+        return obj.name === userId
+    })
+
+    const playerOne = gameState['player_one']['name'];
+    const playerTwo = gameState['player_two']['name'];
+    $('#player-one-name')[0].innerText = playerOne;
+    $('#player-two-name')[0].innerText = playerTwo;
+
+    const playerTurn = gameState['player_turn'];
+    $('#player-one')
+        .addClass(playerTurn === 1 ? ' active' : '')
+        .addClass(userId === playerOne ? ' this-user' : '');
+    $('#player-two')
+        .addClass(playerTurn === 2 ? ' active' : '')
+        .addClass(userId === playerTwo ? ' this-user' : '');
+    $('#cross')
+        .addClass(playerTurn === 1 ? ' active' : '')
+        .addClass(userId === playerOne ? ' this-user' : '');
+    $('#circle')
+        .addClass(playerTurn === 2 ? ' active' : '')
+        .addClass(userId === playerTwo ? ' this-user' : '');
+    // TODO :: refactor^^
+
+    // Init board
+    if (gameState['game_mode'] === "STANDARD") createStandardBoard(userId, thisUser['symbol']);
+    if (gameState['game_mode'] === "ULTIMATE") createUltimateBoard(userId, thisUser['symbol']);
+
+
+
+
     thisSymbol = document.getElementById('this-user-symbol').value;
     const gameMode = document.getElementById('game-mode').value;
 
-    if (gameMode === "STANDARD") initStandard(thisUserId, thisSymbol);
-    if (gameMode === "ULTIMATE") initUltimate(thisUserId, thisSymbol);
+    if (gameMode === "STANDARD") initStandard(userId, thisSymbol);
+    if (gameMode === "ULTIMATE") initUltimate(userId, thisSymbol);
 
+    const copyGameId = document.getElementById("copy-game-id");
+    const span = copyGameId.querySelector("span");
+    span.onclick = function () {
+        document.execCommand("copy");
+    }
+    span.addEventListener("copy", function (event) {
+        event.preventDefault();
+        if (event.clipboardData) {
+            event.clipboardData.setData("text/plain", span.textContent);
+            const copy = copyGameId.getElementsByClassName("fa-copy")[0];
+            const check = copyGameId.getElementsByClassName("fa-check")[0];
+
+            copy.style.display = 'none';
+            $(check).addClass("ticked");
+            setTimeout((function () {
+                $(check).removeClass('ticked');
+                copy.style.display = 'block';
+                $(copy).addClass("fade-in");
+            }), 1000);
+        }
+    });
 }
 
-function initStandard(thisUserId, thisSymbol) {
+function createStandardBoard(userId, thisSymbol) {
+    // Get the threeboard
+    // Create 9 html elements with value from board
+    // Append to threeboard...
+    // TODO^^
+
+
     for (let i = 0; i < 9; i++) {
         const square = document.getElementById(`three-square-${i}`).getElementsByClassName("square")[0];
         const state = square.innerHTML;
@@ -31,8 +103,7 @@ function initStandard(thisUserId, thisSymbol) {
     }
 }
 
-function initUltimate(thisUserId, thisSymbol) {
-    const gameId = "ab12-3cd4-e5f6-78gh";
+function createUltimateBoard(userId, thisSymbol) {
     const innerStates = JSON.parse(document.getElementById("inner-states").value);
     const playableSquare = document.getElementById("playable-square").value;
     console.log(playableSquare)
@@ -93,8 +164,6 @@ function initUltimate(thisUserId, thisSymbol) {
 }
 
 function placeStandardMove(square) {
-    const gameId = "ab12-3cd4-e5f6-78gh";
-
     const userSymbol = document.getElementById('this-user-symbol').value;
     const playerOneActive = document.getElementById('player-one-active').value;
     const playerTwoActive = document.getElementById('player-two-active').value;
@@ -108,13 +177,12 @@ function placeStandardMove(square) {
         return;
     }
 
-    $.get(`/game/${gameId}/place-move/${thisUserId}/${square}`);
-    location.reload();
+    $.get(`/game/${gameId}/place-move/${userId}/${square}`);
+    // location.reload();
 }
 
-function placeMove(outerSquare, innerSquare) {
-    const gameId = "ab12-3cd4-e5f6-78gh";
-
+// Place Ultimate Move
+function placeUltimateMove(outerSquare, innerSquare) {
     const userSymbol = document.getElementById('this-user-symbol').value;
     const playerOneActive = document.getElementById('player-one-active').value;
     const playerTwoActive = document.getElementById('player-two-active').value;
@@ -138,12 +206,11 @@ function placeMove(outerSquare, innerSquare) {
         return;
     }
 
-    $.get(`/game/${gameId}/place-move/${thisUserId}/${outerSquare}/${innerSquare}`);
+    $.get(`/game/${gameId}/place-move/${userId}/${outerSquare}/${innerSquare}`);
     location.reload();
 }
 
 function restart() {
-    const gameId = "ab12-3cd4-e5f6-78gh";
     const formData = {
         name: document.getElementById("this-user-id").value,
         gameId: gameId,
@@ -156,4 +223,28 @@ function restart() {
     location.reload();
 }
 
-init();
+$(document).ready(function(){
+    // const socket = io();
+    const socket = io.connect('http://localhost:8080'); // ??
+
+    // const socket = io();
+    console.log(socket);
+
+    socket.on('connect', function() {
+        console.log('connected');
+        socket.emit('my event', {data: 'I\'m connected!'});
+    });
+
+    // socket.on('connect', function() {
+    //     socket.emit('my event', {data: 'I\'m connected!'});
+    // });
+    //
+    socket.on('my_response', function(msg) {
+        console.log(msg.data);
+    });
+
+    socket.on('update_game_state', function(message) {
+        console.debug('Game state update received');
+        init(message['game_id']);
+    });
+});

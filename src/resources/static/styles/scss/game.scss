@@ -4,10 +4,40 @@
 header {
   display: flex;
   margin: .75rem .5rem;
+  gap: 2rem;
+  align-items: center;
+
+  i {
+    margin-right: .5rem;
+  }
 
   #badge {
     height: 2.25rem;
     margin: .5rem;
+  }
+
+  #copy-game-id {
+    cursor: pointer;
+    opacity: .8;
+    transition: 500ms;
+    display: flex;
+
+    .fa-check {
+      display: none;
+    }
+
+    .ticked {
+      display: block;
+      animation-name: fade-in-out;
+      animation-duration: 1500ms;
+      color: #13ECBA; // FixMe
+    }
+
+    .fade-in {
+      display: block;
+      animation-name: fade-in;
+      animation-duration: 500ms;
+    }
   }
 }
 
@@ -33,7 +63,7 @@ header {
   display: flex;
   height: 100%;
 
-  .this-user {
+  .this-symbol {
     color: $chartreuse;
   }
 
@@ -41,41 +71,29 @@ header {
     width: 70%;
     text-align: center;
 
-    #whose-turn {
+    #player-turn {
       height: 5.125rem;
-      &.inactive-True       { display: none; }
+      color: $rose;
+      &.hide { display: none; }
 
-      .symbol-active-True   { display: block; }
-      .symbol-active-False  { display: none; }
+      div {
+        display: none;
+        &.active { display: block }
+        &.this-user { color: $chartreuse; }
 
-      .symbol {
-        font-size: 5rem;
-      }
+        .symbol {
+          font-size: 5rem;
 
-      .whose-turn-shadow {
-        position: absolute;
-        opacity: .5;
-        filter: blur(.5rem);
-      }
-
-      #whose-turn-cross {
-        &.this-symbol-1  { color: $chartreuse; }
-        &.this-symbol-2  { color: $rose; }
-
-        .whose-turn-shadow {
-          transform: translateX(-3.75rem);
-
+          &.shadow {
+            position: absolute;
+            opacity: .5;
+            filter: blur(.5rem);
+          }
         }
       }
 
-      #whose-turn-circle {
-        &.this-symbol-1 { color: $rose; }
-        &.this-symbol-2 { color: $chartreuse; }
-
-        .whose-turn-shadow {
-          transform: translateX(-5rem);
-        }
-      }
+      #cross  { .shadow { transform: translateX(-3.75rem); } }
+      #circle { .shadow { transform: translateX(-5rem);    } }
     }
   }
 }
@@ -90,17 +108,6 @@ header {
     padding: 1rem;
     width: 12rem;
 
-    &.active {
-      border: 1px solid $rose25;
-      background-color: $aubergine;
-    }
-
-    &.active-True {
-      border: 1px solid $rose25;
-      border-radius: .25rem;
-      background-color: $aubergine;
-    }
-
     .fa-user {
       margin-right: .5rem;
       color: $rose;
@@ -113,15 +120,20 @@ header {
       transform: translateY(1px);
     }
 
-    &#player1 > .this-symbol-1 { color: $chartreuse }
-    &#player1 > .this-symbol-2 { color: $rose }
-    &#player2 > .this-symbol-1 { color: $rose }
-    &#player2 > .this-symbol-2 { color: $chartreuse }
+    &.active {
+      border: 1px solid $rose25;
+      border-radius: .25rem;
+      background-color: $aubergine;
+
+      &.this-user > .symbol {
+          color: $chartreuse;
+        }
+    }
   }
 }
 
 /** Boards **/
-.boards {
+#board-section {
   .threeboard.STANDARD { display: grid; }
   .threeboard.ULTIMATE { display: none; }
   .nineboard.STANDARD  { display: none; }

@@ -6,7 +6,7 @@ env = "dev"
 # dev   : ensure IP is whitelisted on render redis
 # prod
 make start:
-	export FLASK_ENV=$(env) && make build && gunicorn -b 0.0.0.0:8080 --chdir src/app app:app
+	export FLASK_ENV=$(env) && make build && gunicorn -b 0.0.0.0:8080 -k gevent -w 1 --chdir src/app app:app
 
 make test:
 	export FLASK_ENV="prod" && python3 -m unittest discover ./src/app
