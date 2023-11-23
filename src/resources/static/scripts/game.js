@@ -1,8 +1,7 @@
 let userId;
-let gameId;
+let gameState;
 
 async function init(gameId) { // TODO :: convert all to JQuery?
-    let gameState;
     userId = $('#user-id')[0].value; // Question :: better way?
 
     // Retrieve game state
@@ -16,41 +15,55 @@ async function init(gameId) { // TODO :: convert all to JQuery?
     });
 
     // Init user info
-    const thisUser = [gameState['player_one'], gameState['player_two']].filter(obj => {
-        return obj.name === userId
-    })
-
-    const playerOne = gameState['player_one']['name'];
-    const playerTwo = gameState['player_two']['name'];
-    $('#player-one-name')[0].innerText = playerOne;
-    $('#player-two-name')[0].innerText = playerTwo;
-
-    const playerTurn = gameState['player_turn'];
-    $('#player-one')
-        .addClass(playerTurn === 1 ? ' active' : '')
-        .addClass(userId === playerOne ? ' this-user' : '');
-    $('#player-two')
-        .addClass(playerTurn === 2 ? ' active' : '')
-        .addClass(userId === playerTwo ? ' this-user' : '');
-    $('#cross')
-        .addClass(playerTurn === 1 ? ' active' : '')
-        .addClass(userId === playerOne ? ' this-user' : '');
-    $('#circle')
-        .addClass(playerTurn === 2 ? ' active' : '')
-        .addClass(userId === playerTwo ? ' this-user' : '');
+    initUserInfo();
 
     // Init board
-    if (gameState['game_mode'] === "standard") createStandardBoard(userId, thisUser['symbol'], gameState['board']);
-    if (gameState['game_mode'] === "ultimate") createUltimateBoard(userId, thisUser['symbol'], gameState['board']);
+    const thisUser = [gameState['player_one'], gameState['player_two']].filter(obj => {
+        return obj.name === userId
+    })[0];
+
+    if (gameState['game_mode'] === "standard") initStandardBoard(userId, thisUser['symbol'], gameState['board']);
+    if (gameState['game_mode'] === "ultimate") initUltimateBoard(userId, thisUser['symbol'], gameState['board']);
 
 }
 
-function createStandardBoard(userId, thisSymbol, board) {
+function initUserInfo() {
+    const playerOneName = gameState['player_one']['name'];
+    const playerTwoName = gameState['player_two']['name'];
+    $('#player-one-name')[0].innerText = playerOneName;
+    $('#player-two-name')[0].innerText = playerTwoName;
+
+    const playerTurn = gameState['player_turn'];
+    const playerOne = $('#player-one');
+    const playerTwo = $('#player-two');
+    const cross = $('#cross');
+    const circle = $('#circle');
+
+    playerOne.removeClass('active');
+    playerTwo.removeClass('active');
+    cross.removeClass('active');
+    circle.removeClass('active');
+
+    playerOne
+        .addClass(playerTurn === 1 ? ' active' : '')
+        .addClass(userId === playerOneName ? ' this-user' : '');
+    playerTwo
+        .addClass(playerTurn === 2 ? ' active' : '')
+        .addClass(userId === playerTwoName ? ' this-user' : '');
+    cross
+        .addClass(playerTurn === 1 ? ' active' : '')
+        .addClass(userId === playerOneName ? ' this-user' : '');
+    circle
+        .addClass(playerTurn === 2 ? ' active' : '')
+        .addClass(userId === playerTwoName ? ' this-user' : '');
+}
+
+function initStandardBoard(userId, thisSymbol, board) {
     const threeboard = $('#three-board');
 
     threeboard.empty();
     for (let i = 0; i < 9; i++) {
-        const classList = (board[i] === thisSymbol) ? 'this-user' : (board[i] !== 0) ? 'opponent' : '';
+        const classList = getSquareClass(board[i], thisSymbol);
         const markup =
         `
             <div class="shadow" id="three-${i}">
@@ -62,7 +75,7 @@ function createStandardBoard(userId, thisSymbol, board) {
     }
 }
 
-function createUltimateBoard(userId, thisSymbol) {
+function initUltimateBoard(userId, thisSymbol) {
     const innerStates = JSON.parse(document.getElementById("inner-states").value);
     const playableSquare = document.getElementById("playable-square").value;
     console.log(playableSquare)
@@ -122,22 +135,22 @@ function createUltimateBoard(userId, thisSymbol) {
     }
 }
 
-function placeStandardMove(square) {
-    const userSymbol = document.getElementById('this-user-symbol').value;
-    const playerOneActive = document.getElementById('player-one-active').value;
-    const playerTwoActive = document.getElementById('player-two-active').value;
-    const gameComplete = document.getElementById('game-complete').value;
+function placeStandardMove(index) {
+    const playerOne = gameState['player_one']['name'];
+    const playerTwo = gameState['player_two']['name'];
 
-    if (gameComplete === 'True') return;
-    if (userSymbol === '1' && playerTwoActive === 'True') return;
-    if (userSymbol === '2' && playerOneActive === 'True') return;
+    const gameNotStarted = (playerTwo === "");
+    const gameComplete = gameState['complete'];
+    const opponentTurn = !isUserTurn();
+    const alreadyPlayed = gameState['board'][index] !== 0;
+    if (gameNotStarted || gameComplete || opponentTurn || alreadyPlayed) return;
 
-    if (document.getElementById(`three-square-${square}`).getElementsByClassName("square")[0].innerHTML !== '') {
-        return;
-    }
-
-    $.get(`/game/${gameId}/place-move/${userId}/${square}`); // TODO :: err handle
-    // location.reload();
+    $.get(`/game/${gameState['game_id']}/place-move/${userId}/${index}`)
+        .catch(err => {
+            console.error(`[placeStandardMove] Error placing move for square with index [${index}]`);
+            console.error(err);
+        }
+    )
 }
 
 // Place Ultimate Move
@@ -238,4 +251,15 @@ function markupSymbol(value) {
     if (value === 0) return '';
     if (value === 1) return '<i class="fa fa-times symbol"></i>';
     if (value === 2) return '<i class="fa-regular fa-circle symbol"></i>';
+}
+
+function isUserTurn() {
+    return (gameState['player_turn'] === 1 && gameState['player_one']['name'] === userId) ||
+           (gameState['player_turn'] === 2 && gameState['player_two']['name'] === userId);
+}
+
+function getSquareClass(square, thisSymbol) {
+    if (square === thisSymbol) return 'this-user';
+    if (square !== 0) return 'opponent';
+    if (!isUserTurn() || (gameState['player_two']['name'] === "")) return 'inactive';
 }

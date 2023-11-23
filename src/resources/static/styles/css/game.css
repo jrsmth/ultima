@@ -185,7 +185,6 @@ header #copy-game-id .fade-in {
   border: 1px solid rgba(231, 4, 83, 0.2509803922);
   background-color: #2b0710;
   transition: 0.5s;
-  cursor: pointer;
   align-content: center;
   justify-content: center;
   display: flex;
@@ -193,35 +192,30 @@ header #copy-game-id .fade-in {
   height: 100%;
   width: 100%;
 }
-#three-board .shadow .square:hover {
+#three-board .shadow .square:hover:not(.inactive) {
   opacity: 1;
   border: 1px solid #d8ff00;
+  cursor: pointer;
 }
 #three-board .shadow .square .symbol {
   font-size: 4rem;
   position: absolute;
   margin-top: calc(47.5% - 2rem);
 }
-#three-board .shadow.this-user {
-  border: 1px solid #d8ff00;
-}
-#three-board .shadow.this-user .square {
-  border: 1px solid #d8ff00;
+#three-board .shadow .square.this-user {
   background-color: #d8ff00;
-  cursor: default;
+  border: 1px solid #d8ff00 !important;
+  cursor: default !important;
 }
-#three-board .shadow.this-user .square .symbol {
+#three-board .shadow .square.this-user .symbol {
   color: #2b0710;
 }
-#three-board .shadow.opponent {
-  border: 1px solid #e70453;
-}
-#three-board .shadow.opponent .square {
-  border: 1px solid #e70453;
+#three-board .shadow .square.opponent {
   background-color: #e70453;
-  cursor: default;
+  border: 1px solid #e70453 !important;
+  cursor: default !important;
 }
-#three-board .shadow.opponent .square .symbol {
+#three-board .shadow .square.opponent .symbol {
   color: #2b0710;
 }
 

@@ -4,6 +4,7 @@ import random
 from flask import render_template, url_for, redirect, Blueprint, Response
 
 from src.app.model.board.threeboard import ThreeBoard
+from src.app.model.mode.playermode import PlayerMode
 from src.app.model.mood import Mood
 from src.app.model.status import Status
 from src.version.version import __version__
@@ -104,32 +105,37 @@ def construct_blueprint(messages, socket, redis):
 
     @game_page.route("/game/<game_id>/place-move/<user_id>/<square>")
     def place_standard_move(game_id, user_id, square):
+        print("[place_standard_move] [" + game_id + "] [" + user_id + "] Placing square with index: " + square)
+
         # Set player's move
-        symbol = redis.get(user_id)
-        board_list = redis.get_complex("board")
-        board_list[int(square)] = int(symbol)
-        redis.set_complex("board", board_list)
+        current_state = redis.get_complex(game_id)  # Question :: marshal into obj?
+        board = current_state["board"]
+        print("[place_standard_move] Board retrieved: " + str(board))
+
+        players = [current_state["player_one"], current_state["player_two"]]
+        user_symbol = [player for player in players if player["name"] == user_id][0]["symbol"]
+        # Could be more elegant ^
+        board[int(square)] = user_symbol
+        current_state["board"] = board
 
         # Switch player turn
-        if redis.get("whoseTurn") == 'player1':
+        if current_state["player_turn"] == 1:
             # TODO :: I need to test the game state here to prevent the Computer from placing after I win...
-            redis.set("whoseTurn", "player2")
-            if redis.get("playerMode") == "SINGLE":
-                print("[SINGLE] Computer is placing move")
-                # Of the remaining available squares, select one at random
-                current_board = redis.get_complex("board")
-                print("[SINGLE] Board: " + str(current_board))
-                available_squares = [index for index, square in enumerate(current_board) if square == 0]
-                print("[SINGLE] Available: " + str(available_squares))
+            current_state["player_turn"] = 2
+            if redis.get("playerMode") == PlayerMode.SINGLE.value:
+                available_squares = [index for index, square in enumerate(current_state["board"]) if square == 0]
+                print("[place_standard_move] [single] Available squares: " + str(available_squares))
                 if available_squares:
+                    print("[place_standard_move] [single] Computer is placing move in random available square")
                     place_standard_move(game_id, "Computer", random.choice(available_squares))
 
-        elif redis.get("whoseTurn") == 'player2':
-            redis.set("whoseTurn", "player1")
+        elif current_state["player_turn"] == 2:
+            current_state["player_turn"] = 1
 
-        update_game_state(game_id, 'move placement')
+        redis.set_complex(game_id, current_state)
+        update_game_state(game_id, user_id + ' has placed move on square ' + square)
+
         return Response(status=204)
-        # return redirect(url_for("game_page.game", game_id=game_id, user_id=user_id))
 
     @game_page.route("/game/<game_id>/place-move/<user_id>/<outer_square>/<inner_square>")
     def place_ultimate_move(game_id, user_id, outer_square, inner_square):

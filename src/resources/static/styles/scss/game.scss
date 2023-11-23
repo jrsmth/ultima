@@ -172,7 +172,6 @@ header {
       border: 1px solid $rose25;
       background-color: $aubergine;
       transition: .5s;
-      cursor: pointer;
       align-content: center;
       justify-content: center;
       display: flex;
@@ -180,9 +179,10 @@ header {
       height: 100%;
       width: 100%;
 
-      &:hover {
+      &:hover:not(.inactive) {
         opacity: 1;
         border: 1px solid $chartreuse;
+        cursor: pointer;
       }
 
       .symbol {
@@ -190,29 +190,21 @@ header {
         position: absolute;
         margin-top: calc(47.5% - 2rem);
       }
-    }
 
-    &.this-user {
-      border: 1px solid $chartreuse;
-
-      .square {
-        border: 1px solid $chartreuse;
+      &.this-user {
         background-color: $chartreuse;
-        cursor: default;
+        border: 1px solid $chartreuse !important;
+        cursor: default !important ;
 
         .symbol {
           color: $aubergine;
         }
       }
-    }
 
-    &.opponent {
-      border: 1px solid $rose;
-
-      .square {
-        border: 1px solid $rose;
+      &.opponent {
         background-color: $rose;
-        cursor: default;
+        border: 1px solid $rose !important;
+        cursor: default !important;
 
         .symbol {
           color: $aubergine;
@@ -221,6 +213,7 @@ header {
     }
   }
 }
+
 
 /** Nine Board */
 #nine-board {
