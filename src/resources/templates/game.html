@@ -72,16 +72,10 @@
                     </div>
                 </div>
                 <section id="board-section">
-                    {% if gameMode == "STANDARD" %}
-                    <div class="board threeboard">
-                        {% for square in board %}
-                            <div class="shadow-square" id="three-square-{{ loop.index0 }}"><div class="square" onclick="placeStandardMove('{{ loop.index0 }}')">{{ square }}</div></div>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
+                    <div class="board" id="three-board"></div>
 
                     {% if gameMode == "ULTIMATE" %}
-                    <div class="board nineboard">
+                    <div class="board" id="nine-board">
                         {% for outer_square in board %}
                             <div class="shadow-square outer" id="nine-square-{{ loop.index0 }}">
                                 <div class="square">
@@ -105,6 +99,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
     <script src="{{ url_for('static', filename='scripts/game.js') }}"></script>
     <script>
-        init("{{ gameId }}")
+        $(document).ready(function() {
+            enableCopy()
+            connectSocket("{{ gameId }}")
+            init("{{ gameId }}")
+        })
     </script>
 </html>

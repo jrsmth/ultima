@@ -33,7 +33,8 @@ def construct_blueprint(messages, socket, redis):
 
         game_mode = redis.get("gameMode")
         board = redis.get_complex("board")
-        game_state = get_game_state(redis, board)
+        game_state = Status.IN_PROGRESS
+        # game_state = get_game_state(redis, board)
 
         if game_state != Status.IN_PROGRESS:
             notification_active = True

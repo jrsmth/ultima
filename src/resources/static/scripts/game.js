@@ -1,5 +1,4 @@
 let userId;
-let thisSymbol;
 let gameId;
 
 async function init(gameId) { // TODO :: convert all to JQuery?
@@ -39,67 +38,27 @@ async function init(gameId) { // TODO :: convert all to JQuery?
     $('#circle')
         .addClass(playerTurn === 2 ? ' active' : '')
         .addClass(userId === playerTwo ? ' this-user' : '');
-    // TODO :: refactor^^
 
     // Init board
-    if (gameState['game_mode'] === "STANDARD") createStandardBoard(userId, thisUser['symbol']);
-    if (gameState['game_mode'] === "ULTIMATE") createUltimateBoard(userId, thisUser['symbol']);
+    if (gameState['game_mode'] === "standard") createStandardBoard(userId, thisUser['symbol'], gameState['board']);
+    if (gameState['game_mode'] === "ultimate") createUltimateBoard(userId, thisUser['symbol'], gameState['board']);
 
-
-
-
-    thisSymbol = document.getElementById('this-user-symbol').value;
-    const gameMode = document.getElementById('game-mode').value;
-
-    if (gameMode === "STANDARD") initStandard(userId, thisSymbol);
-    if (gameMode === "ULTIMATE") initUltimate(userId, thisSymbol);
-
-    const copyGameId = document.getElementById("copy-game-id");
-    const span = copyGameId.querySelector("span");
-    span.onclick = function () {
-        document.execCommand("copy");
-    }
-    span.addEventListener("copy", function (event) {
-        event.preventDefault();
-        if (event.clipboardData) {
-            event.clipboardData.setData("text/plain", span.textContent);
-            const copy = copyGameId.getElementsByClassName("fa-copy")[0];
-            const check = copyGameId.getElementsByClassName("fa-check")[0];
-
-            copy.style.display = 'none';
-            $(check).addClass("ticked");
-            setTimeout((function () {
-                $(check).removeClass('ticked');
-                copy.style.display = 'block';
-                $(copy).addClass("fade-in");
-            }), 1000);
-        }
-    });
 }
 
-function createStandardBoard(userId, thisSymbol) {
-    // Get the threeboard
-    // Create 9 html elements with value from board
-    // Append to threeboard...
-    // TODO^^
+function createStandardBoard(userId, thisSymbol, board) {
+    const threeboard = $('#three-board');
 
-
+    threeboard.empty();
     for (let i = 0; i < 9; i++) {
-        const square = document.getElementById(`three-square-${i}`).getElementsByClassName("square")[0];
-        const state = square.innerHTML;
-        if (state === thisSymbol) {
-            square.parentElement.classList.add("this-user");
-        } else if (state !== "0") {
-            square.parentElement.classList.add("opponent-user");
-        }
+        const classList = (board[i] === thisSymbol) ? 'this-user' : (board[i] !== 0) ? 'opponent' : '';
+        const markup =
+        `
+            <div class="shadow" id="three-${i}">
+                <div class="square ${classList}" onClick="placeStandardMove(${i})">${markupSymbol(board[i])}</div>
+            </div>
+        `;
 
-        if (state === "0") {
-            square.innerHTML = '';
-        } else if (state === "1") {
-            square.innerHTML = '<i class="fa fa-times symbol"></i>'
-        } else if (state === "2") {
-            square.innerHTML = '<i class="fa-regular fa-circle symbol"></i>'
-        }
+        threeboard.append(markup);
     }
 }
 
@@ -177,7 +136,7 @@ function placeStandardMove(square) {
         return;
     }
 
-    $.get(`/game/${gameId}/place-move/${userId}/${square}`);
+    $.get(`/game/${gameId}/place-move/${userId}/${square}`); // TODO :: err handle
     // location.reload();
 }
 
@@ -210,6 +169,32 @@ function placeUltimateMove(outerSquare, innerSquare) {
     location.reload();
 }
 
+function enableCopy() { // TODO :: switch to jquery
+    const copyGameId = document.getElementById("copy-game-id");
+    const span = copyGameId.querySelector("span");
+    span.onclick = function () {
+        document.execCommand("copy");
+    }
+
+    // TODO :: revisit the animation and styling
+    span.addEventListener("copy", function (event) {
+        event.preventDefault();
+        if (event.clipboardData) {
+            event.clipboardData.setData("text/plain", span.textContent);
+            const copy = copyGameId.getElementsByClassName("fa-copy")[0];
+            const check = copyGameId.getElementsByClassName("fa-check")[0];
+
+            copy.style.display = 'none';
+            $(check).addClass("ticked");
+            setTimeout((function () {
+                $(check).removeClass('ticked');
+                copy.style.display = 'block';
+                $(copy).addClass("fade-in");
+            }), 1000);
+        }
+    });
+}
+
 function restart() {
     const formData = {
         name: document.getElementById("this-user-id").value,
@@ -223,7 +208,7 @@ function restart() {
     location.reload();
 }
 
-$(document).ready(function(){
+function connectSocket(gameId) {
     // const socket = io();
     const socket = io.connect('http://localhost:8080'); // ??
 
@@ -232,7 +217,7 @@ $(document).ready(function(){
 
     socket.on('connect', function() {
         console.log('connected');
-        socket.emit('my event', {data: 'I\'m connected!'});
+        socket.emit('my event', {data: 'I\'m connected!'}); // TODO :: user specific msg? 'James has joined'?
     });
 
     // socket.on('connect', function() {
@@ -247,4 +232,10 @@ $(document).ready(function(){
         console.debug('Game state update received');
         init(message['game_id']);
     });
-});
+}
+
+function markupSymbol(value) {
+    if (value === 0) return '';
+    if (value === 1) return '<i class="fa fa-times symbol"></i>';
+    if (value === 2) return '<i class="fa-regular fa-circle symbol"></i>';
+}

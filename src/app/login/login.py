@@ -5,7 +5,6 @@ from src.app.model.board.nineboard import NineBoard
 from src.app.model.board.threeboard import ThreeBoard
 from src.app.model.game import Game
 from src.app.model.mode.gamemode import GameMode
-from src.app.model.status import Status
 
 
 # Login Logic
