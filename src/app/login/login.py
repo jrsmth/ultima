@@ -1,10 +1,5 @@
-import shortuuid
 from flask import redirect, url_for, render_template, Blueprint, request
-
-from src.app.model.board.nineboard import NineBoard
-from src.app.model.board.threeboard import ThreeBoard
-from src.app.model.game import Game
-from src.app.model.mode.gamemode import GameMode
+from src.app.model.game import Game, generate_game_id, generate_board, has_valid_game_id
 
 
 # Login Logic
@@ -23,10 +18,6 @@ def construct_blueprint(messages, socket, redis):
             game_id = request.form["gameId"]
             user_id = request.form["name"]
             game_mode = request.form["gameMode"]
-
-            if bool(request.form["restart"]):
-                redis.set("whoseTurn", "player1")
-                return redirect(url_for("game_page.game", game_id=request.form["gameId"], user_id=request.form["name"]))
 
             # Set up player one - Question :: extract?
             if request.form["gameId"] == "":
@@ -65,25 +56,3 @@ def construct_blueprint(messages, socket, redis):
 
     # Closing return
     return login_page
-
-
-def has_valid_game_id(game_id):
-    if game_id != "-1":  # Does game id already exist?
-        return True
-    else:
-        return False
-
-
-def generate_game_id():
-    return shortuuid.uuid()[:12]
-    # return "ab12-3cd4-e5f6-78gh"
-
-
-def generate_board(game_mode):
-    if game_mode == GameMode.STANDARD.value:
-        return ThreeBoard().list()
-    elif game_mode == GameMode.ULTIMATE.value:
-        return NineBoard().list()
-
-    else:
-        print("Game Mode already set [" + game_mode + "]")  # TODO :: err handle

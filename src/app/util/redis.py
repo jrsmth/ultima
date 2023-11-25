@@ -19,15 +19,27 @@ class Redis:
 
     # Set a complex key-value element by converting to json string
     def set_complex(self, key, complex_value):
-        # FixMe :: bit dodgy
-        json_value = str(jsons.dump(complex_value)).replace("False,", "false,").replace("True,", "true,")
+        json_value = standardise(jsons.dump(complex_value))
         print("[set_complex] Successful conversion to JSON, setting value: " + json_value)  # TODO :: TRACE
         return self.client.set(key, json_value)
 
     # Get a complex key-value element by converting from json string
     def get_complex(self, key):
-        json_value = self.client.get(key).decode('utf-8').replace("\'", "\"")  # FixMe :: bit dodgy
+        json_value = self.client.get(key).decode('utf-8')
         try:
-            return jsons.loads(json_value)
+            return jsons.loads(standardise(json_value))
         except JSONDecodeError:
             raise Exception("[get_complex] Error parsing retrieved object: " + str(json_value))
+
+
+# Standardises a JSON string for conversion into a python dict
+def standardise(value): # FixMe :: bit dodgy
+    # Convert Python `False` to JSON-standard `true`
+    standardised = str(value).replace("False,", "false,").replace("True,", "true,")
+
+    # Convert single-speech (') marks to the JSON-standard double-speech marks (")
+    return standardised.replace("{\'", "{\"") \
+                       .replace("\'}", "\"}") \
+                       .replace("\':", "\":") \
+                       .replace(" \'", " \"") \
+                       .replace("\',", "\",")

@@ -154,14 +154,6 @@ header #copy-game-id .fade-in {
 }
 
 /** Boards **/
-#board-section.this-user-1.player-1-False .threeboard .shadow-square .square,
-#board-section.this-user-1.player-1-False .nineboard .shadow-square.inner .square, #board-section.this-user-2.player-2-False .threeboard .shadow-square .square,
-#board-section.this-user-2.player-2-False .nineboard .shadow-square.inner .square, #board-section.game-complete-True .threeboard .shadow-square .square,
-#board-section.game-complete-True .nineboard .shadow-square.inner .square {
-  border: 1px solid rgba(231, 4, 83, 0.2509803922) !important;
-  cursor: default !important;
-}
-
 .board {
   display: grid;
   margin: 2rem auto 0 auto;
@@ -310,56 +302,54 @@ header #copy-game-id .fade-in {
 }
 
 /** Notification */
-.notification {
+#notification {
   margin: 0 auto;
   height: 5rem;
   width: 600px;
   letter-spacing: 0.5px;
   align-items: center;
   text-align: left;
+  display: none;
 }
-.notification.error {
+#notification.active {
+  display: flex;
+}
+#notification.error {
   margin: 2rem 1rem 0 1rem;
   width: 14rem;
 }
-.notification.error .notification-content {
+#notification.error #notification-content {
   margin: 1rem;
 }
-.notification.active-True {
-  display: flex;
-}
-.notification.active-False {
-  display: none;
-}
-.notification i {
+#notification i {
   font-size: 1.5rem;
   margin: 0 1.5rem;
 }
-.notification h3 {
+#notification h3 {
   margin: 0 0 0.5rem 0;
   font-weight: 400;
 }
-.notification p {
+#notification p {
   margin: 0;
   font-size: 0.7rem;
   font-weight: 200;
 }
-.notification.happy {
+#notification.happy {
   color: #d8ff00;
 }
-.notification.happy p {
+#notification.happy p {
   color: whitesmoke;
 }
-.notification.sad {
+#notification.sad {
   color: #e70453;
 }
-.notification.sad h3 {
+#notification.sad h3 {
   color: #ff2c63;
 }
-.notification.sad p {
+#notification.sad p {
   color: whitesmoke;
 }
-.notification .restart {
+#notification #restart {
   cursor: pointer;
 }
 

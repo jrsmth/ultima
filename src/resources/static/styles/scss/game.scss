@@ -133,21 +133,6 @@ header {
 }
 
 /** Boards **/
-#board-section {
-  .board {
-  }
-
-  &.this-user-1.player-1-False,
-  &.this-user-2.player-2-False,
-  &.game-complete-True {
-    .threeboard .shadow-square .square,
-    .nineboard .shadow-square.inner .square {
-      border: 1px solid $rose25 !important;
-      cursor: default !important;
-    }
-  }
-}
-
 .board {
   display: grid;
   margin: 2rem auto 0 auto;
@@ -213,7 +198,6 @@ header {
     }
   }
 }
-
 
 /** Nine Board */
 #nine-board {
@@ -328,25 +312,27 @@ header {
 }
 
 /** Notification */
-.notification {
+#notification {
   margin: 0 auto;
   height: 5rem;
   width: $boardLengthMax;
   letter-spacing: .5px;
   align-items: center;
   text-align: left;
+  display: none;
+
+  &.active {
+    display: flex;
+  }
 
   &.error {
     margin: 2rem 1rem 0 1rem;
     width: 14rem;
 
-    .notification-content {
+    #notification-content {
       margin: 1rem;
     }
   }
-
-  &.active-True  { display: flex }
-  &.active-False { display: none  }
 
   i {
     font-size: 1.5rem;
@@ -384,7 +370,7 @@ header {
       }
   }
 
-  .restart {
+  #restart {
     cursor: pointer;
   }
 }

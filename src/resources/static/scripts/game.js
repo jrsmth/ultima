@@ -1,9 +1,8 @@
 let userId;
 let gameState;
+let socket;
 
-async function init(gameId) { // TODO :: convert all to JQuery?
-    userId = $('#user-id')[0].value; // Question :: better way?
-
+async function init(gameId) {
     // Retrieve game state
     await $.get(`/game/state/${gameId}`).then(res => {
         console.debug("Initialising game state");
@@ -14,20 +13,20 @@ async function init(gameId) { // TODO :: convert all to JQuery?
         console.error(err);
     });
 
-    // Init user info
-    initUserInfo();
-
-    // Init board
-    const thisUser = [gameState['player_one'], gameState['player_two']].filter(obj => {
+    const thisPlayer = [gameState['player_one'], gameState['player_two']].filter(obj => {
         return obj.name === userId
     })[0];
 
-    if (gameState['game_mode'] === "standard") initStandardBoard(userId, thisUser['symbol'], gameState['board']);
-    if (gameState['game_mode'] === "ultimate") initUltimateBoard(userId, thisUser['symbol'], gameState['board']);
+    // Init user info
+    initUserInfo(thisPlayer);
+
+    // Init board
+    if (gameState['game_mode'] === "standard") initStandardBoard(userId, thisPlayer['symbol'], gameState['board']);
+    if (gameState['game_mode'] === "ultimate") initUltimateBoard(userId, thisPlayer['symbol'], gameState['board']);
 
 }
 
-function initUserInfo() {
+function initUserInfo(thisPlayer) {
     const playerOneName = gameState['player_one']['name'];
     const playerTwoName = gameState['player_two']['name'];
     $('#player-one-name')[0].innerText = playerOneName;
@@ -44,18 +43,49 @@ function initUserInfo() {
     cross.removeClass('active');
     circle.removeClass('active');
 
-    playerOne
-        .addClass(playerTurn === 1 ? ' active' : '')
-        .addClass(userId === playerOneName ? ' this-user' : '');
-    playerTwo
-        .addClass(playerTurn === 2 ? ' active' : '')
-        .addClass(userId === playerTwoName ? ' this-user' : '');
-    cross
-        .addClass(playerTurn === 1 ? ' active' : '')
-        .addClass(userId === playerOneName ? ' this-user' : '');
-    circle
-        .addClass(playerTurn === 2 ? ' active' : '')
-        .addClass(userId === playerTwoName ? ' this-user' : '');
+    const gameStarted = (playerTwoName !== "");
+    const gameInProgress = gameStarted && !gameState['complete'];
+    if (gameInProgress) {
+        playerOne
+            .addClass(playerTurn === 1 ? ' active' : '')
+            .addClass(userId === playerOneName ? ' this-user' : '');
+        playerTwo
+            .addClass(playerTurn === 2 ? ' active' : '')
+            .addClass(userId === playerTwoName ? ' this-user' : '');
+        cross
+            .addClass(playerTurn === 1 ? ' active' : '')
+            .addClass(userId === playerOneName ? ' this-user' : '');
+        circle
+            .addClass(playerTurn === 2 ? ' active' : '')
+            .addClass(userId === playerTwoName ? ' this-user' : '');
+
+    }
+
+    initNotification(thisPlayer["notification"]);
+}
+
+function initNotification(playerNotification) {
+    const playerTurn = $('#player-turn');
+    const notification = $('#notification');
+    const notificationContent = $('#notification-content');
+    notificationContent.empty();
+
+    if (playerNotification["active"]) {
+        playerTurn.addClass('hide');
+        notification.addClass('active');
+        notification.addClass(playerNotification["mood"]);
+
+        notificationContent.append(
+            `
+                <h3>${playerNotification["title"]}</h3>
+                <p>${playerNotification["content"]}</p>
+            `
+        );
+
+    } else {
+        playerTurn.removeClass('hide');
+        notification.removeClass();
+    }
 }
 
 function initStandardBoard(userId, thisSymbol, board) {
@@ -136,10 +166,7 @@ function initUltimateBoard(userId, thisSymbol) {
 }
 
 function placeStandardMove(index) {
-    const playerOne = gameState['player_one']['name'];
-    const playerTwo = gameState['player_two']['name'];
-
-    const gameNotStarted = (playerTwo === "");
+    const gameNotStarted = (gameState['player_two']['name'] === "");
     const gameComplete = gameState['complete'];
     const opponentTurn = !isUserTurn();
     const alreadyPlayed = gameState['board'][index] !== 0;
@@ -153,7 +180,6 @@ function placeStandardMove(index) {
     )
 }
 
-// Place Ultimate Move
 function placeUltimateMove(outerSquare, innerSquare) {
     const userSymbol = document.getElementById('this-user-symbol').value;
     const playerOneActive = document.getElementById('player-one-active').value;
@@ -209,21 +235,15 @@ function enableCopy() { // TODO :: switch to jquery
 }
 
 function restart() {
-    const formData = {
-        name: document.getElementById("this-user-id").value,
-        gameId: gameId,
-        gameMode: document.getElementById("game-mode").value,
-        playerMode: document.getElementById("player-mode").value,
-        restart: true
-    }
-
-    $.post('/', formData);
-    location.reload();
+    socket.emit('restart', {
+        gameId: gameState["game_id"],
+        userId: userId
+    });
 }
 
 function connectSocket(gameId) {
     // const socket = io();
-    const socket = io.connect('http://localhost:8080'); // ??
+    socket = io.connect('http://localhost:8080'); // ??
 
     // const socket = io();
     console.log(socket);

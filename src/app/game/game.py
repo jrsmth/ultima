@@ -4,8 +4,12 @@ import random
 from flask import render_template, url_for, redirect, Blueprint, Response
 
 from src.app.model.board.threeboard import ThreeBoard
+from src.app.model.combos import get_wins
+from src.app.model.game import generate_board
+from src.app.model.mode.gamemode import GameMode
 from src.app.model.mode.playermode import PlayerMode
 from src.app.model.mood import Mood
+from src.app.model.notification import Notification
 from src.app.model.status import Status
 from src.version.version import __version__
 
@@ -16,92 +20,25 @@ def construct_blueprint(messages, socket, redis):
 
     @game_page.route("/game/<game_id>/<user_id>")
     def game(game_id, user_id):
-        player_one_active = False
-        player_two_active = False
-        notification_active = False
-        game_complete = False
-        notification_header = ""
-        notification_message = ""
-        notification_icon = ""
-        notification_mood = Mood.NEUTRAL.value
-
         update_game_state(game_id, user_id + ' has joined the game')
+        check_status(game_id)
 
-        if redis.get("whoseTurn") == 'player1':
-            player_one_active = True
-        else:
-            player_two_active = True
+        return render_template("game.html", gameId=game_id, userId=user_id, version=__version__)
 
-        game_mode = redis.get("gameMode")
-        board = redis.get_complex("board")
-        game_state = Status.IN_PROGRESS
-        # game_state = get_game_state(redis, board)
+    @socket.on('restart')
+    def restart(message):
+        game_id = message['gameId']
+        user_id = message['userId']
+        game_state = redis.get_complex(game_id)
+        print(f"[restart] Received restart from [{ user_id }] for { game_id }")
 
-        if game_state != Status.IN_PROGRESS:
-            notification_active = True
-            game_complete = True
+        game_state["board"] = generate_board(game_state["game_mode"])
+        game_state["complete"] = False
+        game_state["player_one"]["notification"] = Notification()
+        game_state["player_two"]["notification"] = Notification()
 
-            if game_state == Status.DRAW:
-                notification_header = messages.load("game.end.draw.header")
-                notification_message = messages.load("game.end.draw.1.message")
-                notification_icon = messages.load("game.end.draw.icon")
-
-            elif game_state == Status.PLAYER_ONE_WINS:
-                if redis.get("player1") == user_id:
-                    notification_header = messages.load_with_params("game.end.win.header", [redis.get("player1")])
-                    notification_icon = messages.load("game.end.win.icon")
-                    notification_message = messages.load("game.end.win.1.message")
-                    notification_mood = Mood.HAPPY.value
-                else:
-                    notification_header = messages.load_with_params("game.end.lose.header", [redis.get("player2")])
-                    notification_icon = messages.load("game.end.lose.icon")
-                    notification_message = messages.load("game.end.lose.3.message")
-                    notification_mood = Mood.SAD.value
-
-            elif game_state == Status.PLAYER_TWO_WINS:
-                if redis.get("player2") == user_id:
-                    notification_header = messages.load_with_params("game.end.win.header", [redis.get("player2")])
-                    notification_icon = messages.load("game.end.win.icon")
-                    notification_message = messages.load("game.end.win.3.message")
-                    notification_mood = Mood.HAPPY.value
-                else:
-                    notification_header = messages.load_with_params("game.end.lose.header", [redis.get("player1")])
-                    notification_icon = messages.load("game.end.lose.icon")
-                    notification_message = messages.load("game.end.lose.1.message")
-                    notification_mood = Mood.SAD.value
-
-        return render_template(
-            "game.html",
-            gameId=game_id,
-            gameMode=game_mode,
-            userId=user_id,
-            version=__version__,
-
-
-            # Question :: Should I have an ~overloaded method for simply .get()?
-            # zero=redis.get("0"),
-            # one=redis.get("1"),
-            # two=redis.get("2"),
-            # three=redis.get("3"),
-            # four=redis.get("4"),
-            # five=redis.get("5"),
-            # six=redis.get("6"),
-            # seven=redis.get("7"),
-            # eight=redis.get("8"),
-            # gameComplete=game_complete,
-            # gameMode=game_mode,
-            # playerMode=redis.get("playerMode"),
-            # notificationActive=notification_active,
-            # notificationHeader=notification_header,
-            # notificationMessage=notification_message,
-            # notificationIcon=notification_icon,
-            # notificationMood=notification_mood,
-            # playerOneActive=player_one_active,
-            # playerTwoActive=player_two_active,
-            # thisUserId=user_id,
-            # thisUserSymbol=redis.get(user_id),
-            # whoseTurn=redis.get("whoseTurn")
-        )
+        redis.set_complex(game_id, game_state)
+        update_game_state(game_id, user_id + ' has restarted the game')
 
     @game_page.route("/game/<game_id>/place-move/<user_id>/<square>")
     def place_standard_move(game_id, user_id, square):
@@ -133,6 +70,8 @@ def construct_blueprint(messages, socket, redis):
             current_state["player_turn"] = 1
 
         redis.set_complex(game_id, current_state)
+        check_status(game_id)
+
         update_game_state(game_id, user_id + ' has placed move on square ' + square)
 
         return Response(status=204)
@@ -185,7 +124,7 @@ def construct_blueprint(messages, socket, redis):
         return redirect(url_for("game_page.game", game_id=game_id, user_id=user_id))
 
     @game_page.route('/game/state/<game_id>')
-    def retrieve_game_state(game_id):  # TODO :: rename -> get_game_state?
+    def get_game_state(game_id):
         game_state = redis.get_complex(game_id)
         print('[retrieve_game_state] Retrieving game state: ' + str(game_state))
         return Response(status=200, content_type='application/json', response=json.dumps(game_state))
@@ -196,64 +135,61 @@ def construct_blueprint(messages, socket, redis):
         print('[update_game_state] Game state updated for game id: ' + game_id)
         socket.emit('update_game_state', redis.get_complex(game_id))
 
+    def check_status(game_id):
+        state = redis.get_complex(game_id)
+        print("[check_status] Checking status for game with state: " + str(state))
+        status = calculate_game_status(state)
+        print("[check_status] Status determined to be: " + str(status))
+
+        if status != Status.IN_PROGRESS:
+            state["player_one"]["notification"] = build_notification(state, messages, status, 1)
+            state["player_two"]["notification"] = build_notification(state, messages, status, 2)
+            state["complete"] = True
+            redis.set_complex(game_id, state)
+
+    def calculate_game_status(state):
+        print("[calculate_game_status] Calculating status for game with mode: " + state["game_mode"])
+        if state["game_mode"] == GameMode.ULTIMATE.value:
+            return calculate_ultimate_status(state)
+        if state["board"].count(0) == 0:
+            return Status.DRAW
+        elif has_player_won(state["board"], 1):
+            return Status.PLAYER_ONE_WINS
+        elif has_player_won(state["board"], 2):
+            return Status.PLAYER_TWO_WINS
+        else:
+            return Status.IN_PROGRESS
+
+    def calculate_ultimate_status(state):
+        board = state["board"]
+        outer_states = []
+        for outer_square in board:
+            outer_state = calculate_game_status(outer_square)
+            outer_states.append(outer_state.value)
+            print("[calculate_ultimate_status] inner_states: " + str(outer_states))
+            if len(outer_states) == 9 and outer_states.count(1) == 0:
+                return Status.DRAW
+        state["outer_states"] = outer_states
+        redis.set_complex(state["game_id"], state)
+        return calculate_game_status(create_false_board(outer_states))
+
     # Closing return
     return game_page
 
 
-def get_game_state(redis, board):
-    winning_combos = [
-        [0, 1, 2],
-        [3, 4, 5],
-        [6, 7, 8],
-        [0, 3, 6],
-        [1, 4, 7],
-        [2, 5, 8],
-        [0, 4, 8],
-        [2, 4, 6]
-    ]
+def has_player_won(board, player):
+    if (board.count(player)) >= 3:
+        player_moves = []
 
-    if isinstance(board[0], list):
-        print("[get_game_state] board[0]: " + str(board[0]))
-        inner_states = []
-        for outer_square in board:
-            inner_state = get_game_state(redis, outer_square)
-            inner_states.append(inner_state.value)
-            print("[get_game_state] inner_states: " + str(inner_states))
-            if len(inner_states) == 9 and inner_states.count(1) == 0:
-                return Status.DRAW
-        redis.set_complex("innerStates", inner_states)
-        return get_game_state(redis, create_false_board(inner_states))
+        for index in range(len(board)):
+            if board[index] == player:
+                player_moves.append(index)
 
-    if board.count(0) == 0:
-        return Status.DRAW
-        # FixMe :: this check needs to happen after test each player has won...
-        # Note :: There is probs a clean way to split this up so that you don't iterate when not nec...
-
-    print("count: " + str(board.count(1)))
-    if (board.count(1)) >= 3:
-        player_moves = get_player_moves(1, board)
-        print(player_moves)
-        for combo in winning_combos:
-            print(combo)
+        for combo in get_wins():
             if set(combo).issubset(set(player_moves)):
-                return Status.PLAYER_ONE_WINS
+                return True
 
-    if (board.count(2)) >= 3:
-        player_moves = get_player_moves(2, board)
-        for combo in winning_combos:
-            if set(combo).issubset(set(player_moves)):
-                return Status.PLAYER_TWO_WINS
-
-    return Status.IN_PROGRESS
-
-
-def get_player_moves(player, board):
-    player_moves = []
-    for index in range(len(board)):
-        if board[index] == player:
-            player_moves.append(index)
-
-    return player_moves
+    return False
 
 
 def convert_states_to_symbols(state):
@@ -277,3 +213,34 @@ def create_false_board(states):
 
     print("[create_false_board] board: " + str(board.list()))
     return board.list()
+
+
+def build_notification(game_state, messages, game_status, player):
+    print(f"[build_notification] Building notification for player [{player}] with status [{game_status}]")
+    notification = Notification()
+    notification.active = True
+
+    if game_status == Status.DRAW:
+        notification.title = messages.load("game.end.draw.header")
+        notification.content = messages.load("game.end.draw.1.message")
+        notification.icon = messages.load("game.end.draw.icon")
+        return notification
+
+    player_won = (game_status == Status.PLAYER_ONE_WINS and player == 1) or \
+                 (game_status == Status.PLAYER_TWO_WINS and player == 2)
+
+    player_name = game_state["player_" + ("one" if player == 1 else "two")]["name"]
+
+    if player_won:
+        notification.title = messages.load_with_params("game.end.win.header", [player_name])
+        notification.content = messages.load("game.end.win.1.message")
+        notification.icon = messages.load("game.end.win.icon")
+        notification.mood = Mood.HAPPY.value
+    else:
+        notification.title = messages.load_with_params("game.end.lose.header", [player_name])
+        notification.content = messages.load("game.end.lose.1.message")
+        notification.icon = messages.load("game.end.lose.icon")
+        notification.mood = Mood.SAD.value
+
+    # TODO :: implement random message selection
+    return notification
