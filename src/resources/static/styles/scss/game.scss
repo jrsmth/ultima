@@ -134,7 +134,8 @@ header {
 
 /** Boards **/
 .board {
-  display: grid;
+  &.active { display: grid; }
+  display: none;
   margin: 2rem auto 0 auto;
   height: $boardLengthDefault;
   aspect-ratio: 1 / 1;
@@ -175,9 +176,13 @@ header {
         position: absolute;
         margin-top: calc(47.5% - 2rem);
       }
+    }
 
-      &.this-user {
-        background-color: $chartreuse;
+    &:has(.this-user) {
+      border: 1px solid $chartreuse !important;
+
+      .square {
+        background-color: $chartreuse !important;
         border: 1px solid $chartreuse !important;
         cursor: default !important ;
 
@@ -185,9 +190,13 @@ header {
           color: $aubergine;
         }
       }
+    }
 
-      &.opponent {
-        background-color: $rose;
+    &:has(.opponent) {
+      border: 1px solid $rose !important;
+
+      .square {
+        background-color: $rose !important;
         border: 1px solid $rose !important;
         cursor: default !important;
 
@@ -204,15 +213,53 @@ header {
   .shadow.outer {
     margin: .5rem;
 
-    &:not(.playable, .this-user, .opponent) {
-      .inner:not(.playable, .this-user, .opponent) {
+    &.draw {
+      opacity: .3;
+    }
+
+    &.this-user, &.opponent {
+      .inner {
+        opacity: 1 !important;
+        color: $aubergine;
+        .square {
+          cursor: default !important;
+        }
+      }
+    }
+
+    &.this-user {
+      .inner {
+        border: 1px solid $chartreuse !important;
+        .square {
+          background-color: $chartreuse;
+          border: 1px solid $chartreuse !important;
+        }
+      }
+    }
+
+    &.opponent {
+      .inner {
+        border: 1px solid $rose !important;
+        .square {
+          background-color: $rose;
+          border: 1px solid $rose !important;
+        }
+      }
+    }
+
+    &:not(.playable, .this-user, .opponent-user) {
+      .inner:not(.playable, .this-user, .opponent-user) {
         cursor: default !important;
-        opacity: .3;
+        opacity: .5;
 
         .square {
           cursor: default !important;
           border: 1px solid $rose25 !important;
         }
+      }
+
+      .inner .this-user.square {
+        border: 1px solid $chartreuse !important;
       }
     }
 
@@ -220,32 +267,6 @@ header {
       display: grid;
       grid-template-columns: 33.3% 33.33% 33.3%;
       height: 100%;
-    }
-
-    &.this-user .shadow.inner {
-      border: 1px solid $chartreuse !important;
-      opacity: 1;
-
-      .square {
-        border: 1px solid $chartreuse !important;
-        background-color: $chartreuse !important;
-        cursor: default !important;
-      }
-    }
-
-    &.opponent .shadow.inner {
-      border: 1px solid $rose !important;
-      opacity: 1;
-
-      .square {
-        border: 1px solid $rose !important;
-        background-color: $rose !important;
-        cursor: default !important;
-      }
-    }
-
-    &.draw .shadow.inner {
-      opacity: .1;
     }
   }
 
@@ -255,13 +276,12 @@ header {
     background-color: $aubergine;
     border-radius: .5rem;
 
-    .square {
+    .square { // FixMe :: duplication w/ threeboard
       border-radius: inherit;
-      transform: translate(-0.25rem, -0.25rem);
+      transform: translate(-.25rem, -.25rem);
       border: 1px solid $rose25;
       background-color: $aubergine;
       transition: .5s;
-      cursor: pointer;
       align-content: center;
       justify-content: center;
       display: flex;
@@ -269,9 +289,10 @@ header {
       height: 100%;
       width: 100%;
 
-      &:hover {
+      &:hover:not(.inactive) {
         opacity: 1;
         border: 1px solid $chartreuse;
+        cursor: pointer;
       }
 
       .symbol {
@@ -281,13 +302,14 @@ header {
       }
     }
 
-    &.this-user {
-      border: 1px solid $chartreuse;
+    &:has(.this-user) {
+      border: 1px solid $chartreuse !important;
+      opacity: 1 !important;
 
       .square {
-        border: 1px solid $chartreuse;
-        background-color: $chartreuse;
-        cursor: default;
+        background-color: $chartreuse !important;
+        border: 1px solid $chartreuse !important;
+        cursor: default !important;
 
         .symbol {
           color: $aubergine;
@@ -295,18 +317,23 @@ header {
       }
     }
 
-    &.opponent {
-      border: 1px solid $rose;
+    &:has(.opponent) {
+      border: 1px solid $rose !important;
+      opacity: 1 !important;
 
       .square {
-        border: 1px solid $rose;
-        background-color: $rose;
-        cursor: default;
+        background-color: $rose !important;
+        border: 1px solid $rose !important;
+        cursor: default !important;
 
         .symbol {
           color: $aubergine;
         }
       }
+    }
+
+    &:has(.draw) { // Remove?
+      opacity: .1;
     }
   }
 }

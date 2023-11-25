@@ -53,23 +53,7 @@
                 </div>
                 <section id="board-section">
                     <div class="board" id="three-board"></div>
-
-                    {% if gameMode == "ULTIMATE" %}
-                    <div class="board" id="nine-board">
-                        {% for outer_square in board %}
-                            <div class="shadow-square outer" id="nine-square-{{ loop.index0 }}">
-                                <div class="square">
-                                {% set outer_index = loop.index0 %}
-                                {% for inner_square in outer_square %}
-                                    <div class="shadow-square inner" id="nine-square-{{ outer_index }}-{{ loop.index0 }}">
-                                        <div class="square" onclick="placeUltimateMove('{{ outer_index }}', '{{ loop.index0 }}')">{{ inner_square }}</div>
-                                    </div>
-                                {% endfor %}
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
+                    <div class="board" id="nine-board"></div>
                 </section>
             </section>
             <section class="side-bar right"></section>

@@ -24,6 +24,7 @@ def construct_blueprint(messages, socket, redis):
                 game.game_mode = game_mode
                 game.player_mode = player_mode
                 game.player_one.name = request.form["name"]
+                game.player_two.name = ""
                 game.board = generate_board(game_mode)
 
                 if player_mode == PlayerMode.SINGLE.value:
