@@ -37,6 +37,9 @@ def construct_blueprint(messages, socket, redis):
         game_state["player_one"]["notification"] = Notification()
         game_state["player_two"]["notification"] = Notification()
 
+        if game_state["player_mode"] == PlayerMode.SINGLE.value:
+            game_state["player_turn"] = 1
+
         redis.set_complex(game_id, game_state)
         update_game_state(game_id, user_id + ' has restarted the game')
 
@@ -45,35 +48,37 @@ def construct_blueprint(messages, socket, redis):
         print("[place_standard_move] [" + game_id + "] [" + user_id + "] Placing square with index: " + square)
 
         # Set player's move
-        current_state = redis.get_complex(game_id)  # Question :: marshal into obj?
+        current_state = redis.get_complex(game_id)
         board = current_state["board"]
         print("[place_standard_move] Board retrieved: " + str(board))
 
         players = [current_state["player_one"], current_state["player_two"]]
-        user_symbol = [player for player in players if player["name"] == user_id][0]["symbol"]
-        # Could be more elegant ^
+        user_symbol = [player for player in players if player["name"] == user_id][0]["symbol"]  # Could be more elegant
         board[int(square)] = user_symbol
         current_state["board"] = board
 
         # Switch player turn
         if current_state["player_turn"] == 1:
-            # TODO :: I need to test the game state here to prevent the Computer from placing after I win...
             current_state["player_turn"] = 2
-            if redis.get("playerMode") == PlayerMode.SINGLE.value:
+            redis.set_complex(game_id, current_state)
+            if check_status(game_id) != Status.IN_PROGRESS:
+                update_game_state(game_id, user_id + ' has placed move on square ' + square)
+                return Response(status=204)
+
+            # Place Computer move [single mode]
+            elif current_state["player_mode"] == PlayerMode.SINGLE.value:
                 available_squares = [index for index, square in enumerate(current_state["board"]) if square == 0]
                 print("[place_standard_move] [single] Available squares: " + str(available_squares))
                 if available_squares:
                     print("[place_standard_move] [single] Computer is placing move in random available square")
-                    place_standard_move(game_id, "Computer", random.choice(available_squares))
+                    place_standard_move(game_id, "Computer", str(random.choice(available_squares)))
 
         elif current_state["player_turn"] == 2:
             current_state["player_turn"] = 1
+            redis.set_complex(game_id, current_state)
 
-        redis.set_complex(game_id, current_state)
         check_status(game_id)
-
         update_game_state(game_id, user_id + ' has placed move on square ' + square)
-
         return Response(status=204)
 
     @game_page.route("/game/<game_id>/place-move/<user_id>/<outer_square>/<inner_square>")
@@ -128,7 +133,6 @@ def construct_blueprint(messages, socket, redis):
         game_state = redis.get_complex(game_id)
         print('[retrieve_game_state] Retrieving game state: ' + str(game_state))
         return Response(status=200, content_type='application/json', response=json.dumps(game_state))
-        # Question :: Custom Response class?
 
     def update_game_state(game_id, description):
         print('[update_game_state] Game state update: ' + description)
@@ -146,6 +150,7 @@ def construct_blueprint(messages, socket, redis):
             state["player_two"]["notification"] = build_notification(state, messages, status, 2)
             state["complete"] = True
             redis.set_complex(game_id, state)
+        return status
 
     def calculate_game_status(state):
         print("[calculate_game_status] Calculating status for game with mode: " + state["game_mode"])
@@ -173,7 +178,7 @@ def construct_blueprint(messages, socket, redis):
         redis.set_complex(state["game_id"], state)
         return calculate_game_status(create_false_board(outer_states))
 
-    # Closing return
+    # Blueprint return
     return game_page
 
 
@@ -219,10 +224,11 @@ def build_notification(game_state, messages, game_status, player):
     print(f"[build_notification] Building notification for player [{player}] with status [{game_status}]")
     notification = Notification()
     notification.active = True
+    random_message = str(random.randrange(3))
 
     if game_status == Status.DRAW:
         notification.title = messages.load("game.end.draw.header")
-        notification.content = messages.load("game.end.draw.1.message")
+        notification.content = messages.load("game.end.draw." + random_message + ".message")
         notification.icon = messages.load("game.end.draw.icon")
         return notification
 
@@ -233,14 +239,13 @@ def build_notification(game_state, messages, game_status, player):
 
     if player_won:
         notification.title = messages.load_with_params("game.end.win.header", [player_name])
-        notification.content = messages.load("game.end.win.1.message")
+        notification.content = messages.load("game.end.win." + random_message + ".message")
         notification.icon = messages.load("game.end.win.icon")
         notification.mood = Mood.HAPPY.value
     else:
         notification.title = messages.load_with_params("game.end.lose.header", [player_name])
-        notification.content = messages.load("game.end.lose.1.message")
+        notification.content = messages.load("game.end.lose." + random_message + ".message")
         notification.icon = messages.load("game.end.lose.icon")
         notification.mood = Mood.SAD.value
 
-    # TODO :: implement random message selection
     return notification

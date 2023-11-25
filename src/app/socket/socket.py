@@ -14,5 +14,5 @@ def construct_blueprint(socket, redis):
         print(str(message))
         emit('my_response', {'data': message['data'], 'count': session['receive_count']})
 
-    # Closing return
+    # Blueprint return
     return socket_page
