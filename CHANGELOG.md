@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 # Releases
 <!-- @LatestFirst -->
 
+## [0.5.0] - 27/11/23
+- UMA-30: Add the ability to display a message from the backend via message topic
+- UMA-31: Implement websocket replacement throughout game flow for both game and player modes
+
 ## [0.4.1] - 18/11/23
 - UMA-29: [BUG] Computer incorrectly places in already completed outer-squares (Ultimate)
 
@@ -78,4 +82,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.3.1]: https://github.com/jrsmth/ultima/compare/0.3.0...0.3.1
 [0.3.2]: https://github.com/jrsmth/ultima/compare/0.3.1...0.3.2
 [0.4.0]: https://github.com/jrsmth/ultima/compare/0.3.2...0.4.0
-[0.4.0]: https://github.com/jrsmth/ultima/compare/0.4.0...0.4.1
+[0.4.1]: https://github.com/jrsmth/ultima/compare/0.4.0...0.4.1
+[0.5.0]: https://github.com/jrsmth/ultima/compare/0.4.1...0.5.0
