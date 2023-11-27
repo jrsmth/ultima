@@ -8,17 +8,6 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/css/game.css') }}">
     </head>
     <body>
-        <input id="game-id" type="hidden" value="{{ gameId }}">
-        <input id="user-id" type="hidden" value="{{ userId }}">
-        <input id="this-user-symbol" type="hidden" value="{{ thisUserSymbol }}">
-        <input id="player-one-active" type="hidden" value="{{ playerOneActive }}">
-        <input id="player-two-active" type="hidden" value="{{ playerTwoActive }}">
-        <input id="game-complete" type="hidden" value="{{ gameComplete }}">
-        <input id="game-mode" type="hidden" value="{{ gameMode }}">
-        <input id="player-mode" type="hidden" value="{{ playerMode }}">
-        <input id="inner-states" type="hidden" value="{{ innerStates }}">
-        <input id="playable-square" type="hidden" value="{{ playableSquare }}">
-        <!--        <input id="player-turn" type="hidden" value="{{ whoseTurn }}">-->
         <header>
             <div class="tooltip">
                 <a href="https://github.com/jrsmth/ultima" target="_blank"><img id="badge" alt="badge" src="{{ url_for('static', filename='img/badge.png') }}"></a>
@@ -46,21 +35,12 @@
                     <span id="player-two-name"></span>
                     <i class="symbol fa-regular fa-circle" id="player-two-symbol"></i>
                 </div>
-<!--                <div class="notification error active-{{ notificationActive }} sad">-->
-<!--                    <div class="notification-content">-->
-<!--                        <h3>Invalid Move</h3>-->
-<!--                        <p>Play in the highlighted square</p>-->
-<!--                    </div>-->
-<!--                </div>-->
             </section>
             <section class="main-bar">
-<!--                <div class="notification active-{{ notificationActive }} {{ notificationMood }}">-->
-<!--                    <i class="fa-solid fa-arrow-rotate-left restart" onclick="restart()"></i>-->
-<!--                    <div class="notification-content">-->
-<!--                        <h3>{{ notificationHeader }}</h3>-->
-<!--                        <p>{{ notificationMessage }}</p>-->
-<!--                    </div>-->
-<!--                </div>-->
+                <div id="notification">
+                    <i id="restart" class="fa-solid fa-arrow-rotate-left" onclick="restart()"></i>
+                    <div id="notification-content"></div>
+                </div>
                 <div id="player-turn">
                     <div id="cross">
                         <i class="fa fa-times symbol"></i>
@@ -72,30 +52,8 @@
                     </div>
                 </div>
                 <section id="board-section">
-                    {% if gameMode == "STANDARD" %}
-                    <div class="board threeboard">
-                        {% for square in board %}
-                            <div class="shadow-square" id="three-square-{{ loop.index0 }}"><div class="square" onclick="placeStandardMove('{{ loop.index0 }}')">{{ square }}</div></div>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
-
-                    {% if gameMode == "ULTIMATE" %}
-                    <div class="board nineboard">
-                        {% for outer_square in board %}
-                            <div class="shadow-square outer" id="nine-square-{{ loop.index0 }}">
-                                <div class="square">
-                                {% set outer_index = loop.index0 %}
-                                {% for inner_square in outer_square %}
-                                    <div class="shadow-square inner" id="nine-square-{{ outer_index }}-{{ loop.index0 }}">
-                                        <div class="square" onclick="placeUltimateMove('{{ outer_index }}', '{{ loop.index0 }}')">{{ inner_square }}</div>
-                                    </div>
-                                {% endfor %}
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
+                    <div class="board" id="three-board"></div>
+                    <div class="board" id="nine-board"></div>
                 </section>
             </section>
             <section class="side-bar right"></section>
@@ -105,6 +63,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
     <script src="{{ url_for('static', filename='scripts/game.js') }}"></script>
     <script>
-        init("{{ gameId }}")
+        $(document).ready(function() {
+            userId = "{{ userId }}";
+            enableCopy();
+            connectSocket("{{ gameId }}");
+            init("{{ gameId }}");
+        })
     </script>
 </html>

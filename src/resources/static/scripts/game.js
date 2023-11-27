@@ -1,11 +1,8 @@
 let userId;
-let thisSymbol;
-let gameId;
+let gameState;
+let socket;
 
-async function init(gameId) { // TODO :: convert all to JQuery?
-    let gameState;
-    userId = $('#user-id')[0].value; // Question :: better way?
-
+async function init(gameId) {
     // Retrieve game state
     await $.get(`/game/state/${gameId}`).then(res => {
         console.debug("Initialising game state");
@@ -16,49 +13,191 @@ async function init(gameId) { // TODO :: convert all to JQuery?
         console.error(err);
     });
 
-    // Init user info
-    const thisUser = [gameState['player_one'], gameState['player_two']].filter(obj => {
+    const thisPlayer = [gameState['player_one'], gameState['player_two']].filter(obj => {
         return obj.name === userId
-    })
+    })[0];
 
-    const playerOne = gameState['player_one']['name'];
-    const playerTwo = gameState['player_two']['name'];
-    $('#player-one-name')[0].innerText = playerOne;
-    $('#player-two-name')[0].innerText = playerTwo;
-
-    const playerTurn = gameState['player_turn'];
-    $('#player-one')
-        .addClass(playerTurn === 1 ? ' active' : '')
-        .addClass(userId === playerOne ? ' this-user' : '');
-    $('#player-two')
-        .addClass(playerTurn === 2 ? ' active' : '')
-        .addClass(userId === playerTwo ? ' this-user' : '');
-    $('#cross')
-        .addClass(playerTurn === 1 ? ' active' : '')
-        .addClass(userId === playerOne ? ' this-user' : '');
-    $('#circle')
-        .addClass(playerTurn === 2 ? ' active' : '')
-        .addClass(userId === playerTwo ? ' this-user' : '');
-    // TODO :: refactor^^
+    // Init user info
+    initUserInfo(thisPlayer);
 
     // Init board
-    if (gameState['game_mode'] === "STANDARD") createStandardBoard(userId, thisUser['symbol']);
-    if (gameState['game_mode'] === "ULTIMATE") createUltimateBoard(userId, thisUser['symbol']);
+    if (gameState['game_mode'] === "standard") initStandardBoard(userId, thisPlayer['symbol'], gameState['board']);
+    if (gameState['game_mode'] === "ultimate") initUltimateBoard(userId, thisPlayer['symbol'], gameState['board']);
 
+}
 
+function initUserInfo(thisPlayer) {
+    const playerOneName = gameState['player_one']['name'];
+    const playerTwoName = gameState['player_two']['name'];
+    $('#player-one-name')[0].innerText = playerOneName;
+    $('#player-two-name')[0].innerText = playerTwoName;
 
+    const playerTurn = gameState['player_turn'];
+    const playerOne = $('#player-one');
+    const playerTwo = $('#player-two');
+    const cross = $('#cross');
+    const circle = $('#circle');
 
-    thisSymbol = document.getElementById('this-user-symbol').value;
-    const gameMode = document.getElementById('game-mode').value;
+    playerOne.removeClass('active');
+    playerTwo.removeClass('active');
+    cross.removeClass('active');
+    circle.removeClass('active');
 
-    if (gameMode === "STANDARD") initStandard(userId, thisSymbol);
-    if (gameMode === "ULTIMATE") initUltimate(userId, thisSymbol);
+    const gameStarted = (playerTwoName !== "");
+    const gameInProgress = gameStarted && !gameState['complete'];
+    if (gameInProgress) {
+        playerOne
+            .addClass(playerTurn === 1 ? ' active' : '')
+            .addClass(userId === playerOneName ? ' this-user' : '');
+        playerTwo
+            .addClass(playerTurn === 2 ? ' active' : '')
+            .addClass(userId === playerTwoName ? ' this-user' : '');
+        cross
+            .addClass(playerTurn === 1 ? ' active' : '')
+            .addClass(userId === playerOneName ? ' this-user' : '');
+        circle
+            .addClass(playerTurn === 2 ? ' active' : '')
+            .addClass(userId === playerTwoName ? ' this-user' : '');
 
+    }
+
+    initNotification(thisPlayer["notification"]);
+}
+
+function initNotification(playerNotification) {
+    const playerTurn = $('#player-turn');
+    const notification = $('#notification');
+    const notificationContent = $('#notification-content');
+    notificationContent.empty();
+
+    if (playerNotification["active"]) {
+        playerTurn.addClass('hide');
+        notification.addClass('active');
+        notification.addClass(playerNotification["mood"]);
+
+        notificationContent.append(
+            `
+                <h3>${playerNotification["title"]}</h3>
+                <p>${playerNotification["content"]}</p>
+            `
+        );
+
+    } else {
+        playerTurn.removeClass('hide');
+        notification.removeClass();
+    }
+}
+
+function initStandardBoard(userId, thisSymbol, board) {
+    const threeboard = $('#three-board');
+    threeboard.addClass('active');
+    threeboard.empty();
+
+    for (let i = 0; i < 9; i++) {
+        const classList = getSquareClass(board[i], thisSymbol);
+        const markup =
+        `
+            <div class="shadow" id="three-${i}">
+                <div class="square ${classList}" onclick="placeStandardMove(${i})">${markupSymbol(board[i])}</div>
+            </div>
+        `;
+
+        threeboard.append(markup);
+    }
+}
+
+function initUltimateBoard(userId, thisSymbol, board) {
+    const nineboard = $('#nine-board');
+    nineboard.addClass('active');
+    nineboard.empty();
+
+    const outerStates = gameState["outer_states"];
+    for (let i = 0; i < 9; i++) {
+        let innerSquares = '';
+        let outerClasses = '';
+        if (outerStates[i] === 2) { outerClasses += "draw" }
+        if (outerStates[i] === 3) { outerClasses += (thisSymbol === 1 ? "this-user" : "opponent") }
+        if (outerStates[i] === 4) { outerClasses += (thisSymbol === 2 ? "this-user" : "opponent") }
+
+        const playableSquare = (gameState["playable_square"] === -1) || (gameState["playable_square"] === i);
+        const notTaken = (outerStates[i] === 1);
+        const playable = playableSquare && notTaken;
+        if (playable) outerClasses += 'playable';
+
+        for (let j = 0; j < 9; j++) {
+            let classList = '';
+            if (!outerClasses.includes("this-user") && !outerClasses.includes("opponent")) {
+                classList = getSquareClass(board[i][j], thisSymbol);
+            }
+
+            innerSquares +=
+                `
+                    <div class="shadow inner" id="nine-${i}-${j}">
+                        <div class="square ${classList}" onclick="placeUltimateMove(${i}, ${j})">
+                            ${markupSymbol(board[i][j])}
+                        </div>
+                    </div>
+                `
+        }
+
+        const outerSquare =
+            `
+                <div class="shadow outer ${outerClasses}" id="nine-${i}">
+                    <div class="square">
+                        ${innerSquares}
+                    </div>
+                </div>
+            `
+
+        nineboard.append(outerSquare);
+    }
+}
+
+function placeStandardMove(index) {
+    if (allowedToPlace(index)) {
+        $.get(`/game/${gameState['game_id']}/place-move/${userId}/${index}`)
+            .catch(err => {
+                    console.error(`[placeStandardMove] Error placing move for square with index [${index}]`);
+                    console.error(err);
+                }
+            );
+        // TODO :: disallow a second user click whilst first is processing...
+    }
+}
+
+function placeUltimateMove(outerIndex, innerIndex) {
+    const outerSquare = $(`#nine-${outerIndex}`);
+    const innerSquare = $(`#nine-${outerIndex}-${innerIndex}`);
+
+    const innerSquareComplete = innerSquare.find('.square')[0].innerHTML.trim() !== '';
+    const outerSquareComplete = outerSquare.hasClass('this-user') ||
+                                outerSquare.hasClass('opponent') ||
+                                outerSquare.hasClass('draw');
+
+    const canPlace = allowedToPlace(outerIndex, innerIndex) &&
+                     outerSquare.hasClass('playable') &&
+                     !innerSquareComplete &&
+                     !outerSquareComplete
+
+    if (canPlace) {
+        $.get(`/game/${gameState['game_id']}/place-move/${userId}/${outerIndex}/${innerIndex}`)
+            .catch(err => {
+                    console.error(`[placeStandardMove] Error placing move for square with index [${index}]`);
+                    console.error(err);
+                }
+            );
+        // TODO :: disallow a second user click whilst first is processing...
+    }
+}
+
+function enableCopy() { // TODO :: switch to jquery
     const copyGameId = document.getElementById("copy-game-id");
     const span = copyGameId.querySelector("span");
     span.onclick = function () {
         document.execCommand("copy");
     }
+
+    // TODO :: revisit the animation and styling
     span.addEventListener("copy", function (event) {
         event.preventDefault();
         if (event.clipboardData) {
@@ -77,162 +216,23 @@ async function init(gameId) { // TODO :: convert all to JQuery?
     });
 }
 
-function createStandardBoard(userId, thisSymbol) {
-    // Get the threeboard
-    // Create 9 html elements with value from board
-    // Append to threeboard...
-    // TODO^^
-
-
-    for (let i = 0; i < 9; i++) {
-        const square = document.getElementById(`three-square-${i}`).getElementsByClassName("square")[0];
-        const state = square.innerHTML;
-        if (state === thisSymbol) {
-            square.parentElement.classList.add("this-user");
-        } else if (state !== "0") {
-            square.parentElement.classList.add("opponent-user");
-        }
-
-        if (state === "0") {
-            square.innerHTML = '';
-        } else if (state === "1") {
-            square.innerHTML = '<i class="fa fa-times symbol"></i>'
-        } else if (state === "2") {
-            square.innerHTML = '<i class="fa-regular fa-circle symbol"></i>'
-        }
-    }
-}
-
-function createUltimateBoard(userId, thisSymbol) {
-    const innerStates = JSON.parse(document.getElementById("inner-states").value);
-    const playableSquare = document.getElementById("playable-square").value;
-    console.log(playableSquare)
-
-    for (let i = 0; i < 9; i++) {
-        const outerSquare = document.getElementById(`nine-square-${i}`);
-
-        if (innerStates[i] === 2) { outerSquare.classList.add("draw") }
-        if (innerStates[i] === 3) { outerSquare.classList.add(thisSymbol === '1' ? "this-user" : "opponent-user"); console.log(i) }
-        if (innerStates[i] === 4) { outerSquare.classList.add(thisSymbol === '2' ? "this-user" : "opponent-user") }
-
-        if (
-            (playableSquare === "-1" || playableSquare === i.toString()) &&
-            (!outerSquare.classList.contains("this-user") && !outerSquare.classList.contains("opponent-user") && !outerSquare.classList.contains("draw"))
-        ) { outerSquare.classList.add("playable") }
-
-        let outerBoard = []
-        for (let j = 0; j < 9; j++) {
-            const innerSquare = document.getElementById(`nine-square-${i}-${j}`).getElementsByClassName("square")[0];
-
-            const innerState = innerSquare.innerHTML;
-            if (innerState === thisSymbol) {
-                innerSquare.parentElement.classList.add("this-user");
-            } else if (innerState !== "0") {
-                innerSquare.parentElement.classList.add("opponent-user");
-            }
-
-            if (innerState === "0") {
-                innerSquare.innerHTML = '';
-            } else if (innerState === "1") {
-                innerSquare.innerHTML = '<i class="fa fa-times symbol"></i>'
-            } else if (innerState === "2") {
-                innerSquare.innerHTML = '<i class="fa-regular fa-circle symbol"></i>'
-            }
-
-            outerBoard.push(innerState)
-        }
-
-        // // if outerSquare has a win or lose status, apply colouring and prevent selection...
-        // // how to obtain status? outer_board array? or can we generate that here(!)
-        // // make a request to the backend to tell if the board is complete?
-        // // if count of 1 > 3 or count 2 > 3, make the call to get game state for that square
-        // $.get(`/game/${gameId}/state//${outerSquare}`)
-        //     .then((res) => {
-        //         if (res === "Status.PLAYER_ONE_WINS") {
-        //             // Add class to the outer square, depending on thisPlayer
-        //         } else if (res === "Status.PLAYER_TWO_WINS") {
-        //             // Add class to the outer square, depending on thisPlayer
-        //         }
-        //     })
-        //     .catch((e) => {
-        //         console.log(`Error getting the [${outerSquare}] game state for game with ID [${gameId}]`);
-        //         console.log(e);
-        //     })
-        //
-        // // Question :: would an outer board array we more performant?
-    }
-}
-
-function placeStandardMove(square) {
-    const userSymbol = document.getElementById('this-user-symbol').value;
-    const playerOneActive = document.getElementById('player-one-active').value;
-    const playerTwoActive = document.getElementById('player-two-active').value;
-    const gameComplete = document.getElementById('game-complete').value;
-
-    if (gameComplete === 'True') return;
-    if (userSymbol === '1' && playerTwoActive === 'True') return;
-    if (userSymbol === '2' && playerOneActive === 'True') return;
-
-    if (document.getElementById(`three-square-${square}`).getElementsByClassName("square")[0].innerHTML !== '') {
-        return;
-    }
-
-    $.get(`/game/${gameId}/place-move/${userId}/${square}`);
-    // location.reload();
-}
-
-// Place Ultimate Move
-function placeUltimateMove(outerSquare, innerSquare) {
-    const userSymbol = document.getElementById('this-user-symbol').value;
-    const playerOneActive = document.getElementById('player-one-active').value;
-    const playerTwoActive = document.getElementById('player-two-active').value;
-    const gameComplete = document.getElementById('game-complete').value;
-
-    if (gameComplete === 'True') return;
-    if (userSymbol === '1' && playerTwoActive === 'True') return;
-    if (userSymbol === '2' && playerOneActive === 'True') return;
-
-    // Disallow if square not playable
-    const outerSquareClasses = document.getElementById(`nine-square-${outerSquare}`).classList;
-    if (!outerSquareClasses.contains('playable')) return
-
-    // Disallow if inner square complete
-    if (document.getElementById(`nine-square-${outerSquare}-${innerSquare}`).getElementsByClassName("square")[0].innerHTML !== '') {
-        return;
-    }
-
-    // Disallow if outer square complete
-    if (outerSquareClasses.contains('this-user') || outerSquareClasses.contains('opponent-user') || outerSquareClasses.contains('draw')) {
-        return;
-    }
-
-    $.get(`/game/${gameId}/place-move/${userId}/${outerSquare}/${innerSquare}`);
-    location.reload();
-}
-
 function restart() {
-    const formData = {
-        name: document.getElementById("this-user-id").value,
-        gameId: gameId,
-        gameMode: document.getElementById("game-mode").value,
-        playerMode: document.getElementById("player-mode").value,
-        restart: true
-    }
-
-    $.post('/', formData);
-    location.reload();
+    socket.emit('restart', {
+        gameId: gameState["game_id"],
+        userId: userId
+    });
 }
 
-$(document).ready(function(){
+function connectSocket(gameId) {
     // const socket = io();
-    const socket = io.connect('http://localhost:8080'); // ??
+    socket = io.connect('http://localhost:8080'); // ??
 
     // const socket = io();
     console.log(socket);
 
     socket.on('connect', function() {
         console.log('connected');
-        socket.emit('my event', {data: 'I\'m connected!'});
+        socket.emit('my event', {data: 'I\'m connected!'}); // TODO :: user specific msg? 'James has joined'?
     });
 
     // socket.on('connect', function() {
@@ -247,4 +247,31 @@ $(document).ready(function(){
         console.debug('Game state update received');
         init(message['game_id']);
     });
-});
+}
+
+function markupSymbol(value) {
+    if (value === 0) return '';
+    if (value === 1) return '<i class="fa fa-times symbol"></i>';
+    if (value === 2) return '<i class="fa-regular fa-circle symbol"></i>';
+}
+
+function isUserTurn() {
+    return (gameState['player_turn'] === 1 && gameState['player_one']['name'] === userId) ||
+           (gameState['player_turn'] === 2 && gameState['player_two']['name'] === userId);
+}
+
+function getSquareClass(square, thisSymbol) {
+    if (square === thisSymbol) return 'this-user';
+    if (square !== 0) return 'opponent';
+    if (!isUserTurn() || (gameState['player_two']['name'] === "")) return 'inactive';
+    return '';
+}
+
+function allowedToPlace(outer, inner) {
+    const gameStarted = (gameState['player_two']['name'] !== "");
+    const gameIncomplete = !gameState['complete'];
+    const alreadyPlayed = gameState['game_mode'] === "standard" ?
+                          gameState['board'][outer] !== 0 :
+                          gameState['board'][outer][inner] !== 0;
+    return gameStarted && gameIncomplete && isUserTurn() && !alreadyPlayed;
+}

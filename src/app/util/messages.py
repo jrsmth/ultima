@@ -9,11 +9,19 @@ class Messages:
         self.bundle.load(open(path))
 
     def load(self, key):
-        return self.bundle[key]
+        message = self.bundle[key]
+        if message is None:
+            print(f"[load] Unable to find message for key [{key}]")
+            return ''
+        else:
+            return message
 
     def load_with_params(self, key, parameters: list):
         message = self.bundle[key]
-        for index in range(len(parameters)):
-            message = message.replace('{'+str(index)+'}', parameters[index])
-
-        return message
+        if message is None:
+            print(f"[load_with_params] Unable to find message for key [{key}]")
+            return ''
+        else:
+            for index in range(len(parameters)):
+                message = message.replace('{' + str(index) + '}', parameters[index])
+            return message
