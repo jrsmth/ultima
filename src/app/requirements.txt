@@ -18,3 +18,4 @@ setuptools~=50.3.2
 zipp~=3.17.0
 gevent
 flask_socketio
+shortuuid
