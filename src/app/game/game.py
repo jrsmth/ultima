@@ -1,7 +1,7 @@
 import json
 import random
 
-from flask import render_template, url_for, redirect, Blueprint, Response
+from flask import render_template, Blueprint, Response, current_app
 
 from src.app.model.board.board import map_to_symbol
 from src.app.model.board.threeboard import ThreeBoard
@@ -21,10 +21,11 @@ def construct_blueprint(messages, socket, redis):
 
     @game_page.route("/game/<game_id>/<user_id>")
     def game(game_id, user_id):
+        app_url = current_app.config["APP_URL"]
         update_game_state(game_id, user_id + ' has joined the game')
         check_status(game_id)
 
-        return render_template("game.html", gameId=game_id, userId=user_id, version=__version__)
+        return render_template("game.html", appUrl=app_url, gameId=game_id, userId=user_id, version=__version__)
 
     @socket.on('restart')
     def restart(message):

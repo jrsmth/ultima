@@ -64,7 +64,9 @@
     <script src="{{ url_for('static', filename='scripts/game.js') }}"></script>
     <script>
         $(document).ready(function() {
+            appUrl = "{{ appUrl }}";
             userId = "{{ userId }}";
+
             enableCopy();
             connectSocket("{{ gameId }}");
             init("{{ gameId }}");

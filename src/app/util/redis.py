@@ -33,7 +33,7 @@ class Redis:
 
 
 # Standardises a JSON string for conversion into a python dict
-def standardise(value): # FixMe :: bit dodgy
+def standardise(value):  # FixMe :: bit dodgy
     # Convert Python `False` to JSON-standard `true`
     standardised = str(value).replace("False,", "false,").replace("True,", "true,")
 

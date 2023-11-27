@@ -1,6 +1,7 @@
 let userId;
 let gameState;
 let socket;
+let appUrl;
 
 async function init(gameId) {
     // Retrieve game state
@@ -224,11 +225,9 @@ function restart() {
 }
 
 function connectSocket(gameId) {
-    // const socket = io();
-    socket = io.connect('http://localhost:8080'); // ??
+    socket = io.connect(appUrl);
 
-    // const socket = io();
-    console.log(socket);
+    console.log(socket); // FixMe
 
     socket.on('connect', function() {
         console.log('connected');
