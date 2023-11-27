@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 # Releases
 <!-- @LatestFirst -->
 
-## [0.5.0] - ???
+## [0.5.0] - 27/11/23
 - UMA-30: Add the ability to display a message from the backend via message topic
 - UMA-31: Implement websocket replacement throughout game flow for both game and player modes
 
