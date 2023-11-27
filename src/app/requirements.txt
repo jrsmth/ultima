@@ -19,3 +19,4 @@ zipp~=3.17.0
 gevent
 flask_socketio
 shortuuid
+jsons
