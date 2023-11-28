@@ -1,18 +1,20 @@
-import socketio
-from flask import session, Blueprint
-from flask_socketio import emit
+from flask import Blueprint
+from flask_socketio import join_room, emit
 
 
 # Socket Logic
-def construct_blueprint(socket, redis):
+def construct_blueprint(socket):
     socket_page = Blueprint('socket_page', __name__)
 
-    @socket.event
-    def my_event(message):
-        print('my_event')
-        session['receive_count'] = session.get('receive_count', 0) + 1
-        print(str(message))
-        emit('my_response', {'data': message['data'], 'count': session['receive_count']})
+    @socket.on('join')
+    def on_join(data):
+        user_id = data['userId']
+        room = data['gameId']
+        join_room(room)
+
+        trigger = user_id + ' has entered the room for game with id: ' + room
+        print(f"[on_join] {trigger}")
+        emit('connected', trigger, to=room)
 
     # Blueprint return
     return socket_page

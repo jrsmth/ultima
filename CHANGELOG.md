@@ -23,6 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 # Releases
 <!-- @LatestFirst -->
 
+## [0.5.3] - 28/11/23
+- UMA-33: Allow for parallel games through game-specific websocket channels
+
 ## [0.5.2] - 27/11/23
 - UMA-35: [Bug] Set websocket URL based on environment
 
@@ -92,3 +95,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.5.0]: https://github.com/jrsmth/ultima/compare/0.4.1...0.5.0
 [0.5.1]: https://github.com/jrsmth/ultima/compare/0.5.0...0.5.1
 [0.5.2]: https://github.com/jrsmth/ultima/compare/0.5.1...0.5.2
+[0.5.3]: https://github.com/jrsmth/ultima/compare/0.5.2...0.5.3

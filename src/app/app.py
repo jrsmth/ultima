@@ -23,13 +23,11 @@ if not env:
     raise ValueError("Start-up failed: no environment specified!")
 elif env == "local":
     app.config.from_object(Config())
-    print("Starting app in [local] mode")
 elif env == "dev":
     app.config.from_object(DevConfig())
-    print("Starting app in [dev] mode")
 elif env == "prod":
     app.config.from_object(ProductionConfig())
-    print("Starting app in [production] mode")
+print(f"Starting app in [{env}] mode")
 
 # Initialise redis client
 redis = Redis(app)
@@ -42,7 +40,7 @@ app.register_blueprint(login.construct_blueprint(messages, socketio, redis))
 app.register_blueprint(game.construct_blueprint(messages, socketio, redis))
 
 # Register events
-app.register_blueprint(socket.construct_blueprint(socketio, redis))
+app.register_blueprint(socket.construct_blueprint(socketio))
 
 # Let's go!
 if __name__ == "__main__":
