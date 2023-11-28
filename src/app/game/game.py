@@ -126,7 +126,7 @@ def construct_blueprint(messages, socket, redis):
     def update_game_state(game_id, description):
         print('[update_game_state] Game state update: ' + description)
         print('[update_game_state] Game state updated for game id: ' + game_id)
-        socket.emit('update_game_state', redis.get_complex(game_id))
+        socket.emit('update_game_state', redis.get_complex(game_id), to=game_id)
 
     def check_status(game_id):
         state = redis.get_complex(game_id)
@@ -227,7 +227,7 @@ def has_player_won(board, player):
 
 
 # In ULTIMATE mode, a 'False Board' is defined to be the 3x3 board of resolved outer squares
-def create_false_board(states):  # Question :: a more elegant way must exist?
+def create_false_board(states):  # Question :: does a more elegant way exist?
     board = ThreeBoard()
     board.top_lhs = map_to_symbol(states[0])
     board.top_mid = map_to_symbol(states[1])

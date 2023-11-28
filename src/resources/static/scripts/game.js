@@ -227,19 +227,14 @@ function restart() {
 function connectSocket(gameId) {
     socket = io.connect(appUrl);
 
-    console.log(socket); // FixMe
-
-    socket.on('connect', function() {
-        console.log('connected');
-        socket.emit('my event', {data: 'I\'m connected!'}); // TODO :: user specific msg? 'James has joined'?
+    console.debug(`${userId} wants to join room with game id: ${gameId}`);
+    socket.emit('join', {
+        "gameId": gameId,
+        "userId": userId,
     });
 
-    // socket.on('connect', function() {
-    //     socket.emit('my event', {data: 'I\'m connected!'});
-    // });
-    //
-    socket.on('my_response', function(msg) {
-        console.log(msg.data);
+    socket.on('connected', function(message) {
+        console.debug(message);
     });
 
     socket.on('update_game_state', function(message) {
