@@ -30,32 +30,18 @@ $(document).ready(function() {
 });
 
 function login() {
-    const transitionLength = 2000;
+    const delay = 500;
     setVelocity(1);
     setDensity(10000);
     setBrightness(10);
     makeStars();
 
-    $('#login-section')[0].style.display = 'none';
+    $('#login-form')[0].style.display = 'none';
     $('#login-loader')[0].style.display = 'block';
 
-    const timeBefore = new Date($.now());
-    $.post('/', $("#login-form").serialize())
-        .then((res) => {
-            const duration = new Date($.now()) - timeBefore;
-            let delay = 0;
+    setTimeout(() => {
+        $('#login-form')[0].submit();
+    }, delay);
 
-            if (duration < transitionLength)
-                delay = transitionLength - duration;
-
-            setTimeout(() => {
-                $(location).prop('href', `/game/${res.gameId}/${res.userId}`);
-            }, delay);
-        })
-        .catch(err => {
-                console.error('[login] Error moving user into new game');
-                console.error(err);
-            }
-        );
 }
 

@@ -47,6 +47,9 @@ section {
   left: calc(50% - 18rem);
   top: calc(50% - 20rem);
   text-align: center;
+  background-color: #1e1530;
+  padding: 4rem 2rem;
+  border-radius: 1.25rem;
 }
 section #logo {
   width: 10rem;
@@ -151,12 +154,14 @@ section form button:hover {
 
 #login-loader {
   display: none;
-  position: absolute;
+  margin: auto;
+  border: 0.5rem solid rgba(97, 67, 191, 0.5019607843);
+  border-top: 0.5rem solid #6143bf;
   border-radius: 50%;
-  border: 0.5rem solid transparent;
-  animation: spin 1s linear infinite, grow 60s linear;
-  filter: blur(4px);
-  background: linear-gradient(#6143bf, #13ecba) padding-box, linear-gradient(to right, #6143bf, #13ecba) border-box;
+  width: 4rem;
+  height: 4rem;
+  animation: spin 2s linear infinite;
+  opacity: 0.5;
 }
 
 @keyframes spin {
@@ -165,20 +170,6 @@ section form button:hover {
   }
   100% {
     transform: rotate(360deg);
-  }
-}
-@keyframes grow {
-  0% {
-    width: 0.5rem;
-    height: 0.5rem;
-    right: calc(50% - 0.25rem);
-    top: calc(50% - 0.25rem);
-  }
-  100% {
-    width: 40rem;
-    height: 37.5rem;
-    right: calc(50% - 20rem);
-    top: calc(50% - 18.75rem);
   }
 }
 

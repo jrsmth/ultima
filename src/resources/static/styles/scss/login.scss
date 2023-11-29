@@ -7,6 +7,9 @@ section {
   left: calc(50% - ($loginWidth * .5));
   top: calc(50% - $loginHeight);
   text-align: center;
+  background-color: #1e1530;
+  padding: 4rem 2rem;
+  border-radius: 1.25rem;
 
   #logo {
     width: 10rem;
@@ -117,31 +120,17 @@ section {
 
 #login-loader {
   display: none;
-  position: absolute;
+  margin: auto;
+  border: .5rem solid #6143bf80;
+  border-top: .5rem solid #6143bf;
   border-radius: 50%;
-  border: 0.5rem solid transparent;
-  animation: spin 1s linear infinite, grow 60s linear;
-  filter: blur(4px);
-  background: linear-gradient(#6143bf, #13ecba) padding-box,
-              linear-gradient(to right, #6143bf, #13ecba) border-box;
+  width: 4rem;
+  height: 4rem;
+  animation: spin 2s linear infinite;
+  opacity: .5;
 }
 
-@keyframes spin { // TODO :: move
+@keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
-}
-
-@keyframes grow { // TODO :: move
-  0% {
-    width: .5rem;
-    height: .5rem;
-    right: calc(50% - .25rem);
-    top: calc(50% - .25rem);
-  }
-  100% {
-    width: 40rem;
-    height: 37.5rem;
-    right: calc(50% - 20rem);
-    top: calc(50% - 18.75rem);
-  }
 }

@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, request
+from flask import redirect, url_for, render_template, Blueprint, request
 from src.app.model.game import Game, generate_game_id, generate_board, has_valid_game_id
 from src.app.model.mode.playermode import PlayerMode
 
@@ -32,8 +32,7 @@ def construct_blueprint(messages, socket, redis):
 
                 print("[login] Setting game object: " + game.to_string())
                 redis.set_complex(game_id, game)
-                data = {'gameId': game_id, 'userId': user_id}
-                return data, 201
+                return redirect(url_for("game_page.game", game_id=game_id, user_id=user_id))
 
             elif has_valid_game_id(request.form["gameId"]):
                 print("Testing playMode [" + request.form["playerMode"] + "]")
@@ -46,8 +45,7 @@ def construct_blueprint(messages, socket, redis):
                     game['player_two']['name'] = request.form["name"]
                     print("[login] Setting game object: " + str(game))
                     redis.set_complex(game_id, game)
-                    data = {'gameId': game_id, 'userId': user_id}
-                    return data, 201
+                    return redirect(url_for("game_page.game", game_id=game_id, user_id=user_id))
 
             else:
                 error = messages.load("login.error.invalid-game-id")
