@@ -32,7 +32,8 @@ $(document).ready(function() {
 function login() {
     setVelocity(1);
     setDensity(10000);
-    makeStars(density);
+    setBrightness(10);
+    makeStars();
 
     $('#login-section')[0].style.display = 'none';
     $('#login-loader')[0].style.display = 'block';

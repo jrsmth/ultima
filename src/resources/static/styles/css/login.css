@@ -160,7 +160,6 @@ section form button:hover {
   animation: spin 1s linear infinite;
   top: calc(50% - 8rem);
   right: calc(50% - 2rem);
-  opacity: 0.5;
 }
 
 @keyframes spin {

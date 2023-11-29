@@ -3,7 +3,9 @@ const context = canvas.getContext("2d");
 let width;
 let height;
 let velocity = 0.01;
-let density = 2500;
+let density = 500;
+let brightness = 1;
+let size = 2;
 
 function getVelocity() {
     return velocity;
@@ -21,6 +23,22 @@ function setDensity(value) {
     density = value;
 }
 
+function getBrightness() {
+    return brightness;
+}
+
+function setBrightness(value) {
+    brightness = value;
+}
+
+function getSize() {
+    return size;
+}
+
+function setSize(value) {
+    size = value;
+}
+
 const setCanvasLimits = () => {
     width = document.body.clientWidth;
     height = document.body.clientHeight;
@@ -34,9 +52,9 @@ window.onresize = () => {
     setCanvasLimits();
 };
 
-const makeStars = (count) => {
+const makeStars = () => {
     const out = [];
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < getDensity(); i++) {
         const s = {
             x: Math.random() * 1600 - 800,
             y: Math.random() * 900 - 450,
@@ -48,7 +66,7 @@ const makeStars = (count) => {
     return out;
 };
 
-let stars = makeStars(density);
+let stars = makeStars();
 
 const clear = () => {
     context.fillStyle = "black"; // FixMe?
@@ -58,7 +76,7 @@ const clear = () => {
 const putPixel = (x, y, brightness) => {
     const intensity = brightness * 255;
     context.fillStyle = "rgb(" + intensity + "," + intensity + "," + intensity + ")";
-    context.fillRect(x, y, 1, 1);
+    context.fillRect(x, y, getSize(), getSize());
 };
 
 const moveStars = distance => {
@@ -100,7 +118,7 @@ const tick = time => {
         }
 
         const d = star.z / 1000.0;
-        const b = 1 - d * d;
+        const b = getBrightness() - d * d;
 
         putPixel(x, y, b);
     }
