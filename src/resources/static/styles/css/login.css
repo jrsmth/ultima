@@ -158,7 +158,7 @@ section form button:hover {
   width: 4rem;
   height: 4rem;
   animation: spin 1s linear infinite;
-  top: calc(50% - 8rem);
+  top: calc(50% - 2rem);
   right: calc(50% - 2rem);
 }
 
