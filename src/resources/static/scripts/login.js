@@ -30,6 +30,7 @@ $(document).ready(function() {
 });
 
 function login() {
+    const transitionLength = 2000;
     setVelocity(1);
     setDensity(10000);
     setBrightness(10);
@@ -38,8 +39,23 @@ function login() {
     $('#login-section')[0].style.display = 'none';
     $('#login-loader')[0].style.display = 'block';
 
-    setTimeout(() => {
-        $('#login-form')[0].submit();
-    }, 1000);
+    const timeBefore = new Date($.now());
+    $.post('/', $("#login-form").serialize())
+        .then((res) => {
+            const duration = new Date($.now()) - timeBefore;
+            let delay = 0;
+
+            if (duration < transitionLength)
+                delay = transitionLength - duration;
+
+            setTimeout(() => {
+                $(location).prop('href', `/game/${res.gameId}/${res.userId}`);
+            }, delay);
+        })
+        .catch(err => {
+                console.error('[login] Error moving user into new game');
+                console.error(err);
+            }
+        );
 }
 
