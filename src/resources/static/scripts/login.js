@@ -29,3 +29,16 @@ $(document).ready(function() {
 
 });
 
+function login() {
+    setVelocity(1);
+    setDensity(10000);
+    makeStars(density);
+
+    $('#login-section')[0].style.display = 'none';
+    $('#login-loader')[0].style.display = 'block';
+
+    setTimeout(() => {
+        $('#login-form')[0].submit();
+    }, 1000);
+}
+
