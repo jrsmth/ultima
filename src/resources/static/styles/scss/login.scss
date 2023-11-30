@@ -5,14 +5,15 @@ section {
   width: $loginWidth;
   height: $loginHeight;
   left: calc(50% - ($loginWidth * .5));
-  top: calc(50% - $loginHeight);
+  top: 20%; // calc(50% - $loginHeight);
   text-align: center;
   background-color: #1e1530;
   padding: 4rem 2rem;
   border-radius: 1.25rem;
+  border: 1px solid rgba(97,67,191,0.25);
 
   #logo {
-    width: 10rem;
+    width: 4rem;
     margin-bottom: 2rem;
   }
 
