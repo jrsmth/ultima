@@ -2,7 +2,7 @@
 [![python](https://img.shields.io/badge/Python-3.9-3776AB.svg?style=flat&logo=python&logoColor=white)](https://www.python.org)
 [![test-and-release](https://github.com/jrsmth/ultima/actions/workflows/main.yaml/badge.svg)](https://github.com/jrsmth/ultima/actions/workflows/main.yaml)
 
-# <img src="https://github.com/jrsmth/ultima/assets/34093915/b67d641d-1963-48cd-b110-b13e6d3537d8" width="28" alt="Logo"> Ultima
+# <img src="![ultima-badge](https://github.com/jrsmth/ultima/assets/34093915/f4688405-a59f-4508-b6a0-fd82809db134)" width="28" alt="Logo"> Ultima
 <!-- TODO :: Private repo whilst under development, publicise upon submission -->
 [ultima.jrsmth.io](https://ultima.jrsmth.io)
 
