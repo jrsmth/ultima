@@ -8,15 +8,13 @@
     </head>
     <body>
         <section id="login-section">
+            <div id="login-loader"></div>
             <img id="logo" alt="logo" src="../static/img/logo.png">
             <form action="" method="post" id="login-form">
                 <div class="form-control">
-                    <div class="label">
-                        <h3>Player Name</h3>
-                    </div>
                     <div class="field">
                         <input type="text"
-                               placeholder="Name"
+                               placeholder="Player Name"
                                name="name"
                                value="{{ request.form.name }}"
                                autofocus
@@ -24,10 +22,6 @@
                     </div>
                 </div>
                 <div class="form-control">
-                    <div class="label">
-                        <h3>Game ID</h3>
-                        <p>Leave blank to start a new game</p>
-                    </div>
                     <div class="field">
                         <input type="text"
                                id="game-id"
@@ -39,9 +33,6 @@
                 </div>
                 <div class="form-control radio">
                     <input type="hidden" id="game-mode" name="gameMode" value="standard">
-                    <div class="label">
-                        <h3>Game Mode</h3>
-                    </div>
                     <div class="field radio">
                         <p class="selection selected">Standard</p>
                         <p class="selection">Ultimate</p>
@@ -49,9 +40,6 @@
                 </div>
                 <div class="form-control radio">
                     <input type="hidden" id="player-mode" name="playerMode" value="double">
-                    <div class="label">
-                        <h3>Player Mode</h3>
-                    </div>
                     <div class="field radio">
                         <p class="selection selected">Double</p>
                         <p class="selection">Single</p>
@@ -62,7 +50,6 @@
                     <button type="button" onclick="login()">Play</button>
                 </div>
             </form>
-            <div id="login-loader"></div>
         </section>
         <canvas id="starfield"></canvas>
         <div id="background-overlay">

@@ -7,19 +7,31 @@ section {
   left: calc(50% - ($loginWidth * .5));
   top: 20%; // calc(50% - $loginHeight);
   text-align: center;
-  background-color: #1e1530;
+  background: rgb(15,15,26);
+  background: linear-gradient(85deg, rgba(15,15,26,1) 0%, rgba(29,13,43,1) 35%, rgba(40,23,63,1) 100%);
   padding: 4rem 2rem;
   border-radius: 1.25rem;
   border: 1px solid rgba(97,67,191,0.25);
+  box-shadow: $drop-shadow;
 
-  #logo {
-    width: 4rem;
+  #logo, #login-loader {
+    height: 2.375rem;
     margin-bottom: 2rem;
+  }
+
+  #login-loader {
+    display: none;
+    border: .5rem solid #6143bf80;
+    border-top: .5rem solid #6143bf;
+    border-radius: 50%;
+    animation: spin 2s linear infinite;
+    opacity: .5;
+    width: 2.375rem;
+    margin: 0 auto 1.25rem auto;
   }
 
   form {
     color: $text-light;
-    box-shadow: $drop-shadow;
     letter-spacing: .5px;
     display: flex;
     flex-direction: column;
@@ -30,14 +42,10 @@ section {
     p   { font-size: .7rem; margin: 2px 0; color: $text-light }
 
     .form-control {
-      display: flex;
-      height: $form-control-height + ($gutter * 1.5);
-      padding: $gutter;
-      width: 100%;
-      align-items: center;
+      margin: 1rem;
 
       .field {
-        margin-left: auto;
+        margin: auto;
         display: flex;
         height: $form-control-height;
         align-items: center;
@@ -83,17 +91,21 @@ section {
     }
 
     input {
-      border: none;
-      border-bottom: 1px solid $rose25;
       background: none;
       line-height: 2rem;
       color: $text-lightest;
       outline: none;
-      width: 16.875rem;
+      width: 14rem;
       margin: auto;
+      padding: .5rem .75rem;
+      border: 1px solid rgba(97, 67, 191, 0.5);
+      border-radius: .75rem;
+      text-align: center;
+      letter-spacing: 1px;
+      font-size: 12px;
 
       &:focus {
-        border-bottom: 1px solid $rose75;
+        border: 1px solid rgba(97, 67, 191, 0.75);
         transition: $ease-in;
       }
     }
@@ -119,19 +131,7 @@ section {
 
 }
 
-#login-loader {
-  display: none;
-  margin: auto;
-  border: .5rem solid #6143bf80;
-  border-top: .5rem solid #6143bf;
-  border-radius: 50%;
-  width: 4rem;
-  height: 4rem;
-  animation: spin 2s linear infinite;
-  opacity: .5;
-}
-
-@keyframes spin {
+@keyframes spin { // TODO :: Move
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }

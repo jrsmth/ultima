@@ -69,23 +69,34 @@ body #background-overlay h1 {
 
 section {
   position: absolute;
-  width: 36rem;
+  width: 26rem;
   height: 20rem;
-  left: calc(50% - 18rem);
+  left: calc(50% - 13rem);
   top: 20%;
   text-align: center;
-  background-color: #1e1530;
+  background: rgb(15, 15, 26);
+  background: linear-gradient(85deg, rgb(15, 15, 26) 0%, rgb(29, 13, 43) 35%, rgb(40, 23, 63) 100%);
   padding: 4rem 2rem;
   border-radius: 1.25rem;
   border: 1px solid rgba(97, 67, 191, 0.25);
+  box-shadow: 0px 13px 50px -13px rgba(0, 0, 0, 0.0980392157);
 }
-section #logo {
-  width: 4rem;
+section #logo, section #login-loader {
+  height: 2.375rem;
   margin-bottom: 2rem;
+}
+section #login-loader {
+  display: none;
+  border: 0.5rem solid rgba(97, 67, 191, 0.5019607843);
+  border-top: 0.5rem solid #6143bf;
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+  opacity: 0.5;
+  width: 2.375rem;
+  margin: 0 auto 1.25rem auto;
 }
 section form {
   color: #ccc;
-  box-shadow: 0px 13px 50px -13px rgba(0, 0, 0, 0.0980392157);
   letter-spacing: 0.5px;
   display: flex;
   flex-direction: column;
@@ -106,14 +117,10 @@ section form p {
   color: #ccc;
 }
 section form .form-control {
-  display: flex;
-  height: 5rem;
-  padding: 2rem;
-  width: 100%;
-  align-items: center;
+  margin: 1rem;
 }
 section form .form-control .field {
-  margin-left: auto;
+  margin: auto;
   display: flex;
   height: 2rem;
   align-items: center;
@@ -151,17 +158,21 @@ section form .form-control.radio.hide {
   display: none;
 }
 section form input {
-  border: none;
-  border-bottom: 1px solid rgba(231, 4, 83, 0.2509803922);
   background: none;
   line-height: 2rem;
   color: whitesmoke;
   outline: none;
-  width: 16.875rem;
+  width: 14rem;
   margin: auto;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgba(97, 67, 191, 0.5);
+  border-radius: 0.75rem;
+  text-align: center;
+  letter-spacing: 1px;
+  font-size: 12px;
 }
 section form input:focus {
-  border-bottom: 1px solid rgba(231, 4, 83, 0.7490196078);
+  border: 1px solid rgba(97, 67, 191, 0.75);
   transition: 0.15s ease-in-out;
 }
 section form button {
@@ -178,18 +189,6 @@ section form button {
 }
 section form button:hover {
   background: rgba(231, 4, 83, 0.7490196078);
-}
-
-#login-loader {
-  display: none;
-  margin: auto;
-  border: 0.5rem solid rgba(97, 67, 191, 0.5019607843);
-  border-top: 0.5rem solid #6143bf;
-  border-radius: 50%;
-  width: 4rem;
-  height: 4rem;
-  animation: spin 2s linear infinite;
-  opacity: 0.5;
 }
 
 @keyframes spin {

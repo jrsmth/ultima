@@ -36,7 +36,7 @@ function login() {
     setBrightness(10);
     makeStars();
 
-    $('#login-form')[0].style.display = 'none';
+    $('#logo')[0].style.display = 'none';
     $('#login-loader')[0].style.display = 'block';
 
     setTimeout(() => {
