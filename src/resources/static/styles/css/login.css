@@ -1,3 +1,10 @@
+#starfield {
+  width: 100%;
+  height: 100%;
+  z-index: -100;
+  background-color: #0f0f1a;
+}
+
 @keyframes fade-in {
   0% {
     opacity: 0;
@@ -27,9 +34,10 @@ html {
 }
 
 body {
-  background-color: #180405;
+  background-color: rgba(24, 4, 5, 0.7490196078);
   color: whitesmoke;
   height: 100%;
+  margin: 0;
 }
 
 section {
@@ -39,6 +47,9 @@ section {
   left: calc(50% - 18rem);
   top: calc(50% - 20rem);
   text-align: center;
+  background-color: #1e1530;
+  padding: 4rem 2rem;
+  border-radius: 1.25rem;
 }
 section #logo {
   width: 10rem;
@@ -139,6 +150,27 @@ section form button {
 }
 section form button:hover {
   background: rgba(231, 4, 83, 0.7490196078);
+}
+
+#login-loader {
+  display: none;
+  margin: auto;
+  border: 0.5rem solid rgba(97, 67, 191, 0.5019607843);
+  border-top: 0.5rem solid #6143bf;
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+  animation: spin 2s linear infinite;
+  opacity: 0.5;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /*# sourceMappingURL=login.css.map */

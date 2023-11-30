@@ -7,6 +7,9 @@ section {
   left: calc(50% - ($loginWidth * .5));
   top: calc(50% - $loginHeight);
   text-align: center;
+  background-color: #1e1530;
+  padding: 4rem 2rem;
+  border-radius: 1.25rem;
 
   #logo {
     width: 10rem;
@@ -113,4 +116,21 @@ section {
 
   }
 
+}
+
+#login-loader {
+  display: none;
+  margin: auto;
+  border: .5rem solid #6143bf80;
+  border-top: .5rem solid #6143bf;
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+  animation: spin 2s linear infinite;
+  opacity: .5;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

@@ -7,9 +7,9 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/css/login.css') }}">
     </head>
     <body>
-        <section>
+        <section id="login-section">
             <img id="logo" alt="logo" src="../static/img/logo.png">
-            <form action="" method="post">
+            <form action="" method="post" id="login-form">
                 <div class="form-control">
                     <div class="label">
                         <h3>Player Name</h3>
@@ -59,11 +59,14 @@
                 </div>
                 <input type="hidden" id="restart" name="restart" value="">
                 <div class="form-control button">
-                    <button type="submit">Play</button>
+                    <button type="button" onclick="login()">Play</button>
                 </div>
             </form>
+            <div id="login-loader"></div>
         </section>
+        <canvas id="starfield"></canvas>
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="{{ url_for('static', filename='scripts/login.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/starfield.js') }}"></script>
 </html>

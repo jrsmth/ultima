@@ -42,9 +42,8 @@ def construct_blueprint(messages, socket, redis):
 
                 else:
                     game = redis.get_complex(game_id)
-                    game['player_two']['name'] = request.form["name"]  # TODO :: marshal dict into Game obj
+                    game['player_two']['name'] = request.form["name"]
                     print("[login] Setting game object: " + str(game))
-                    # print("[login] Setting game object: " + game.to_string())
                     redis.set_complex(game_id, game)
                     return redirect(url_for("game_page.game", game_id=game_id, user_id=user_id))
 
