@@ -20,3 +20,4 @@ gevent
 flask_socketio
 shortuuid
 jsons
+Flask-HTTPAuth

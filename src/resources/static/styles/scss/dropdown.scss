@@ -1,67 +1,103 @@
 @import "variables";
 
-.custom-select {
-  position: relative;
-}
-
-.custom-select select {
-  display: none;
-}
-
-.select-selected {
-  background-color: transparent;
-}
-
-/*style the arrow inside the select element:*/
-.select-selected:after {
-  position: absolute;
-  content: "";
-  top: 1rem;
-  margin-left: .5rem;
-  width: 0;
-  height: 0;
-  border: .25rem solid transparent;
-  border-color: $text-light transparent transparent transparent;
-}
-
-/*point the arrow upwards when the select box is open (active):*/
-.select-selected.select-arrow-active:after {
-  border-color: transparent transparent #fff transparent;
-  top: 7px;
-}
-
-/*style the items (options), including the selected item:*/
-.select-items div,.select-selected {
+.game-dropdown {
   width: 15.81625rem;
   margin: auto;
-  padding: 1rem .75rem;
-  border: 1px solid rgba(97, 67, 191, .5);
-  border-radius: .75rem;
-  text-align: center;
-  letter-spacing: 1px;
-  font-size: 11px;
-  cursor: pointer;
-  user-select: none;
+
+  .select-btn {
+    border: 1px solid rgba(97, 67, 191, 0.5);
+    text-align: center;
+    padding: 1rem;
+    font-size: 11px;
+    letter-spacing: 1px;
+    border-radius: .75rem;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .options {
+    display: none;
+    position: absolute;
+    overflow-y: auto;
+    margin-top: -1rem;
+    padding: 0;
+    width: 15.81625rem;
+
+    .option {
+      display: flex;
+      justify-content: space-around;
+      cursor: pointer;
+      padding: 1rem;
+      border-radius: 0;
+      align-items: center;
+      background: #221236;
+      border: 1px solid rgba(97, 67, 191, 0.5);
+      border-top: none;
+
+      &.last {
+        border-radius: 0 0 .5rem .5rem;
+      }
+
+      &:hover {
+        background: #301c4c;
+      }
+      i {
+        font-size: 25px;
+        margin-right: 12px;
+      }
+      .option-text {
+        font-size: 11px;
+        letter-spacing: 1px;
+      }
+    }
+  }
 }
+.select-btn {
+  i {
+    transition: .3s;
+  }
+}
+.game-dropdown.active {
+  .select-btn {
+    border-radius: .5rem .5rem 0 0;
 
-/*style items (options):*/
-.select-items {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  z-index: 99;
-
-  div {
-    background-color: #200c2c;
+    i {
+      transform: rotate(-180deg);
+    }
+  }
+  .options {
+    display: block;
+    opacity: 0;
+    z-index: 10;
+    animation-name: fadeInUp;
+    -webkit-animation-name: fadeInUp;
+    animation-duration: .25s;
+    animation-fill-mode: both;
+    -webkit-animation-duration: .25s;
+    -webkit-animation-fill-mode: both;
   }
 }
 
-/*hide the items when the select box is closed:*/
-.select-hide {
-  display: none;
-}
 
-.select-items div:hover, {
-  background-color: #301c4c;
+@keyframes fadeInUp {
+  from {
+    display: block;
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+  to {
+    transform: translate3d(0, 1rem, 0);
+    opacity: 1;
+  }
+}
+@keyframes fadeInDown {
+  from {
+    display: block;
+    transform: translate3d(0, 1rem, 0);
+    opacity: 1;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
 }

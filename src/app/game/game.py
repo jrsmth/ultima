@@ -1,8 +1,6 @@
 import json
 import random
-
 from flask import render_template, Blueprint, Response, current_app
-
 from src.app.model.board.board import map_to_symbol
 from src.app.model.board.threeboard import ThreeBoard
 from src.app.model.combos import get_wins

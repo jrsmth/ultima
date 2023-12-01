@@ -34,7 +34,7 @@ def construct_blueprint(messages, socket, redis):
                 redis.set_complex(game_id, game)
                 return redirect(url_for("game_page.game", game_id=game_id, user_id=user_id))
 
-            elif has_valid_game_id(request.form["gameId"]):
+            elif has_valid_game_id(request.form["gameId"]):  # TODO :: sort this block...
                 print("Testing playMode [" + request.form["playerMode"] + "]")
                 if redis.get("playerMode") == "SINGLE":
                     print("Player Mode set to [SINGLE] for game id [" + redis.get("playerMode") + "]")
@@ -50,7 +50,30 @@ def construct_blueprint(messages, socket, redis):
             else:
                 error = messages.load("login.error.invalid-game-id")
 
-        return render_template("login.html", error=error)
+        return render_template("login.html", error=error, games=get_game_info(redis))
 
     # Blueprint return
     return login_page
+
+
+def get_game_info(redis):
+    game_info = []
+    for key in redis.get_client().scan_iter():
+        game = redis.get_complex(key)
+        print("[get_game_info] Found game: " + str(game))  # TRACE
+        game_id = game["game_id"]
+        owner = ''
+        player_two = ''
+        try:
+            owner = game["player_one"]["name"]
+        except KeyError:
+            print("[get_game_info] No owner found for game with id: " + str(game_id))  # TRACE
+        try:
+            player_two = game["player_two"]["name"]
+        except KeyError:
+            print("[get_game_info] No second player found for game with id: " + str(game_id))  # TRACE
+        if player_two == '':
+            game_info.append((game_id, owner))
+
+    print("[get_game_info] Available games: " + str(game_info))  # TODO :: rm games with a player two
+    return game_info

@@ -9,6 +9,9 @@ class Redis:
     def __init__(self, app):
         self.client = FlaskRedis(app)
 
+    def get_client(self):
+        return self.client
+
     # Get an element by its key and decode in utf-8 format
     def get(self, key):
         return self.client.get(key).decode('utf-8')
@@ -30,6 +33,11 @@ class Redis:
             return jsons.loads(standardise(json_value))
         except JSONDecodeError:
             raise Exception("[get_complex] Error parsing retrieved object: " + str(json_value))
+
+    # Remove all entries held in Redis
+    def clear(self):
+        for key in self.client.scan_iter():
+            self.client.delete(key)
 
 
 # Standardises a JSON string for conversion into a python dict
