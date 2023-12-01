@@ -6,6 +6,8 @@ header {
   margin: .75rem .5rem;
   gap: 2rem;
   align-items: center;
+  position: absolute;
+  z-index: 10;
 
   i {
     margin-right: .5rem;
@@ -30,7 +32,7 @@ header {
       display: block;
       animation-name: fade-in-out;
       animation-duration: 1500ms;
-      color: #13ECBA; // FixMe
+      color: $turquoise; // FixMe
     }
 
     .fade-in {
@@ -62,6 +64,8 @@ header {
 #content {
   display: flex;
   height: 100%;
+  position: absolute;
+  z-index: 10;
 
   .this-symbol {
     color: $chartreuse;

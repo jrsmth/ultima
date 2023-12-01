@@ -58,7 +58,10 @@
             </section>
             <section class="side-bar right"></section>
         </section>
-        <canvas id="starfield"></canvas>
+        <canvas id="starfield-game" class="starfield"></canvas>
+        <div id="background-overlay">
+            <h1>Ultima</h1>
+        </div>
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.js"></script>
@@ -73,5 +76,5 @@
             init("{{ gameId }}");
         })
     </script>
-    <script src="{{ url_for('static', filename='scripts/starfield.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/starfield-game.js') }}"></script>
 </html>

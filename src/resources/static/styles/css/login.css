@@ -1,4 +1,4 @@
-#starfield {
+.starfield {
   width: 100%;
   height: 100%;
   background-color: #0f0f1a;
@@ -75,7 +75,7 @@
   transform: translate(-50%, 110%) scale(1);
 }
 
-#starfield {
+.starfield {
   width: 100%;
   height: 100%;
   background-color: #0f0f1a;
