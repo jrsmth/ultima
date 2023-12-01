@@ -1,0 +1,33 @@
+/** Header */
+header {
+  display: flex;
+  margin: 0.75rem 0.5rem;
+}
+header #badge {
+  height: 2.25rem;
+  margin: 0.5rem;
+}
+header h1 {
+  margin: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.25rem;
+  font-weight: 200;
+  font-size: 1.5rem;
+  line-height: 2.25rem;
+}
+
+/** Tooltip */
+.tooltip .tooltip-text {
+  display: flex;
+  visibility: hidden;
+  position: absolute;
+  letter-spacing: 1.5px;
+  width: 20rem;
+  padding: 0 1rem;
+  font-size: 0.75rem;
+}
+.tooltip:hover .tooltip-text {
+  visibility: visible;
+}
+
+/*# sourceMappingURL=header.css.map */
