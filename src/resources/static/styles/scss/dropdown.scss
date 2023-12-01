@@ -1,4 +1,5 @@
 @import "variables";
+@import "colours";
 
 .game-dropdown {
   width: 15.81625rem;
@@ -13,6 +14,12 @@
     border-radius: .75rem;
     align-items: center;
     cursor: pointer;
+    color: #666469;
+
+    i {
+      float: right;
+      color: #666469;
+    }
   }
 
   .options {
@@ -35,15 +42,11 @@
       border-top: none;
 
       &.last {
-        border-radius: 0 0 .5rem .5rem;
+        border-radius: 0 0 .75rem .75rem;
       }
 
       &:hover {
         background: #301c4c;
-      }
-      i {
-        font-size: 25px;
-        margin-right: 12px;
       }
       .option-text {
         font-size: 11px;
@@ -52,17 +55,20 @@
     }
   }
 }
-.select-btn {
-  i {
-    transition: .3s;
-  }
+
+.select-btn.touched {
+  color: $text-light
 }
+
 .game-dropdown.active {
   .select-btn {
-    border-radius: .5rem .5rem 0 0;
+    border-radius: .75rem .75rem 0 0;
+    color: $text-light;
 
     i {
       transform: rotate(-180deg);
+      margin-top: 2px;
+      color: $text-light;
     }
   }
   .options {

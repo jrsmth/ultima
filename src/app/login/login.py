@@ -4,7 +4,7 @@ from src.app.model.mode.playermode import PlayerMode
 
 
 # Login Logic
-def construct_blueprint(messages, socket, redis):
+def construct_blueprint(messages, redis):
     login_page = Blueprint('login_page', __name__)
 
     @login_page.route('/', methods=['GET', 'POST'])
@@ -34,14 +34,13 @@ def construct_blueprint(messages, socket, redis):
                 redis.set_complex(game_id, game)
                 return redirect(url_for("game_page.game", game_id=game_id, user_id=user_id))
 
-            elif has_valid_game_id(request.form["gameId"]):  # TODO :: sort this block...
+            elif has_valid_game_id(request.form["gameId"]):
+                game = redis.get_complex(game_id)
                 print("Testing playMode [" + request.form["playerMode"] + "]")
-                if redis.get("playerMode") == "SINGLE":
+                if game["player_mode"] == "SINGLE":
                     print("Player Mode set to [SINGLE] for game id [" + redis.get("playerMode") + "]")
                     error = messages.load("login.error.single-player-only")
-
                 else:
-                    game = redis.get_complex(game_id)
                     game['player_two']['name'] = request.form["name"]
                     print("[login] Setting game object: " + str(game))
                     redis.set_complex(game_id, game)
@@ -75,5 +74,5 @@ def get_game_info(redis):
         if player_two == '':
             game_info.append((game_id, owner))
 
-    print("[get_game_info] Available games: " + str(game_info))  # TODO :: rm games with a player two
+    print("[get_game_info] Available games: " + str(game_info))
     return game_info

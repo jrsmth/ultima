@@ -12,7 +12,25 @@ selectBtn.addEventListener("click", () =>
 
 options.forEach((option) => {
     option.addEventListener("click", () => {
-        sBtn_text.innerText = option.querySelector(".option-text").innerText;
+        selectBtn.classList.remove("touched")
+        const newOption = option.querySelector(".option-text").innerText;
+        const radio = $('.radio');
+        let gameId;
+
+        if (newOption === 'New Game') {
+            radio.removeClass("hide");
+            gameId = '';
+        } else {
+            radio.addClass("hide");
+            gameId = newOption;
+        }
+
+        console.log($('#game-id')[0].value);
+        $('#game-id')[0].value = gameId;
+        console.log($('#game-id')[0].value);
+        sBtn_text.innerText = newOption;
+
         optionMenu.classList.remove("active");
+        selectBtn.classList.add("touched")
     });
 });

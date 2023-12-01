@@ -4,17 +4,18 @@
         <title>Ultima</title>
         <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon/favicon.ico') }}">
         <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" type="text/css">
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/css/login.css') }}">
     </head>
     <body>
         <section id="login-section">
-            <div id="login-loader"></div> <!-- TODO :: move to replace btn rather than logo (?) -->
             <img id="logo" alt="logo" src="../static/img/logo.png">
             <form action="" method="post" id="login-form">
                 <div class="form-control">
                     <div class="field">
                         <input type="text"
                                placeholder="Player Name"
+                               id="player-name"
                                name="name"
                                value="{{ request.form.name }}"
                                autofocus
@@ -22,20 +23,11 @@
                     </div>
                 </div>
                 <div class="form-control">
-<!--                    <div class="field">-->
-<!--                        <input type="text"-->
-<!--                               id="game-id"-->
-<!--                               placeholder="Game ID"-->
-<!--                               name="gameId"-->
-<!--                               value="{{ request.form.gameId }}"-->
-<!--                               autocomplete="off">-->
-<!--                    </div>-->
-
-
+                    <input type="hidden" id="game-id" name="gameId" value="-1">
                     <div class="game-dropdown">
                         <div class="select-btn">
                             <span class="select-btn-text">Game ID</span>
-                            <i class="bx bx-chevron-down"></i>
+                            <i class="fa-solid fa-caret-down"></i>
                         </div>
                         <ul class="options">
                             <li class="option">
@@ -53,20 +45,15 @@
                             {% endfor %}
                         </ul>
                     </div>
-
-
-
-
-
                 </div>
-                <div class="form-control radio">
+                <div class="form-control radio hide">
                     <input type="hidden" id="game-mode" name="gameMode" value="standard">
                     <div class="field radio" data-customTooltip="Game Mode">
                         <p class="selection selected left">Standard</p>
                         <p class="selection right">Ultimate</p>
                     </div>
                 </div>
-                <div class="form-control radio">
+                <div class="form-control radio hide">
                     <input type="hidden" id="player-mode" name="playerMode" value="double">
                     <div class="field radio" data-customTooltip="Player Mode">
                         <p class="selection selected left">Double</p>
@@ -75,8 +62,9 @@
                 </div>
                 <input type="hidden" id="restart" name="restart" value="">
                 <div class="form-control button">
-                    <button type="button" onclick="login()">Play</button>
+                    <button id="login-button" type="button" onclick="login()">Play</button>
                 </div>
+                <div id="login-loader"></div>
             </form>
         </section>
         <canvas id="starfield"></canvas>

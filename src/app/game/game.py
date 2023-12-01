@@ -14,7 +14,7 @@ from src.version.version import __version__
 
 
 # Game Logic
-def construct_blueprint(messages, socket, redis):
+def construct_blueprint(messages, redis, socket):
     game_page = Blueprint('game_page', __name__)
 
     @game_page.route("/game/<game_id>/<user_id>")

@@ -70,6 +70,11 @@
   border-radius: 0.75rem;
   align-items: center;
   cursor: pointer;
+  color: #666469;
+}
+.game-dropdown .select-btn i {
+  float: right;
+  color: #666469;
 }
 .game-dropdown .options {
   display: none;
@@ -91,29 +96,28 @@
   border-top: none;
 }
 .game-dropdown .options .option.last {
-  border-radius: 0 0 0.5rem 0.5rem;
+  border-radius: 0 0 0.75rem 0.75rem;
 }
 .game-dropdown .options .option:hover {
   background: #301c4c;
-}
-.game-dropdown .options .option i {
-  font-size: 25px;
-  margin-right: 12px;
 }
 .game-dropdown .options .option .option-text {
   font-size: 11px;
   letter-spacing: 1px;
 }
 
-.select-btn i {
-  transition: 0.3s;
+.select-btn.touched {
+  color: #ccc;
 }
 
 .game-dropdown.active .select-btn {
-  border-radius: 0.5rem 0.5rem 0 0;
+  border-radius: 0.75rem 0.75rem 0 0;
+  color: #ccc;
 }
 .game-dropdown.active .select-btn i {
   transform: rotate(-180deg);
+  margin-top: 2px;
+  color: #ccc;
 }
 .game-dropdown.active .options {
   display: block;
@@ -205,19 +209,9 @@ section {
   border: 1px solid rgba(97, 67, 191, 0.25);
   box-shadow: 0px 13px 50px -13px rgba(0, 0, 0, 0.0980392157);
 }
-section #logo, section #login-loader {
+section #logo {
   height: 2.375rem;
   margin: 1rem 0 2rem 0;
-}
-section #login-loader {
-  display: none;
-  border: 0.5rem solid rgba(97, 67, 191, 0.5019607843);
-  border-top: 0.5rem solid #6143bf;
-  border-radius: 50%;
-  animation: spin 2s linear infinite;
-  opacity: 0.5;
-  width: 2.375rem;
-  margin: 1rem auto 2.25rem auto;
 }
 section form div {
   box-sizing: border-box;
@@ -306,7 +300,6 @@ section form button {
   width: 15.625rem;
   color: whitesmoke;
   transition: 0.15s ease-in-out;
-  cursor: pointer;
   box-shadow: 0px 13px 50px -13px rgba(0, 0, 0, 0.0980392157);
   letter-spacing: 2px;
   background: rgb(97, 67, 191);
@@ -319,10 +312,22 @@ section form button {
   padding: 1rem 0;
   border-radius: 0.5rem;
 }
-section form button:hover {
+section form button:hover:not(.disabled) {
+  cursor: pointer;
   background: linear-gradient(90deg, rgb(97, 67, 191) 0%, rgb(19, 236, 186) 80%);
   transform: scale(1.0125);
   opacity: 1;
+}
+section form #login-loader {
+  display: none;
+  border: 0.5rem solid rgba(97, 67, 191, 0.5019607843);
+  border-top: 0.5rem solid #6143bf;
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+  opacity: 0.5;
+  width: 3rem;
+  height: 3rem;
+  margin: 1rem auto 2.25rem auto;
 }
 
 @keyframes spin {

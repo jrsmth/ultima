@@ -44,8 +44,8 @@ messages = Messages('../resources/messages.properties')
 
 # Register routes
 app.register_blueprint(admin.construct_blueprint(auth, redis))
-app.register_blueprint(login.construct_blueprint(messages, socketio, redis))
-app.register_blueprint(game.construct_blueprint(messages, socketio, redis))
+app.register_blueprint(login.construct_blueprint(messages, redis))
+app.register_blueprint(game.construct_blueprint(messages, redis, socketio))
 
 
 # Register events

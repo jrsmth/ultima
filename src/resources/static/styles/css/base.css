@@ -70,6 +70,11 @@
   border-radius: 0.75rem;
   align-items: center;
   cursor: pointer;
+  color: #666469;
+}
+.game-dropdown .select-btn i {
+  float: right;
+  color: #666469;
 }
 .game-dropdown .options {
   display: none;
@@ -91,29 +96,28 @@
   border-top: none;
 }
 .game-dropdown .options .option.last {
-  border-radius: 0 0 0.5rem 0.5rem;
+  border-radius: 0 0 0.75rem 0.75rem;
 }
 .game-dropdown .options .option:hover {
   background: #301c4c;
-}
-.game-dropdown .options .option i {
-  font-size: 25px;
-  margin-right: 12px;
 }
 .game-dropdown .options .option .option-text {
   font-size: 11px;
   letter-spacing: 1px;
 }
 
-.select-btn i {
-  transition: 0.3s;
+.select-btn.touched {
+  color: #ccc;
 }
 
 .game-dropdown.active .select-btn {
-  border-radius: 0.5rem 0.5rem 0 0;
+  border-radius: 0.75rem 0.75rem 0 0;
+  color: #ccc;
 }
 .game-dropdown.active .select-btn i {
   transform: rotate(-180deg);
+  margin-top: 2px;
+  color: #ccc;
 }
 .game-dropdown.active .options {
   display: block;

@@ -14,20 +14,9 @@ section {
   border: 1px solid rgba(97,67,191,0.25);
   box-shadow: $drop-shadow;
 
-  #logo, #login-loader {
+  #logo {
     height: 2.375rem;
     margin: 1rem 0 2rem 0;
-  }
-
-  #login-loader {
-    display: none;
-    border: .5rem solid #6143bf80;
-    border-top: .5rem solid #6143bf;
-    border-radius: 50%;
-    animation: spin 2s linear infinite;
-    opacity: .5;
-    width: 2.375rem;
-    margin: 1rem auto 2.25rem auto;
   }
 
   form {
@@ -115,7 +104,6 @@ section {
       width: 15.625rem; //calc($field-width * .5);
       color: $text-lightest;
       transition: $ease-in;
-      cursor: pointer;
       box-shadow: $drop-shadow;
       letter-spacing: 2px;
       background: rgb(97,67,191);
@@ -130,11 +118,24 @@ section {
       padding: 1rem 0;
       border-radius: .5rem;
 
-      &:hover {
+      &:hover:not(.disabled) { // TODO :: impl .disabled
+        cursor: pointer;
         background: linear-gradient(90deg, rgba(97,67,191,1) 0%, rgba(19,236,186,1) 80%);
         transform: scale(1.0125);
         opacity: 1;
       }
+    }
+
+    #login-loader {
+      display: none;
+      border: .5rem solid #6143bf80;
+      border-top: .5rem solid #6143bf;
+      border-radius: 50%;
+      animation: spin 2s linear infinite;
+      opacity: .5;
+      width: 3rem;
+      height: 3rem;
+      margin: 1rem auto 2.25rem auto;
     }
 
   }
