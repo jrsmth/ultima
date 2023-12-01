@@ -25,8 +25,8 @@ body {
     position: absolute;
     height: 100%;
     width: 100%;
-    background: rgb(15,15,26);
-    background: linear-gradient(90deg, rgba(15,15,26,0.25) 0%, rgba(151,66,225,0.25) 50%, rgba(97,67,191,0.5) 100%);
+    background: $deep-space;
+    background: linear-gradient(90deg, $deep-space25 0%, $electric25 50%, $studio50 100%);
     text-align: center;
 
     h1 {
@@ -39,7 +39,7 @@ body {
       position: relative;
       font-weight: 400;
 
-      background-image: linear-gradient(0deg, rgba(97,67,191,0) 0%, rgba(97,67,191,1) 100%);
+      background-image: linear-gradient(0deg, $studio00 0%, $studio 100%);
       background-size: 100%;
       background-repeat: repeat;
       -webkit-background-clip: text;

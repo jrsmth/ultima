@@ -3,8 +3,20 @@
 // Dark
 $aubergine: #2b0710;
 $creole: #180405;
-$creole75: #180405bf; // 25% alpha
+$creole75: #180405bf; // 75% alpha
 $deep-space: #0f0f1a;
+$deep-space25: #0f0f1a40; // 25% alpha
+
+// Purple
+$studio: #6143bf;
+$studio00: #6143bf00; // 00% alpha
+$studio25: #6143bf40; // 25% alpha
+$studio50: #6143bf80; // 50% alpha
+$studio75: #6143bfbf; // 75% alpha
+$haiti: #221236;
+$valhalla: #301c4c;
+$electric: #9742e1;
+$electric25: #9742e140; // 25% alpha
 
 // Pink
 $carnation: #ff2c63;
@@ -20,8 +32,10 @@ $verdun: #566505;
 $chartreuse: #d8ff00;
 $chartreuse05: #d8ff000d; // 5% alpha
 $chartreuse25: #d8ff0040; // 25% alpha
+$turquoise: #13ecba;
 
 // Text
+$text-disabled: #666;
 $text-lightest: whitesmoke;
 $text-lighter: #eee;
-$text-light: #ccc
+$text-light: #ccc;

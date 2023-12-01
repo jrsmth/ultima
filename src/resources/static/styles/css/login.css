@@ -25,6 +25,24 @@
     opacity: 0;
   }
 }
+@keyframes fade-in-down {
+  from {
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+  to {
+    transform: translate3d(0, 1rem, 0);
+    opacity: 1;
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 [data-customTooltip] {
   cursor: pointer;
   position: relative;
@@ -33,7 +51,7 @@
 [data-customTooltip]::after {
   z-index: 100;
   background-color: #1D0D2B;
-  border: 1px solid rgba(97, 67, 191, 0.75);
+  border: 1px solid rgba(97, 67, 191, 0.7490196078);
   font-size: 11px;
   padding: 0.5rem;
   height: fit-content;
@@ -57,12 +75,57 @@
   transform: translate(-50%, 110%) scale(1);
 }
 
+#starfield {
+  width: 100%;
+  height: 100%;
+  background-color: #0f0f1a;
+  position: relative;
+  z-index: -10;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fade-in-out {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes fade-in-down {
+  from {
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+  to {
+    transform: translate3d(0, 1rem, 0);
+    opacity: 1;
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 .game-dropdown {
   width: 15.81625rem;
   margin: auto;
 }
 .game-dropdown .select-btn {
-  border: 1px solid rgba(97, 67, 191, 0.5);
+  border: 1px solid rgba(97, 67, 191, 0.5019607843);
   text-align: center;
   padding: 1rem;
   font-size: 11px;
@@ -70,11 +133,12 @@
   border-radius: 0.75rem;
   align-items: center;
   cursor: pointer;
-  color: #666469;
+  color: #666;
 }
 .game-dropdown .select-btn i {
-  float: right;
-  color: #666469;
+  position: absolute;
+  right: 7.25rem;
+  color: #666;
 }
 .game-dropdown .options {
   display: none;
@@ -92,7 +156,7 @@
   border-radius: 0;
   align-items: center;
   background: #221236;
-  border: 1px solid rgba(97, 67, 191, 0.5);
+  border: 1px solid rgba(97, 67, 191, 0.5019607843);
   border-top: none;
 }
 .game-dropdown .options .option.last {
@@ -116,43 +180,21 @@
 }
 .game-dropdown.active .select-btn i {
   transform: rotate(-180deg);
-  margin-top: 2px;
+  margin-top: 1px;
   color: #ccc;
 }
 .game-dropdown.active .options {
   display: block;
   opacity: 0;
   z-index: 10;
-  animation-name: fadeInUp;
-  -webkit-animation-name: fadeInUp;
+  animation-name: fade-in-down;
+  -webkit-animation-name: fade-in-down;
   animation-duration: 0.25s;
   animation-fill-mode: both;
   -webkit-animation-duration: 0.25s;
   -webkit-animation-fill-mode: both;
 }
 
-@keyframes fadeInUp {
-  from {
-    display: block;
-    transform: translate3d(0, 0, 0);
-    opacity: 0;
-  }
-  to {
-    transform: translate3d(0, 1rem, 0);
-    opacity: 1;
-  }
-}
-@keyframes fadeInDown {
-  from {
-    display: block;
-    transform: translate3d(0, 1rem, 0);
-    opacity: 1;
-  }
-  to {
-    transform: translate3d(0, 0, 0);
-    opacity: 0;
-  }
-}
 * {
   font-family: Montserrat, sans-serif;
 }
@@ -175,8 +217,8 @@ body #background-overlay {
   position: absolute;
   height: 100%;
   width: 100%;
-  background: rgb(15, 15, 26);
-  background: linear-gradient(90deg, rgba(15, 15, 26, 0.25) 0%, rgba(151, 66, 225, 0.25) 50%, rgba(97, 67, 191, 0.5) 100%);
+  background: #0f0f1a;
+  background: linear-gradient(90deg, rgba(15, 15, 26, 0.2509803922) 0%, rgba(151, 66, 225, 0.2509803922) 50%, rgba(97, 67, 191, 0.5019607843) 100%);
   text-align: center;
 }
 body #background-overlay h1 {
@@ -188,7 +230,7 @@ body #background-overlay h1 {
   top: 2rem;
   position: relative;
   font-weight: 400;
-  background-image: linear-gradient(0deg, rgba(97, 67, 191, 0) 0%, rgb(97, 67, 191) 100%);
+  background-image: linear-gradient(0deg, rgba(97, 67, 191, 0) 0%, #6143bf 100%);
   background-size: 100%;
   background-repeat: repeat;
   -webkit-background-clip: text;
@@ -200,13 +242,13 @@ section {
   width: 26rem;
   height: 28rem;
   left: calc(50% - 13rem);
-  top: 20%;
+  top: calc(50% - 14rem);
   text-align: center;
-  background: rgb(15, 15, 26);
-  background: linear-gradient(85deg, rgb(15, 15, 26) 0%, rgb(29, 13, 43) 35%, rgb(40, 23, 63) 100%);
+  background: #0f0f1a;
+  background: linear-gradient(85deg, #0f0f1a 0%, #221236 35%, #301c4c 100%);
   padding: 2rem 1rem;
   border-radius: 1.25rem;
-  border: 1px solid rgba(97, 67, 191, 0.25);
+  border: 1px solid rgba(97, 67, 191, 0.2509803922);
   box-shadow: 0px 13px 50px -13px rgba(0, 0, 0, 0.0980392157);
 }
 section #logo {
@@ -241,7 +283,7 @@ section form .form-control .field .selection {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  width: 7.8125rem;
+  width: 7.75rem;
   margin-left: -1px;
   background-clip: border-box;
   transform: scale3d(1, 1, 1);
@@ -251,7 +293,7 @@ section form .form-control .field .selection {
   font-size: 11px;
   padding: 1rem 0;
   background-color: transparent;
-  border: 1px solid rgb(97, 67, 191);
+  border: 1px solid #6143bf;
   color: #ccc;
   opacity: 0.5;
 }
@@ -262,14 +304,14 @@ section form .form-control .field .selection.right {
   border-radius: 0 0.5rem 0.5rem 0;
 }
 section form .form-control .field .selection.selected {
-  background-color: rgba(97, 67, 191, 0.25);
+  background-color: rgba(97, 67, 191, 0.2509803922);
   z-index: 2;
   cursor: text;
   opacity: 1;
 }
 section form .form-control .field .selection:hover {
   opacity: 1;
-  background-color: rgba(97, 67, 191, 0.25);
+  background-color: rgba(97, 67, 191, 0.2509803922);
 }
 section form .form-control.button {
   display: flex;
@@ -286,27 +328,27 @@ section form input {
   width: 14rem;
   margin: auto;
   padding: 0.5rem 0.75rem;
-  border: 1px solid rgba(97, 67, 191, 0.5);
+  border: 1px solid rgba(97, 67, 191, 0.5019607843);
   border-radius: 0.75rem;
   text-align: center;
   letter-spacing: 1px;
   font-size: 11px;
 }
 section form input:focus {
-  border: 1px solid rgba(97, 67, 191, 0.75);
+  border: 1px solid rgba(97, 67, 191, 0.7490196078);
   transition: 0.15s ease-in-out;
 }
 section form button {
-  width: 15.625rem;
+  width: 15.81625rem;
   color: whitesmoke;
   transition: 0.15s ease-in-out;
   box-shadow: 0px 13px 50px -13px rgba(0, 0, 0, 0.0980392157);
   letter-spacing: 2px;
   background: rgb(97, 67, 191);
-  background: linear-gradient(45deg, rgb(97, 67, 191) 20%, rgb(19, 236, 186) 100%);
+  background: linear-gradient(45deg, #6143bf 20%, #13ecba 100%);
   opacity: 0.7;
   margin-top: 1rem;
-  border: 1px solid rgb(97, 67, 191);
+  border: 1px solid #6143bf;
   text-transform: uppercase;
   font-size: 11px;
   padding: 1rem 0;
@@ -314,7 +356,7 @@ section form button {
 }
 section form button:hover:not(.disabled) {
   cursor: pointer;
-  background: linear-gradient(90deg, rgb(97, 67, 191) 0%, rgb(19, 236, 186) 80%);
+  background: linear-gradient(90deg, #6143bf 0%, #13ecba 80%);
   transform: scale(1.0125);
   opacity: 1;
 }
@@ -328,15 +370,6 @@ section form #login-loader {
   width: 3rem;
   height: 3rem;
   margin: 1rem auto 2.25rem auto;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
 }
 
 /*# sourceMappingURL=login.css.map */

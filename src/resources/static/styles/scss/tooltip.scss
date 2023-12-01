@@ -8,8 +8,8 @@
 [data-customTooltip]::after {
   z-index: 100;
   background-color: #1D0D2B;
-  border: 1px solid rgba(97, 67, 191, 0.75);
-  font-size: 11px;
+  border: 1px solid $studio75;
+  font-size: $default-text;
   padding: .5rem;
   height: fit-content;
   width: fit-content;

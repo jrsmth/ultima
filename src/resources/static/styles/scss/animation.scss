@@ -20,3 +20,19 @@
     opacity: 0;
   }
 }
+
+@keyframes fade-in-down {
+  from {
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+  to {
+    transform: translate3d(0, 1rem, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

@@ -3,15 +3,15 @@
 section {
   position: absolute;
   width: $loginWidth;
-  height: 28rem; //$loginHeight;
+  height: 28rem;
   left: calc(50% - ($loginWidth * .5));
-  top: 20%; // calc(50% - $loginHeight);
+  top: calc(50% - ($loginHeight * .5));
   text-align: center;
-  background: rgb(15,15,26);
-  background: linear-gradient(85deg, rgba(15,15,26,1) 0%, rgba(29,13,43,1) 35%, rgba(40,23,63,1) 100%);
+  background: $deep-space;
+  background: linear-gradient(85deg, $deep-space 0%, $haiti 35%, $valhalla 100%);
   padding: 2rem 1rem;
   border-radius: 1.25rem;
-  border: 1px solid rgba(97,67,191,0.25);
+  border: 1px solid $studio25;
   box-shadow: $drop-shadow;
 
   #logo {
@@ -39,17 +39,17 @@ section {
           align-items: center;
           justify-content: center;
           cursor: pointer;
-          width: 7.8125rem; // calc($field-width * .5);
+          width: 7.75rem;
           margin-left: -1px;
           background-clip: border-box;
           transform: scale3d(1, 1, 1);
           text-transform: uppercase;
           transition: $ease-in;
           letter-spacing: 1.5px;
-          font-size: 11px;
+          font-size: $default-text;
           padding: 1rem 0;
           background-color: transparent;
-          border: 1px solid rgba(97, 67, 191, 1);
+          border: 1px solid $studio;
           color: $text-light;
           opacity: .5;
 
@@ -57,7 +57,7 @@ section {
           &.right { border-radius: 0 .5rem .5rem 0; }
 
           &.selected {
-            background-color: rgba(97, 67, 191, .25);
+            background-color: $studio25;
             z-index: 2;
             cursor: text;
             opacity: 1;
@@ -65,7 +65,7 @@ section {
 
           &:hover {
             opacity: 1;
-            background-color: rgba(97, 67, 191, .25);
+            background-color: $studio25;
           }
         }
       }
@@ -88,39 +88,37 @@ section {
       width: 14rem;
       margin: auto;
       padding: .5rem .75rem;
-      border: 1px solid rgba(97, 67, 191, .5);
+      border: 1px solid $studio50;
       border-radius: .75rem;
       text-align: center;
       letter-spacing: 1px;
-      font-size: 11px;
+      font-size: $default-text;
 
       &:focus {
-        border: 1px solid rgba(97, 67, 191, .75);
+        border: 1px solid $studio75;
         transition: $ease-in;
       }
     }
 
     button {
-      width: 15.625rem; //calc($field-width * .5);
+      width: $field_width;
       color: $text-lightest;
       transition: $ease-in;
       box-shadow: $drop-shadow;
       letter-spacing: 2px;
       background: rgb(97,67,191);
-      background: linear-gradient(45deg, rgba(97,67,191,1) 20%, rgba(19,236,186,1) 100%);
+      background: linear-gradient(45deg, $studio 20%, $turquoise 100%);
       opacity: .7;
       margin-top: 1rem;
-      border: 1px solid rgba(97, 67, 191, 1);
-
-      // TODO :: Extract me
+      border: 1px solid $studio;
       text-transform: uppercase;
-      font-size: 11px;
+      font-size: $default-text;
       padding: 1rem 0;
       border-radius: .5rem;
 
       &:hover:not(.disabled) { // TODO :: impl .disabled
         cursor: pointer;
-        background: linear-gradient(90deg, rgba(97,67,191,1) 0%, rgba(19,236,186,1) 80%);
+        background: linear-gradient(90deg, $studio 0%, $turquoise 80%);
         transform: scale(1.0125);
         opacity: 1;
       }
@@ -128,8 +126,8 @@ section {
 
     #login-loader {
       display: none;
-      border: .5rem solid #6143bf80;
-      border-top: .5rem solid #6143bf;
+      border: .5rem solid $studio50;
+      border-top: .5rem solid $studio;
       border-radius: 50%;
       animation: spin 2s linear infinite;
       opacity: .5;
@@ -137,12 +135,5 @@ section {
       height: 3rem;
       margin: 1rem auto 2.25rem auto;
     }
-
   }
-
-}
-
-@keyframes spin { // TODO :: Move
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
 }

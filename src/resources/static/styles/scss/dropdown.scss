@@ -1,24 +1,26 @@
 @import "variables";
 @import "colours";
+@import "animation";
 
 .game-dropdown {
-  width: 15.81625rem;
+  width: $field_width;
   margin: auto;
 
   .select-btn {
-    border: 1px solid rgba(97, 67, 191, 0.5);
+    border: 1px solid $studio50;
     text-align: center;
     padding: 1rem;
-    font-size: 11px;
+    font-size: $default-text;
     letter-spacing: 1px;
     border-radius: .75rem;
     align-items: center;
     cursor: pointer;
-    color: #666469;
+    color: $text-disabled;
 
     i {
-      float: right;
-      color: #666469;
+      position: absolute;
+      right: 7.25rem;
+      color: $text-disabled;
     }
   }
 
@@ -28,7 +30,7 @@
     overflow-y: auto;
     margin-top: -1rem;
     padding: 0;
-    width: 15.81625rem;
+    width: $field_width;
 
     .option {
       display: flex;
@@ -37,8 +39,8 @@
       padding: 1rem;
       border-radius: 0;
       align-items: center;
-      background: #221236;
-      border: 1px solid rgba(97, 67, 191, 0.5);
+      background: $haiti;
+      border: 1px solid $studio50;
       border-top: none;
 
       &.last {
@@ -46,10 +48,10 @@
       }
 
       &:hover {
-        background: #301c4c;
+        background: $valhalla;
       }
       .option-text {
-        font-size: 11px;
+        font-size: $default-text;
         letter-spacing: 1px;
       }
     }
@@ -67,7 +69,7 @@
 
     i {
       transform: rotate(-180deg);
-      margin-top: 2px;
+      margin-top: 1px;
       color: $text-light;
     }
   }
@@ -75,35 +77,11 @@
     display: block;
     opacity: 0;
     z-index: 10;
-    animation-name: fadeInUp;
-    -webkit-animation-name: fadeInUp;
+    animation-name: fade-in-down;
+    -webkit-animation-name: fade-in-down;
     animation-duration: .25s;
     animation-fill-mode: both;
     -webkit-animation-duration: .25s;
     -webkit-animation-fill-mode: both;
-  }
-}
-
-
-@keyframes fadeInUp {
-  from {
-    display: block;
-    transform: translate3d(0, 0, 0);
-    opacity: 0;
-  }
-  to {
-    transform: translate3d(0, 1rem, 0);
-    opacity: 1;
-  }
-}
-@keyframes fadeInDown {
-  from {
-    display: block;
-    transform: translate3d(0, 1rem, 0);
-    opacity: 1;
-  }
-  to {
-    transform: translate3d(0, 0, 0);
-    opacity: 0;
   }
 }

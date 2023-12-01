@@ -25,9 +25,7 @@ options.forEach((option) => {
             gameId = newOption;
         }
 
-        console.log($('#game-id')[0].value);
         $('#game-id')[0].value = gameId;
-        console.log($('#game-id')[0].value);
         sBtn_text.innerText = newOption;
 
         optionMenu.classList.remove("active");
