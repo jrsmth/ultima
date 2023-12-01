@@ -8,7 +8,7 @@
     </head>
     <body>
         <section id="login-section">
-            <div id="login-loader"></div>
+            <div id="login-loader"></div> <!-- TODO :: move to replace btn rather than logo (?) -->
             <img id="logo" alt="logo" src="../static/img/logo.png">
             <form action="" method="post" id="login-form">
                 <div class="form-control">
@@ -22,27 +22,46 @@
                     </div>
                 </div>
                 <div class="form-control">
-                    <div class="field">
-                        <input type="text"
-                               id="game-id"
-                               placeholder="Game ID"
-                               name="gameId"
-                               value="{{ request.form.gameId }}"
-                               autocomplete="off">
+<!--                    <div class="field">-->
+<!--                        <input type="text"-->
+<!--                               id="game-id"-->
+<!--                               placeholder="Game ID"-->
+<!--                               name="gameId"-->
+<!--                               value="{{ request.form.gameId }}"-->
+<!--                               autocomplete="off">-->
+<!--                    </div>-->
+
+
+                    <div class="custom-select">
+                        <select>
+                            <option value="0">Game ID</option>
+                            <option value="1">Audi</option>
+                            <option value="2">BMW</option>
+                            <option value="3">Citroen</option>
+                            <option value="4">Ford</option>
+                            <option value="5">Honda</option>
+                            <option value="6">Jaguar</option>
+                            <option value="7">Land Rover</option>
+                            <option value="8">Mercedes</option>
+                            <option value="9">Mini</option>
+                            <option value="10">Nissan</option>
+                            <option value="11">Toyota</option>
+                            <option value="12">Volvo</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-control radio">
                     <input type="hidden" id="game-mode" name="gameMode" value="standard">
-                    <div class="field radio">
-                        <p class="selection selected">Standard</p>
-                        <p class="selection">Ultimate</p>
+                    <div class="field radio" data-customTooltip="Game Mode">
+                        <p class="selection selected left">Standard</p>
+                        <p class="selection right">Ultimate</p>
                     </div>
                 </div>
                 <div class="form-control radio">
                     <input type="hidden" id="player-mode" name="playerMode" value="double">
-                    <div class="field radio">
-                        <p class="selection selected">Double</p>
-                        <p class="selection">Single</p>
+                    <div class="field radio" data-customTooltip="Player Mode">
+                        <p class="selection selected left">Double</p>
+                        <p class="selection right">Single</p>
                     </div>
                 </div>
                 <input type="hidden" id="restart" name="restart" value="">
@@ -59,4 +78,5 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="{{ url_for('static', filename='scripts/login.js') }}"></script>
     <script src="{{ url_for('static', filename='scripts/starfield.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/dropdown.js') }}"></script>
 </html>

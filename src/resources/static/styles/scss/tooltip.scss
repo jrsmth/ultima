@@ -1,0 +1,33 @@
+@import "variables";
+
+[data-customTooltip] {
+  cursor: pointer;
+  position: relative;
+}
+
+[data-customTooltip]::after {
+  z-index: 100;
+  background-color: #1D0D2B;
+  border: 1px solid rgba(97, 67, 191, 0.75);
+  font-size: 11px;
+  padding: .5rem;
+  height: fit-content;
+  width: fit-content;
+  top: -2.375rem;
+  border-radius: .5rem;
+  position: absolute;
+  text-align: center;
+  bottom: 0;
+  left: 50%;
+  opacity: .85;
+  content: attr(data-customTooltip);
+  transform: translate(-50%, 110%) scale(0);
+  transform-origin: top;
+  transition: .25s;
+  box-shadow: $drop-shadow;
+}
+
+[data-customTooltip]:hover:after {
+  display: block;
+  transform: translate(-50%, 110%) scale(1);
+}

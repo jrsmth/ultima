@@ -25,6 +25,103 @@
     opacity: 0;
   }
 }
+[data-customTooltip] {
+  cursor: pointer;
+  position: relative;
+}
+
+[data-customTooltip]::after {
+  z-index: 100;
+  background-color: #1D0D2B;
+  border: 1px solid rgba(97, 67, 191, 0.75);
+  font-size: 11px;
+  padding: 0.5rem;
+  height: fit-content;
+  width: fit-content;
+  top: -2.375rem;
+  border-radius: 0.5rem;
+  position: absolute;
+  text-align: center;
+  bottom: 0;
+  left: 50%;
+  opacity: 0.85;
+  content: attr(data-customTooltip);
+  transform: translate(-50%, 110%) scale(0);
+  transform-origin: top;
+  transition: 0.25s;
+  box-shadow: 0px 13px 50px -13px rgba(0, 0, 0, 0.0980392157);
+}
+
+[data-customTooltip]:hover:after {
+  display: block;
+  transform: translate(-50%, 110%) scale(1);
+}
+
+.custom-select {
+  position: relative;
+}
+
+.custom-select select {
+  display: none;
+}
+
+.select-selected {
+  background-color: transparent;
+}
+
+/*style the arrow inside the select element:*/
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 1rem;
+  margin-left: 0.5rem;
+  width: 0;
+  height: 0;
+  border: 0.25rem solid transparent;
+  border-color: #ccc transparent transparent transparent;
+}
+
+/*point the arrow upwards when the select box is open (active):*/
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent #fff transparent;
+  top: 7px;
+}
+
+/*style the items (options), including the selected item:*/
+.select-items div, .select-selected {
+  width: 15.81625rem;
+  margin: auto;
+  padding: 1rem 0.75rem;
+  border: 1px solid rgba(97, 67, 191, 0.5);
+  border-radius: 0.75rem;
+  text-align: center;
+  letter-spacing: 1px;
+  font-size: 11px;
+  cursor: pointer;
+  user-select: none;
+}
+
+/*style items (options):*/
+.select-items {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+.select-items div {
+  background-color: #200c2c;
+}
+
+/*hide the items when the select box is closed:*/
+.select-hide {
+  display: none;
+}
+
+.select-items div:hover {
+  background-color: #301c4c;
+}
+
 * {
   font-family: Montserrat, sans-serif;
 }
@@ -70,20 +167,20 @@ body #background-overlay h1 {
 section {
   position: absolute;
   width: 26rem;
-  height: 20rem;
+  height: 28rem;
   left: calc(50% - 13rem);
   top: 20%;
   text-align: center;
   background: rgb(15, 15, 26);
   background: linear-gradient(85deg, rgb(15, 15, 26) 0%, rgb(29, 13, 43) 35%, rgb(40, 23, 63) 100%);
-  padding: 4rem 2rem;
+  padding: 2rem 1rem;
   border-radius: 1.25rem;
   border: 1px solid rgba(97, 67, 191, 0.25);
   box-shadow: 0px 13px 50px -13px rgba(0, 0, 0, 0.0980392157);
 }
 section #logo, section #login-loader {
   height: 2.375rem;
-  margin-bottom: 2rem;
+  margin: 1rem 0 2rem 0;
 }
 section #login-loader {
   display: none;
@@ -93,14 +190,7 @@ section #login-loader {
   animation: spin 2s linear infinite;
   opacity: 0.5;
   width: 2.375rem;
-  margin: 0 auto 1.25rem auto;
-}
-section form {
-  color: #ccc;
-  letter-spacing: 0.5px;
-  display: flex;
-  flex-direction: column;
-  text-align: left;
+  margin: 1rem auto 2.25rem auto;
 }
 section form div {
   box-sizing: border-box;
@@ -122,7 +212,6 @@ section form .form-control {
 section form .form-control .field {
   margin: auto;
   display: flex;
-  height: 2rem;
   align-items: center;
   justify-content: center;
 }
@@ -131,28 +220,39 @@ section form .form-control .field .selection {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  height: 2.25rem;
-  width: 8.5rem;
+  width: 7.8125rem;
   margin-left: -1px;
   background-clip: border-box;
   transform: scale3d(1, 1, 1);
-  background-color: rgba(231, 4, 83, 0.2509803922);
-  color: #ccc;
+  text-transform: uppercase;
   transition: 0.15s ease-in-out;
+  letter-spacing: 1.5px;
+  font-size: 11px;
+  padding: 1rem 0;
+  background-color: transparent;
+  border: 1px solid rgb(97, 67, 191);
+  color: #ccc;
+  opacity: 0.5;
+}
+section form .form-control .field .selection.left {
+  border-radius: 0.5rem 0 0 0.5rem;
+}
+section form .form-control .field .selection.right {
+  border-radius: 0 0.5rem 0.5rem 0;
 }
 section form .form-control .field .selection.selected {
-  background-color: rgba(231, 4, 83, 0.7490196078) !important;
-  color: whitesmoke !important;
+  background-color: rgba(97, 67, 191, 0.25);
   z-index: 2;
   cursor: text;
+  opacity: 1;
 }
 section form .form-control .field .selection:hover {
-  color: whitesmoke !important;
-  background-color: rgba(231, 4, 83, 0.7490196078);
+  opacity: 1;
+  background-color: rgba(97, 67, 191, 0.25);
 }
 section form .form-control.button {
   display: flex;
-  justify-content: end;
+  justify-content: center;
 }
 section form .form-control.radio.hide {
   display: none;
@@ -169,26 +269,33 @@ section form input {
   border-radius: 0.75rem;
   text-align: center;
   letter-spacing: 1px;
-  font-size: 12px;
+  font-size: 11px;
 }
 section form input:focus {
   border: 1px solid rgba(97, 67, 191, 0.75);
   transition: 0.15s ease-in-out;
 }
 section form button {
-  width: 8.5rem;
-  background-color: rgba(231, 4, 83, 0.2509803922);
-  border: none;
+  width: 15.625rem;
   color: whitesmoke;
   transition: 0.15s ease-in-out;
-  padding: 0.5rem;
   cursor: pointer;
-  letter-spacing: 1px;
   box-shadow: 0px 13px 50px -13px rgba(0, 0, 0, 0.0980392157);
-  height: 2.25rem;
+  letter-spacing: 2px;
+  background: rgb(97, 67, 191);
+  background: linear-gradient(45deg, rgb(97, 67, 191) 20%, rgb(19, 236, 186) 100%);
+  opacity: 0.7;
+  margin-top: 1rem;
+  border: 1px solid rgb(97, 67, 191);
+  text-transform: uppercase;
+  font-size: 11px;
+  padding: 1rem 0;
+  border-radius: 0.5rem;
 }
 section form button:hover {
-  background: rgba(231, 4, 83, 0.7490196078);
+  background: linear-gradient(90deg, rgb(97, 67, 191) 0%, rgb(19, 236, 186) 80%);
+  transform: scale(1.0125);
+  opacity: 1;
 }
 
 @keyframes spin {

@@ -25,6 +25,103 @@
     opacity: 0;
   }
 }
+[data-customTooltip] {
+  cursor: pointer;
+  position: relative;
+}
+
+[data-customTooltip]::after {
+  z-index: 100;
+  background-color: #1D0D2B;
+  border: 1px solid rgba(97, 67, 191, 0.75);
+  font-size: 11px;
+  padding: 0.5rem;
+  height: fit-content;
+  width: fit-content;
+  top: -2.375rem;
+  border-radius: 0.5rem;
+  position: absolute;
+  text-align: center;
+  bottom: 0;
+  left: 50%;
+  opacity: 0.85;
+  content: attr(data-customTooltip);
+  transform: translate(-50%, 110%) scale(0);
+  transform-origin: top;
+  transition: 0.25s;
+  box-shadow: 0px 13px 50px -13px rgba(0, 0, 0, 0.0980392157);
+}
+
+[data-customTooltip]:hover:after {
+  display: block;
+  transform: translate(-50%, 110%) scale(1);
+}
+
+.custom-select {
+  position: relative;
+}
+
+.custom-select select {
+  display: none;
+}
+
+.select-selected {
+  background-color: transparent;
+}
+
+/*style the arrow inside the select element:*/
+.select-selected:after {
+  position: absolute;
+  content: "";
+  top: 1rem;
+  margin-left: 0.5rem;
+  width: 0;
+  height: 0;
+  border: 0.25rem solid transparent;
+  border-color: #ccc transparent transparent transparent;
+}
+
+/*point the arrow upwards when the select box is open (active):*/
+.select-selected.select-arrow-active:after {
+  border-color: transparent transparent #fff transparent;
+  top: 7px;
+}
+
+/*style the items (options), including the selected item:*/
+.select-items div, .select-selected {
+  width: 15.81625rem;
+  margin: auto;
+  padding: 1rem 0.75rem;
+  border: 1px solid rgba(97, 67, 191, 0.5);
+  border-radius: 0.75rem;
+  text-align: center;
+  letter-spacing: 1px;
+  font-size: 11px;
+  cursor: pointer;
+  user-select: none;
+}
+
+/*style items (options):*/
+.select-items {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 99;
+}
+.select-items div {
+  background-color: #200c2c;
+}
+
+/*hide the items when the select box is closed:*/
+.select-hide {
+  display: none;
+}
+
+.select-items div:hover {
+  background-color: #301c4c;
+}
+
 * {
   font-family: Montserrat, sans-serif;
 }
