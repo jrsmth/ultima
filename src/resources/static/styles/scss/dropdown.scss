@@ -1,0 +1,87 @@
+@import "variables";
+@import "colours";
+@import "animation";
+
+.game-dropdown {
+  width: $field_width;
+  margin: auto;
+
+  .select-btn {
+    border: 1px solid $studio50;
+    text-align: center;
+    padding: 1rem;
+    font-size: $default-text;
+    letter-spacing: 1px;
+    border-radius: .75rem;
+    align-items: center;
+    cursor: pointer;
+    color: $text-disabled;
+
+    i {
+      position: absolute;
+      right: 7.25rem;
+      color: $text-disabled;
+    }
+  }
+
+  .options {
+    display: none;
+    position: absolute;
+    overflow-y: auto;
+    margin-top: -1rem;
+    padding: 0;
+    width: $field_width;
+
+    .option {
+      display: flex;
+      justify-content: space-around;
+      cursor: pointer;
+      padding: 1rem;
+      border-radius: 0;
+      align-items: center;
+      background: $haiti;
+      border: 1px solid $studio50;
+      border-top: none;
+
+      &.last {
+        border-radius: 0 0 .75rem .75rem;
+      }
+
+      &:hover {
+        background: $valhalla;
+      }
+      .option-text {
+        font-size: $default-text;
+        letter-spacing: 1px;
+      }
+    }
+  }
+}
+
+.select-btn.touched {
+  color: $text-light
+}
+
+.game-dropdown.active {
+  .select-btn {
+    border-radius: .75rem .75rem 0 0;
+    color: $text-light;
+
+    i {
+      transform: rotate(-180deg);
+      margin-top: 1px;
+      color: $text-light;
+    }
+  }
+  .options {
+    display: block;
+    opacity: 0;
+    z-index: 10;
+    animation-name: fade-in-down;
+    -webkit-animation-name: fade-in-down;
+    animation-duration: .25s;
+    animation-fill-mode: both;
+    -webkit-animation-duration: .25s;
+    -webkit-animation-fill-mode: both;
+  }
+}

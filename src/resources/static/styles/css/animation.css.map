@@ -1,0 +1,1 @@
+{"version":3,"sourceRoot":"","sources":["../scss/starfield.scss","../scss/colours.scss","../scss/animation.scss"],"names":[],"mappings":"AAEA;EACE;EACA;EACA,kBCCW;EDAX;EACA;;;AELF;EACE;IACE;;EAEF;IACE;;;AAIJ;EACE;IACE;;EAEF;IACE;;EAEF;IACE;;;AAIJ;EACE;IACE;IACA;;EAEF;IACE;IACA;;;AAIJ;EACE;IAAK;;EACL;IAAO","file":"animation.css"}

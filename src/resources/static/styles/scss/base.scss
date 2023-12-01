@@ -1,5 +1,7 @@
 @import "variables";
 @import "animation";
+@import "tooltip";
+@import "dropdown";
 
 * {
   font-family: Montserrat, sans-serif;
@@ -15,4 +17,37 @@ body {
   color: $text-lightest;
   height: 100%;
   margin: 0;
+
+  #background-overlay {
+    z-index: -1;
+    right: 0;
+    top: 0;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: $deep-space;
+    background: linear-gradient(90deg, $deep-space25 0%, $electric25 50%, $studio50 100%);
+    text-align: center;
+
+    h1 {
+      text-transform: uppercase;
+      opacity: .15;
+      letter-spacing: 4rem;
+      margin: 0;
+      position: relative;
+      font-weight: 400;
+      background-image: linear-gradient(0deg, $studio00 0%, $studio 100%);
+      background-size: 100%;
+      background-repeat: repeat;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 12rem;
+      top: calc(50% - ($loginHeight * .75));
+
+      @media (min-width: 1500px) {
+        font-size: 16rem;
+        top: calc(50% - ($loginHeight * 0.95));
+      }
+    }
+  }
 }

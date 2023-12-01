@@ -1,8 +1,9 @@
 #starfield {
   width: 100%;
   height: 100%;
-  z-index: -100;
   background-color: #0f0f1a;
+  position: relative;
+  z-index: -10;
 }
 
 @keyframes fade-in {
@@ -24,6 +25,176 @@
     opacity: 0;
   }
 }
+@keyframes fade-in-down {
+  from {
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+  to {
+    transform: translate3d(0, 1rem, 0);
+    opacity: 1;
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+[data-customTooltip] {
+  cursor: pointer;
+  position: relative;
+}
+
+[data-customTooltip]::after {
+  z-index: 100;
+  background-color: #1D0D2B;
+  border: 1px solid rgba(97, 67, 191, 0.7490196078);
+  font-size: 11px;
+  padding: 0.5rem;
+  height: fit-content;
+  width: fit-content;
+  top: -0.125rem;
+  border-radius: 0.5rem;
+  position: absolute;
+  text-align: center;
+  bottom: 0;
+  left: 50%;
+  opacity: 0.85;
+  content: attr(data-customTooltip);
+  transform: translate(-50%, 110%) scale(0);
+  transform-origin: top;
+  transition: 0.25s;
+  box-shadow: 0px 13px 50px -13px rgba(0, 0, 0, 0.0980392157);
+}
+
+[data-customTooltip]:hover:after {
+  display: block;
+  transform: translate(-50%, 110%) scale(1);
+}
+
+#starfield {
+  width: 100%;
+  height: 100%;
+  background-color: #0f0f1a;
+  position: relative;
+  z-index: -10;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fade-in-out {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes fade-in-down {
+  from {
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+  to {
+    transform: translate3d(0, 1rem, 0);
+    opacity: 1;
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.game-dropdown {
+  width: 15.81625rem;
+  margin: auto;
+}
+.game-dropdown .select-btn {
+  border: 1px solid rgba(97, 67, 191, 0.5019607843);
+  text-align: center;
+  padding: 1rem;
+  font-size: 11px;
+  letter-spacing: 1px;
+  border-radius: 0.75rem;
+  align-items: center;
+  cursor: pointer;
+  color: #666;
+}
+.game-dropdown .select-btn i {
+  position: absolute;
+  right: 7.25rem;
+  color: #666;
+}
+.game-dropdown .options {
+  display: none;
+  position: absolute;
+  overflow-y: auto;
+  margin-top: -1rem;
+  padding: 0;
+  width: 15.81625rem;
+}
+.game-dropdown .options .option {
+  display: flex;
+  justify-content: space-around;
+  cursor: pointer;
+  padding: 1rem;
+  border-radius: 0;
+  align-items: center;
+  background: #221236;
+  border: 1px solid rgba(97, 67, 191, 0.5019607843);
+  border-top: none;
+}
+.game-dropdown .options .option.last {
+  border-radius: 0 0 0.75rem 0.75rem;
+}
+.game-dropdown .options .option:hover {
+  background: #301c4c;
+}
+.game-dropdown .options .option .option-text {
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.select-btn.touched {
+  color: #ccc;
+}
+
+.game-dropdown.active .select-btn {
+  border-radius: 0.75rem 0.75rem 0 0;
+  color: #ccc;
+}
+.game-dropdown.active .select-btn i {
+  transform: rotate(-180deg);
+  margin-top: 1px;
+  color: #ccc;
+}
+.game-dropdown.active .options {
+  display: block;
+  opacity: 0;
+  z-index: 10;
+  animation-name: fade-in-down;
+  -webkit-animation-name: fade-in-down;
+  animation-duration: 0.25s;
+  animation-fill-mode: both;
+  -webkit-animation-duration: 0.25s;
+  -webkit-animation-fill-mode: both;
+}
+
 * {
   font-family: Montserrat, sans-serif;
 }
@@ -38,6 +209,38 @@ body {
   color: whitesmoke;
   height: 100%;
   margin: 0;
+}
+body #background-overlay {
+  z-index: -1;
+  right: 0;
+  top: 0;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: #0f0f1a;
+  background: linear-gradient(90deg, rgba(15, 15, 26, 0.2509803922) 0%, rgba(151, 66, 225, 0.2509803922) 50%, rgba(97, 67, 191, 0.5019607843) 100%);
+  text-align: center;
+}
+body #background-overlay h1 {
+  text-transform: uppercase;
+  opacity: 0.15;
+  letter-spacing: 4rem;
+  margin: 0;
+  position: relative;
+  font-weight: 400;
+  background-image: linear-gradient(0deg, rgba(97, 67, 191, 0) 0%, #6143bf 100%);
+  background-size: 100%;
+  background-repeat: repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 12rem;
+  top: calc(50% - 21rem);
+}
+@media (min-width: 1500px) {
+  body #background-overlay h1 {
+    font-size: 16rem;
+    top: calc(50% - 26.6rem);
+  }
 }
 
 /** Header */

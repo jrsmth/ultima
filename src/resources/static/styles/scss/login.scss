@@ -3,42 +3,34 @@
 section {
   position: absolute;
   width: $loginWidth;
-  height: $loginHeight;
+  height: 28rem;
   left: calc(50% - ($loginWidth * .5));
-  top: calc(50% - $loginHeight);
+  top: calc(50% - ($loginHeight * .5));
   text-align: center;
-  background-color: #1e1530;
-  padding: 4rem 2rem;
+  background: $deep-space;
+  background: linear-gradient(85deg, $deep-space 0%, $haiti 35%, $valhalla 100%);
+  padding: 2rem 1rem;
   border-radius: 1.25rem;
+  border: 1px solid $studio25;
+  box-shadow: $drop-shadow;
 
   #logo {
-    width: 10rem;
-    margin-bottom: 2rem;
+    height: 2.375rem;
+    margin: 1rem 0 2rem 0;
   }
 
   form {
-    color: $text-light;
-    box-shadow: $drop-shadow;
-    letter-spacing: .5px;
-    display: flex;
-    flex-direction: column;
-    text-align: left;
 
     div { box-sizing: border-box; }
     h3  { font-size: 1rem; font-weight: normal; margin: 2px 0; color: $text-lighter}
     p   { font-size: .7rem; margin: 2px 0; color: $text-light }
 
     .form-control {
-      display: flex;
-      height: $form-control-height + ($gutter * 1.5);
-      padding: $gutter;
-      width: 100%;
-      align-items: center;
+      margin: 1rem;
 
       .field {
-        margin-left: auto;
+        margin: auto;
         display: flex;
-        height: $form-control-height;
         align-items: center;
         justify-content: center;
 
@@ -47,33 +39,40 @@ section {
           align-items: center;
           justify-content: center;
           cursor: pointer;
-          height: 2.25rem;
-          width: calc($field-width * .5);
+          width: 7.75rem;
           margin-left: -1px;
           background-clip: border-box;
           transform: scale3d(1, 1, 1);
-
-          background-color: $rose25;
-          color: $text-light;
+          text-transform: uppercase;
           transition: $ease-in;
+          letter-spacing: 1.5px;
+          font-size: $default-text;
+          padding: 1rem 0;
+          background-color: transparent;
+          border: 1px solid $studio;
+          color: $text-light;
+          opacity: .5;
+
+          &.left { border-radius: .5rem 0 0 .5rem; }
+          &.right { border-radius: 0 .5rem .5rem 0; }
 
           &.selected {
-            background-color: $rose75 !important;
-            color: $text-lightest !important;
+            background-color: $studio25;
             z-index: 2;
             cursor: text;
+            opacity: 1;
           }
 
           &:hover {
-            color: $text-lightest !important;
-            background-color: $rose75;
+            opacity: 1;
+            background-color: $studio25;
           }
         }
       }
 
       &.button {
         display: flex;
-        justify-content: end;
+        justify-content: center;
       }
 
       &.radio.hide {
@@ -82,55 +81,58 @@ section {
     }
 
     input {
-      border: none;
-      border-bottom: 1px solid $rose25;
       background: none;
       line-height: 2rem;
       color: $text-lightest;
       outline: none;
-      width: 16.875rem;
+      width: 14rem;
       margin: auto;
+      padding: .5rem .75rem;
+      border: 1px solid $studio50;
+      border-radius: .75rem;
+      text-align: center;
+      letter-spacing: 1px;
+      font-size: $default-text;
 
       &:focus {
-        border-bottom: 1px solid $rose75;
+        border: 1px solid $studio75;
         transition: $ease-in;
       }
     }
 
     button {
-      width: calc($field-width * .5);
-      background-color: $rose25;
-      border: none;
+      width: $field_width;
       color: $text-lightest;
       transition: $ease-in;
-      padding: .5rem;
-      cursor: pointer;
-      letter-spacing: 1px;
       box-shadow: $drop-shadow;
-      height: 2.25rem;
+      letter-spacing: 2px;
+      background: rgb(97,67,191);
+      background: linear-gradient(45deg, $studio 20%, $turquoise 100%);
+      opacity: .7;
+      border: 1px solid $studio;
+      text-transform: uppercase;
+      font-size: $default-text;
+      padding: 1rem 0;
+      border-radius: .5rem;
 
-      &:hover {
-        background: $rose75;
+      &:hover:not(.disabled) { // TODO :: impl .disabled
+        cursor: pointer;
+        background: linear-gradient(90deg, $studio 0%, $turquoise 80%);
+        transform: scale(1.0125);
+        opacity: 1;
       }
     }
 
+    #login-loader {
+      display: none;
+      border: .5rem solid $studio50;
+      border-top: .5rem solid $studio;
+      border-radius: 50%;
+      animation: spin 2s linear infinite;
+      opacity: .5;
+      width: 3rem;
+      height: 3rem;
+      margin: 1rem auto 2.25rem auto;
+    }
   }
-
-}
-
-#login-loader {
-  display: none;
-  margin: auto;
-  border: .5rem solid #6143bf80;
-  border-top: .5rem solid #6143bf;
-  border-radius: 50%;
-  width: 4rem;
-  height: 4rem;
-  animation: spin 2s linear infinite;
-  opacity: .5;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
 }

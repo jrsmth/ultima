@@ -30,13 +30,16 @@ $(document).ready(function() {
 });
 
 function login() {
+    if ($('#player-name')[0].value === '' ||
+        $('#game-id')[0].value === '-1') return;
+
     const delay = 500;
     setVelocity(1);
     setDensity(10000);
     setBrightness(10);
     makeStars();
 
-    $('#login-form')[0].style.display = 'none';
+    $('#login-button')[0].style.display = 'none';
     $('#login-loader')[0].style.display = 'block';
 
     setTimeout(() => {
