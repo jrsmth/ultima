@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 # Releases
 <!-- @LatestFirst -->
 
-## [0.6.0] - ???
+## [0.6.0] - 02/12/23
 - UMA-37: Create star field background
 - UMA-38: Restyle login screen
 - UMA-39: Restyle game screen
