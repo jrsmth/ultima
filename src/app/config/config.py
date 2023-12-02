@@ -1,6 +1,9 @@
 class Config(object):
     APP_URL = "http://localhost:8080"
     REDIS_URL = "redis://@localhost:6379/0"
+    USERNAME = "noah"
+    PASSWORD = "ark"
+    # Note :: Security risk - ideally would store creds as env-var in some sort of trust store and inject at runtime
 
 
 class DevConfig(Config):

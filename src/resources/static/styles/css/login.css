@@ -1,3 +1,11 @@
+.starfield {
+  width: 100%;
+  height: 100%;
+  background-color: #0f0f1a;
+  position: relative;
+  z-index: -10;
+}
+
 @keyframes fade-in {
   0% {
     opacity: 0;
@@ -17,6 +25,176 @@
     opacity: 0;
   }
 }
+@keyframes fade-in-down {
+  from {
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+  to {
+    transform: translate3d(0, 1rem, 0);
+    opacity: 1;
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+[data-customTooltip] {
+  cursor: pointer;
+  position: relative;
+}
+
+[data-customTooltip]::after {
+  z-index: 100;
+  background-color: #1D0D2B;
+  border: 1px solid rgba(97, 67, 191, 0.7490196078);
+  font-size: 11px;
+  padding: 0.5rem;
+  height: fit-content;
+  width: fit-content;
+  top: -0.125rem;
+  border-radius: 0.5rem;
+  position: absolute;
+  text-align: center;
+  bottom: 0;
+  left: 50%;
+  opacity: 0.85;
+  content: attr(data-customTooltip);
+  transform: translate(-50%, 110%) scale(0);
+  transform-origin: top;
+  transition: 0.25s;
+  box-shadow: 0px 13px 50px -13px rgba(0, 0, 0, 0.0980392157);
+}
+
+[data-customTooltip]:hover:after {
+  display: block;
+  transform: translate(-50%, 110%) scale(1);
+}
+
+.starfield {
+  width: 100%;
+  height: 100%;
+  background-color: #0f0f1a;
+  position: relative;
+  z-index: -10;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fade-in-out {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes fade-in-down {
+  from {
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+  to {
+    transform: translate3d(0, 1rem, 0);
+    opacity: 1;
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.game-dropdown {
+  width: 15.81625rem;
+  margin: auto;
+}
+.game-dropdown .select-btn {
+  border: 1px solid rgba(97, 67, 191, 0.5019607843);
+  text-align: center;
+  padding: 1rem;
+  font-size: 11px;
+  letter-spacing: 1px;
+  border-radius: 0.75rem;
+  align-items: center;
+  cursor: pointer;
+  color: #666;
+}
+.game-dropdown .select-btn i {
+  position: absolute;
+  right: 7.25rem;
+  color: #666;
+}
+.game-dropdown .options {
+  display: none;
+  position: absolute;
+  overflow-y: auto;
+  margin-top: -1rem;
+  padding: 0;
+  width: 15.81625rem;
+}
+.game-dropdown .options .option {
+  display: flex;
+  justify-content: space-around;
+  cursor: pointer;
+  padding: 1rem;
+  border-radius: 0;
+  align-items: center;
+  background: #221236;
+  border: 1px solid rgba(97, 67, 191, 0.5019607843);
+  border-top: none;
+}
+.game-dropdown .options .option.last {
+  border-radius: 0 0 0.75rem 0.75rem;
+}
+.game-dropdown .options .option:hover {
+  background: #301c4c;
+}
+.game-dropdown .options .option .option-text {
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.select-btn.touched {
+  color: #ccc;
+}
+
+.game-dropdown.active .select-btn {
+  border-radius: 0.75rem 0.75rem 0 0;
+  color: #ccc;
+}
+.game-dropdown.active .select-btn i {
+  transform: rotate(-180deg);
+  margin-top: 1px;
+  color: #ccc;
+}
+.game-dropdown.active .options {
+  display: block;
+  opacity: 0;
+  z-index: 10;
+  animation-name: fade-in-down;
+  -webkit-animation-name: fade-in-down;
+  animation-duration: 0.25s;
+  animation-fill-mode: both;
+  -webkit-animation-duration: 0.25s;
+  -webkit-animation-fill-mode: both;
+}
+
 * {
   font-family: Montserrat, sans-serif;
 }
@@ -27,30 +205,61 @@ html {
 }
 
 body {
-  background-color: #180405;
+  background-color: rgba(24, 4, 5, 0.7490196078);
   color: whitesmoke;
   height: 100%;
+  margin: 0;
+}
+body #background-overlay {
+  z-index: -1;
+  right: 0;
+  top: 0;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: #0f0f1a;
+  background: linear-gradient(90deg, rgba(15, 15, 26, 0.2509803922) 0%, rgba(151, 66, 225, 0.2509803922) 50%, rgba(97, 67, 191, 0.5019607843) 100%);
+  text-align: center;
+}
+body #background-overlay h1 {
+  text-transform: uppercase;
+  opacity: 0.15;
+  letter-spacing: 4rem;
+  margin: 0;
+  position: relative;
+  font-weight: 400;
+  background-image: linear-gradient(0deg, rgba(97, 67, 191, 0) 0%, #6143bf 100%);
+  background-size: 100%;
+  background-repeat: repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 12rem;
+  top: calc(50% - 21rem);
+}
+@media (min-width: 1500px) {
+  body #background-overlay h1 {
+    font-size: 16rem;
+    top: calc(50% - 26.6rem);
+  }
 }
 
 section {
   position: absolute;
-  width: 36rem;
-  height: 20rem;
-  left: calc(50% - 18rem);
-  top: calc(50% - 20rem);
+  width: 26rem;
+  height: 28rem;
+  left: calc(50% - 13rem);
+  top: calc(50% - 14rem);
   text-align: center;
+  background: #0f0f1a;
+  background: linear-gradient(85deg, #0f0f1a 0%, #221236 35%, #301c4c 100%);
+  padding: 2rem 1rem;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(97, 67, 191, 0.2509803922);
+  box-shadow: 0px 13px 50px -13px rgba(0, 0, 0, 0.0980392157);
 }
 section #logo {
-  width: 10rem;
-  margin-bottom: 2rem;
-}
-section form {
-  color: #ccc;
-  box-shadow: 0px 13px 50px -13px rgba(0, 0, 0, 0.0980392157);
-  letter-spacing: 0.5px;
-  display: flex;
-  flex-direction: column;
-  text-align: left;
+  height: 2.375rem;
+  margin: 1rem 0 2rem 0;
 }
 section form div {
   box-sizing: border-box;
@@ -67,16 +276,11 @@ section form p {
   color: #ccc;
 }
 section form .form-control {
-  display: flex;
-  height: 5rem;
-  padding: 2rem;
-  width: 100%;
-  align-items: center;
+  margin: 1rem;
 }
 section form .form-control .field {
-  margin-left: auto;
+  margin: auto;
   display: flex;
-  height: 2rem;
   align-items: center;
   justify-content: center;
 }
@@ -85,60 +289,92 @@ section form .form-control .field .selection {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  height: 2.25rem;
-  width: 8.5rem;
+  width: 7.75rem;
   margin-left: -1px;
   background-clip: border-box;
   transform: scale3d(1, 1, 1);
-  background-color: rgba(231, 4, 83, 0.2509803922);
-  color: #ccc;
+  text-transform: uppercase;
   transition: 0.15s ease-in-out;
+  letter-spacing: 1.5px;
+  font-size: 11px;
+  padding: 1rem 0;
+  background-color: transparent;
+  border: 1px solid #6143bf;
+  color: #ccc;
+  opacity: 0.5;
+}
+section form .form-control .field .selection.left {
+  border-radius: 0.5rem 0 0 0.5rem;
+}
+section form .form-control .field .selection.right {
+  border-radius: 0 0.5rem 0.5rem 0;
 }
 section form .form-control .field .selection.selected {
-  background-color: rgba(231, 4, 83, 0.7490196078) !important;
-  color: whitesmoke !important;
+  background-color: rgba(97, 67, 191, 0.2509803922);
   z-index: 2;
   cursor: text;
+  opacity: 1;
 }
 section form .form-control .field .selection:hover {
-  color: whitesmoke !important;
-  background-color: rgba(231, 4, 83, 0.7490196078);
+  opacity: 1;
+  background-color: rgba(97, 67, 191, 0.2509803922);
 }
 section form .form-control.button {
   display: flex;
-  justify-content: end;
+  justify-content: center;
 }
 section form .form-control.radio.hide {
   display: none;
 }
 section form input {
-  border: none;
-  border-bottom: 1px solid rgba(231, 4, 83, 0.2509803922);
   background: none;
   line-height: 2rem;
   color: whitesmoke;
   outline: none;
-  width: 16.875rem;
+  width: 14rem;
   margin: auto;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid rgba(97, 67, 191, 0.5019607843);
+  border-radius: 0.75rem;
+  text-align: center;
+  letter-spacing: 1px;
+  font-size: 11px;
 }
 section form input:focus {
-  border-bottom: 1px solid rgba(231, 4, 83, 0.7490196078);
+  border: 1px solid rgba(97, 67, 191, 0.7490196078);
   transition: 0.15s ease-in-out;
 }
 section form button {
-  width: 8.5rem;
-  background-color: rgba(231, 4, 83, 0.2509803922);
-  border: none;
+  width: 15.81625rem;
   color: whitesmoke;
   transition: 0.15s ease-in-out;
-  padding: 0.5rem;
-  cursor: pointer;
-  letter-spacing: 1px;
   box-shadow: 0px 13px 50px -13px rgba(0, 0, 0, 0.0980392157);
-  height: 2.25rem;
+  letter-spacing: 2px;
+  background: rgb(97, 67, 191);
+  background: linear-gradient(45deg, #6143bf 20%, #13ecba 100%);
+  opacity: 0.7;
+  border: 1px solid #6143bf;
+  text-transform: uppercase;
+  font-size: 11px;
+  padding: 1rem 0;
+  border-radius: 0.5rem;
 }
-section form button:hover {
-  background: rgba(231, 4, 83, 0.7490196078);
+section form button:hover:not(.disabled) {
+  cursor: pointer;
+  background: linear-gradient(90deg, #6143bf 0%, #13ecba 80%);
+  transform: scale(1.0125);
+  opacity: 1;
+}
+section form #login-loader {
+  display: none;
+  border: 0.5rem solid rgba(97, 67, 191, 0.5019607843);
+  border-top: 0.5rem solid #6143bf;
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+  opacity: 0.5;
+  width: 3rem;
+  height: 3rem;
+  margin: 1rem auto 2.25rem auto;
 }
 
 /*# sourceMappingURL=login.css.map */

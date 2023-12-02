@@ -4,19 +4,18 @@
         <title>Ultima</title>
         <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon/favicon.ico') }}">
         <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" type="text/css">
         <link rel="stylesheet" href="{{ url_for('static', filename='styles/css/login.css') }}">
     </head>
     <body>
-        <section>
+        <section id="login-section">
             <img id="logo" alt="logo" src="../static/img/logo.png">
-            <form action="" method="post">
+            <form action="" method="post" id="login-form">
                 <div class="form-control">
-                    <div class="label">
-                        <h3>Player Name</h3>
-                    </div>
                     <div class="field">
                         <input type="text"
-                               placeholder="Name"
+                               placeholder="Player Name"
+                               id="player-name"
                                name="name"
                                value="{{ request.form.name }}"
                                autofocus
@@ -24,46 +23,57 @@
                     </div>
                 </div>
                 <div class="form-control">
-                    <div class="label">
-                        <h3>Game ID</h3>
-                        <p>Leave blank to start a new game</p>
-                    </div>
-                    <div class="field">
-                        <input type="text"
-                               id="game-id"
-                               placeholder="Game ID"
-                               name="gameId"
-                               value="{{ request.form.gameId }}"
-                               autocomplete="off">
+                    <input type="hidden" id="game-id" name="gameId" value="-1">
+                    <div class="game-dropdown">
+                        <div class="select-btn">
+                            <span class="select-btn-text">Game ID</span>
+                            <i class="fa-solid fa-caret-down"></i>
+                        </div>
+                        <ul class="options">
+                            <li class="option">
+                                <span class="option-text">New Game</span>
+                            </li>
+                            {% for game in games %}
+                                {% if (games|count - 1) == loop.index0 %}
+                                    <li class="option last">
+                                {% else %}
+                                    <li class="option">
+                                {% endif %}
+                                        <span class="option-text">{{ game[0] }}</span>
+                                        <span class="option-text">{{ game[1] }}</span>
+                                    </li>
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
-                <div class="form-control radio">
+                <div class="form-control radio hide">
                     <input type="hidden" id="game-mode" name="gameMode" value="standard">
-                    <div class="label">
-                        <h3>Game Mode</h3>
-                    </div>
-                    <div class="field radio">
-                        <p class="selection selected">Standard</p>
-                        <p class="selection">Ultimate</p>
+                    <div class="field radio" data-customTooltip="Game Mode">
+                        <p class="selection selected left">Standard</p>
+                        <p class="selection right">Ultimate</p>
                     </div>
                 </div>
-                <div class="form-control radio">
+                <div class="form-control radio hide">
                     <input type="hidden" id="player-mode" name="playerMode" value="double">
-                    <div class="label">
-                        <h3>Player Mode</h3>
-                    </div>
-                    <div class="field radio">
-                        <p class="selection selected">Double</p>
-                        <p class="selection">Single</p>
+                    <div class="field radio" data-customTooltip="Player Mode">
+                        <p class="selection selected left">Double</p>
+                        <p class="selection right">Single</p>
                     </div>
                 </div>
                 <input type="hidden" id="restart" name="restart" value="">
                 <div class="form-control button">
-                    <button type="submit">Play</button>
+                    <button id="login-button" type="button" onclick="login()">Play</button>
                 </div>
+                <div id="login-loader"></div>
             </form>
         </section>
+        <canvas id="starfield-login" class="starfield"></canvas>
+        <div id="background-overlay">
+            <h1>Ultima</h1>
+        </div>
     </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="{{ url_for('static', filename='scripts/login.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/starfield-login.js') }}"></script>
+    <script src="{{ url_for('static', filename='scripts/dropdown.js') }}"></script>
 </html>

@@ -3,16 +3,21 @@
 /** Header */
 header {
   display: flex;
-  margin: .75rem .5rem;
-  gap: 2rem;
+  padding: 1rem;
+  gap: 3rem;
   align-items: center;
+  position: absolute;
+  z-index: 100;
+  background: $bastille;
+  background: linear-gradient(90deg, $bastille 0%, $bastille00 100%);
+  width: 50%;
 
   i {
     margin-right: .5rem;
   }
 
   #badge {
-    height: 2.25rem;
+    height: 1.5rem;
     margin: .5rem;
   }
 
@@ -21,6 +26,8 @@ header {
     opacity: .8;
     transition: 500ms;
     display: flex;
+    font-size: 14px;
+    margin-top: -3px;
 
     .fa-check {
       display: none;
@@ -30,13 +37,38 @@ header {
       display: block;
       animation-name: fade-in-out;
       animation-duration: 1500ms;
-      color: #13ECBA; // FixMe
+      color: $turquoise; // FixMe
     }
 
     .fade-in {
       display: block;
       animation-name: fade-in;
       animation-duration: 500ms;
+    }
+  }
+
+  .player {
+    letter-spacing: .5px;
+    font-size: 15px;
+    opacity: .8;
+
+    .symbol {
+      color: $studio;
+      margin-left: .5rem;
+      transform: translateY(1px);
+      filter: brightness(150%);
+
+      &.cross {
+        transform: scale(1.1);
+      }
+    }
+
+    &.active {
+      opacity: 1;
+
+      &.this-user > .symbol {
+        color: $turquoise;
+      }
     }
   }
 }
@@ -56,30 +88,38 @@ header {
   &:hover .tooltip-text {
     visibility: visible;
   }
-}
+} // TODO
 
 /** Main Content */
 #content {
   display: flex;
   height: 100%;
-
-  .this-symbol {
-    color: $chartreuse;
-  }
+  width: 100%;
+  position: absolute;
+  z-index: 10;
 
   .main-bar {
-    width: 70%;
+    position: absolute;
     text-align: center;
+    @include card;
+    padding: 2rem;
+    top: calc(50% - (.45 * $game-card-height-min));
+    left: calc(50% - (.5 * $game-card-width-min));
+
+    @media (min-width: 1500px) {
+      top: calc(50% - (.45 * $game-card-height-max));
+      left: calc(50% - (.5 * $game-card-width-max));
+    }
 
     #player-turn {
-      height: 5.125rem;
-      color: $rose;
+      height: 5rem;
+      color: $studio;
       &.hide { display: none; }
 
       div {
         display: none;
         &.active { display: block }
-        &.this-user { color: $chartreuse; }
+        &.this-user { color: $turquoise; }
 
         .symbol {
           font-size: 5rem;
@@ -98,65 +138,33 @@ header {
   }
 }
 
-/** Side Bar */
-.side-bar {
-  margin-top: 6.5rem;
-  width: 15%;
-
-  .player {
-    margin: 1rem;
-    padding: 1rem;
-    width: 12rem;
-
-    .fa-user {
-      margin-right: .5rem;
-      color: $rose;
-    }
-
-    .symbol {
-      color: $rose;
-      margin-left: .5rem;
-      float: right;
-      transform: translateY(1px);
-    }
-
-    &.active {
-      border: 1px solid $rose25;
-      border-radius: .25rem;
-      background-color: $aubergine;
-
-      &.this-user > .symbol {
-          color: $chartreuse;
-        }
-    }
-  }
-}
-
 /** Boards **/
 .board {
   &.active { display: grid; }
+  grid-template-columns: 33.3% 33.3% 33.3%;
   display: none;
   margin: 2rem auto 0 auto;
-  height: $boardLengthDefault;
   aspect-ratio: 1 / 1;
-  max-height: $boardLengthMax;
-  min-height: $boardLengthMin;
-  grid-template-columns: 33.3% 33.3% 33.3%;
+  height: $board-length-min;
+
+  @media (min-width: 1500px) {
+    height: $board-length-max;
+  }
 }
 
 /** Three Board */
 #three-board {
   .shadow {
     margin: .5rem;
-    border: 1px solid $rose25;
-    background-color: $aubergine;
-    border-radius: .5rem;
+    border: 1px solid $studio50;
+    background-color: $revolver;
+    border-radius: .25rem;
 
     .square {
       border-radius: inherit;
-      transform: translate(-0.25rem, -0.25rem);
-      border: 1px solid $rose25;
-      background-color: $aubergine;
+      transform: translate(-.25rem, -.25rem);
+      border: 1px solid $studio50;
+      background-color: $revolver;
       transition: .5s;
       align-content: center;
       justify-content: center;
@@ -167,7 +175,7 @@ header {
 
       &:hover:not(.inactive) {
         opacity: 1;
-        border: 1px solid $chartreuse;
+        border: 1px solid $turquoise;
         cursor: pointer;
       }
 
@@ -179,29 +187,31 @@ header {
     }
 
     &:has(.this-user) {
-      border: 1px solid $chartreuse !important;
+      border: 1px solid $turquoise !important;
 
       .square {
-        background-color: $chartreuse !important;
-        border: 1px solid $chartreuse !important;
+        background: $turquoise;
+        background: linear-gradient(45deg, $java 0%, $turquoise 15%, $spray 80%);
+        border: 1px solid $turquoise !important;
         cursor: default !important ;
 
         .symbol {
-          color: $aubergine;
+          color: $revolver;
         }
       }
     }
 
     &:has(.opponent) {
-      border: 1px solid $rose !important;
+      border: 1px solid $studio !important;
 
       .square {
-        background-color: $rose !important;
-        border: 1px solid $rose !important;
+        background: $studio;
+        background: linear-gradient(45deg, $victoria 0%, $studio 15%, $abbey 80%);
+        border: 1px solid $studio !important;
         cursor: default !important;
 
         .symbol {
-          color: $aubergine;
+          color: $revolver;
         }
       }
     }
@@ -214,13 +224,13 @@ header {
     margin: .5rem;
 
     &.draw {
-      opacity: .3;
+      opacity: .5;
     }
 
     &.this-user, &.opponent {
       .inner {
         opacity: 1 !important;
-        color: $aubergine;
+        color: $revolver;
         .square {
           cursor: default !important;
         }
@@ -229,20 +239,22 @@ header {
 
     &.this-user {
       .inner {
-        border: 1px solid $chartreuse !important;
+        border: 1px solid $turquoise !important;
         .square {
-          background-color: $chartreuse;
-          border: 1px solid $chartreuse !important;
+          background: $turquoise;
+          background: linear-gradient(45deg, $java 0%, $turquoise 15%, $spray 80%);
+          border: 1px solid $turquoise !important;
         }
       }
     }
 
     &.opponent {
       .inner {
-        border: 1px solid $rose !important;
+        border: 1px solid $studio !important;
         .square {
-          background-color: $rose;
-          border: 1px solid $rose !important;
+          background: $studio;
+          background: linear-gradient(45deg, $victoria 0%, $studio 15%, $abbey 80%);
+          border: 1px solid $studio !important;
         }
       }
     }
@@ -254,12 +266,12 @@ header {
 
         .square {
           cursor: default !important;
-          border: 1px solid $rose25 !important;
+          border: 1px solid $studio25 !important;
         }
       }
 
       .inner .this-user.square {
-        border: 1px solid $chartreuse !important;
+        border: 1px solid $turquoise !important;
       }
     }
 
@@ -271,16 +283,21 @@ header {
   }
 
   .shadow.inner {
-    margin: .375rem;
-    border: 1px solid $rose25;
-    background-color: $aubergine;
-    border-radius: .5rem;
+    border: .75px solid $studio50;
+    background-color: $revolver;
+    border-radius: .25rem;
+    margin: .25rem;
+
+    @media (min-width: 1500px) {
+      margin: .375rem;
+      border: 1px solid $studio50;
+    }
 
     .square { // FixMe :: duplication w/ threeboard
       border-radius: inherit;
       transform: translate(-.25rem, -.25rem);
-      border: 1px solid $rose25;
-      background-color: $aubergine;
+      border: 1px solid $studio75;
+      background-color: $revolver;
       transition: .5s;
       align-content: center;
       justify-content: center;
@@ -291,43 +308,50 @@ header {
 
       &:hover:not(.inactive) {
         opacity: 1;
-        border: 1px solid $chartreuse;
+        border: 1px solid $turquoise;
         cursor: pointer;
       }
 
       .symbol {
-        font-size: 1.5rem;
         position: absolute;
-        margin-top: calc(50% - .75rem);
+        font-size: 1rem;
+        margin-top: calc(50% - .45rem);
+
+        @media (min-width: 1500px) {
+          font-size: 1.5rem;
+          margin-top: calc(50% - .75rem);
+        }
       }
     }
 
     &:has(.this-user) {
-      border: 1px solid $chartreuse !important;
+      border: 1px solid $turquoise !important;
       opacity: 1 !important;
 
       .square {
-        background-color: $chartreuse !important;
-        border: 1px solid $chartreuse !important;
+        background: $turquoise !important;;
+        background: linear-gradient(45deg, $java 0%, $turquoise 15%, $spray 80%) !important;;
+        border: 1px solid $turquoise !important;
         cursor: default !important;
 
         .symbol {
-          color: $aubergine;
+          color: $revolver;
         }
       }
     }
 
     &:has(.opponent) {
-      border: 1px solid $rose !important;
+      border: 1px solid $studio !important;
       opacity: 1 !important;
 
       .square {
-        background-color: $rose !important;
-        border: 1px solid $rose !important;
+        background: $studio !important;
+        background: linear-gradient(45deg, $victoria 0%, $studio 15%, $abbey 80%) !important;
+        border: 1px solid $studio !important;
         cursor: default !important;
 
         .symbol {
-          color: $aubergine;
+          color: $revolver;
         }
       }
     }
@@ -342,11 +366,15 @@ header {
 #notification {
   margin: 0 auto;
   height: 5rem;
-  width: $boardLengthMax;
   letter-spacing: .5px;
   align-items: center;
   text-align: left;
   display: none;
+  width: $board-length-min;
+
+  @media (min-width: 1500px) {
+    width: $board-length-max;
+  }
 
   &.active {
     display: flex;
@@ -362,43 +390,52 @@ header {
   }
 
   i {
-    font-size: 1.5rem;
-    margin: 0 1.5rem;
+    font-size: 2.25rem;
+    margin: 0 1rem 0 1rem;
+    transform: scale(-1, 1);
+
+    background: -webkit-linear-gradient($java, $studio);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: .2s;
+
+    &:hover {
+      transform: scale(-1.05, 1.05);
+    }
   }
 
   h3 {
-    margin: 0 0 .5rem 0;
-    font-weight: 400;
+    margin: 0 0 .25rem 0;
+    font-weight: 300;
+    font-size: 1.1rem;
   }
 
   p {
     margin: 0;
     font-size: .7rem;
     font-weight: 200;
+    opacity: .9;
   }
 
-  &.happy {
-    color: $chartreuse;
-
-    p {
-      color: $text-lightest;
-    }
-  }
-
-    &.sad {
-      color: $rose;
-
-      h3 {
-        color: $carnation;
-      }
-
-      p {
-        color: $text-lightest;
-      }
-  }
+  &.happy { }
+  &.sad { }
 
   #restart {
     cursor: pointer;
   }
 }
 
+/** Loaders */
+#game-loader {
+  display: none;
+  border: .5rem solid $studio50;
+  border-top: .5rem solid $studio;
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+  opacity: .5;
+  width: 4rem;
+  height: 4rem;
+  top: 40%;
+  left: calc(50% - 2rem);
+  position: absolute;
+}

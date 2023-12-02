@@ -1,3 +1,11 @@
+.starfield {
+  width: 100%;
+  height: 100%;
+  background-color: #0f0f1a;
+  position: relative;
+  z-index: -10;
+}
+
 @keyframes fade-in {
   0% {
     opacity: 0;
@@ -17,6 +25,176 @@
     opacity: 0;
   }
 }
+@keyframes fade-in-down {
+  from {
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+  to {
+    transform: translate3d(0, 1rem, 0);
+    opacity: 1;
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+[data-customTooltip] {
+  cursor: pointer;
+  position: relative;
+}
+
+[data-customTooltip]::after {
+  z-index: 100;
+  background-color: #1D0D2B;
+  border: 1px solid rgba(97, 67, 191, 0.7490196078);
+  font-size: 11px;
+  padding: 0.5rem;
+  height: fit-content;
+  width: fit-content;
+  top: -0.125rem;
+  border-radius: 0.5rem;
+  position: absolute;
+  text-align: center;
+  bottom: 0;
+  left: 50%;
+  opacity: 0.85;
+  content: attr(data-customTooltip);
+  transform: translate(-50%, 110%) scale(0);
+  transform-origin: top;
+  transition: 0.25s;
+  box-shadow: 0px 13px 50px -13px rgba(0, 0, 0, 0.0980392157);
+}
+
+[data-customTooltip]:hover:after {
+  display: block;
+  transform: translate(-50%, 110%) scale(1);
+}
+
+.starfield {
+  width: 100%;
+  height: 100%;
+  background-color: #0f0f1a;
+  position: relative;
+  z-index: -10;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fade-in-out {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes fade-in-down {
+  from {
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+  to {
+    transform: translate3d(0, 1rem, 0);
+    opacity: 1;
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.game-dropdown {
+  width: 15.81625rem;
+  margin: auto;
+}
+.game-dropdown .select-btn {
+  border: 1px solid rgba(97, 67, 191, 0.5019607843);
+  text-align: center;
+  padding: 1rem;
+  font-size: 11px;
+  letter-spacing: 1px;
+  border-radius: 0.75rem;
+  align-items: center;
+  cursor: pointer;
+  color: #666;
+}
+.game-dropdown .select-btn i {
+  position: absolute;
+  right: 7.25rem;
+  color: #666;
+}
+.game-dropdown .options {
+  display: none;
+  position: absolute;
+  overflow-y: auto;
+  margin-top: -1rem;
+  padding: 0;
+  width: 15.81625rem;
+}
+.game-dropdown .options .option {
+  display: flex;
+  justify-content: space-around;
+  cursor: pointer;
+  padding: 1rem;
+  border-radius: 0;
+  align-items: center;
+  background: #221236;
+  border: 1px solid rgba(97, 67, 191, 0.5019607843);
+  border-top: none;
+}
+.game-dropdown .options .option.last {
+  border-radius: 0 0 0.75rem 0.75rem;
+}
+.game-dropdown .options .option:hover {
+  background: #301c4c;
+}
+.game-dropdown .options .option .option-text {
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.select-btn.touched {
+  color: #ccc;
+}
+
+.game-dropdown.active .select-btn {
+  border-radius: 0.75rem 0.75rem 0 0;
+  color: #ccc;
+}
+.game-dropdown.active .select-btn i {
+  transform: rotate(-180deg);
+  margin-top: 1px;
+  color: #ccc;
+}
+.game-dropdown.active .options {
+  display: block;
+  opacity: 0;
+  z-index: 10;
+  animation-name: fade-in-down;
+  -webkit-animation-name: fade-in-down;
+  animation-duration: 0.25s;
+  animation-fill-mode: both;
+  -webkit-animation-duration: 0.25s;
+  -webkit-animation-fill-mode: both;
+}
+
 * {
   font-family: Montserrat, sans-serif;
 }
@@ -27,23 +205,61 @@ html {
 }
 
 body {
-  background-color: #180405;
+  background-color: rgba(24, 4, 5, 0.7490196078);
   color: whitesmoke;
   height: 100%;
+  margin: 0;
+}
+body #background-overlay {
+  z-index: -1;
+  right: 0;
+  top: 0;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: #0f0f1a;
+  background: linear-gradient(90deg, rgba(15, 15, 26, 0.2509803922) 0%, rgba(151, 66, 225, 0.2509803922) 50%, rgba(97, 67, 191, 0.5019607843) 100%);
+  text-align: center;
+}
+body #background-overlay h1 {
+  text-transform: uppercase;
+  opacity: 0.15;
+  letter-spacing: 4rem;
+  margin: 0;
+  position: relative;
+  font-weight: 400;
+  background-image: linear-gradient(0deg, rgba(97, 67, 191, 0) 0%, #6143bf 100%);
+  background-size: 100%;
+  background-repeat: repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 12rem;
+  top: calc(50% - 21rem);
+}
+@media (min-width: 1500px) {
+  body #background-overlay h1 {
+    font-size: 16rem;
+    top: calc(50% - 26.6rem);
+  }
 }
 
 /** Header */
 header {
   display: flex;
-  margin: 0.75rem 0.5rem;
-  gap: 2rem;
+  padding: 1rem;
+  gap: 3rem;
   align-items: center;
+  position: absolute;
+  z-index: 100;
+  background: #18141e;
+  background: linear-gradient(90deg, #18141e 0%, rgba(24, 20, 30, 0) 100%);
+  width: 50%;
 }
 header i {
   margin-right: 0.5rem;
 }
 header #badge {
-  height: 2.25rem;
+  height: 1.5rem;
   margin: 0.5rem;
 }
 header #copy-game-id {
@@ -51,6 +267,8 @@ header #copy-game-id {
   opacity: 0.8;
   transition: 500ms;
   display: flex;
+  font-size: 14px;
+  margin-top: -3px;
 }
 header #copy-game-id .fa-check {
   display: none;
@@ -59,12 +277,32 @@ header #copy-game-id .ticked {
   display: block;
   animation-name: fade-in-out;
   animation-duration: 1500ms;
-  color: #13ECBA;
+  color: #13ecba;
 }
 header #copy-game-id .fade-in {
   display: block;
   animation-name: fade-in;
   animation-duration: 500ms;
+}
+header .player {
+  letter-spacing: 0.5px;
+  font-size: 15px;
+  opacity: 0.8;
+}
+header .player .symbol {
+  color: #6143bf;
+  margin-left: 0.5rem;
+  transform: translateY(1px);
+  filter: brightness(150%);
+}
+header .player .symbol.cross {
+  transform: scale(1.1);
+}
+header .player.active {
+  opacity: 1;
+}
+header .player.active.this-user > .symbol {
+  color: #13ecba;
 }
 
 /** Tooltip */
@@ -85,17 +323,31 @@ header #copy-game-id .fade-in {
 #content {
   display: flex;
   height: 100%;
-}
-#content .this-symbol {
-  color: #d8ff00;
+  width: 100%;
+  position: absolute;
+  z-index: 10;
 }
 #content .main-bar {
-  width: 70%;
+  position: absolute;
   text-align: center;
+  background: #0f0f1a;
+  background: linear-gradient(85deg, #0f0f1a 0%, #221236 35%, #301c4c 100%);
+  padding: 2rem 1rem;
+  border-radius: 1.25rem;
+  border: 1px solid rgba(97, 67, 191, 0.2509803922);
+  padding: 2rem;
+  top: calc(50% - 16.25625rem);
+  left: calc(50% - 14.5625rem);
+}
+@media (min-width: 1500px) {
+  #content .main-bar {
+    top: calc(50% - 21.9375rem);
+    left: calc(50% - 20.8125rem);
+  }
 }
 #content .main-bar #player-turn {
-  height: 5.125rem;
-  color: #e70453;
+  height: 5rem;
+  color: #6143bf;
 }
 #content .main-bar #player-turn.hide {
   display: none;
@@ -107,7 +359,7 @@ header #copy-game-id .fade-in {
   display: block;
 }
 #content .main-bar #player-turn div.this-user {
-  color: #d8ff00;
+  color: #13ecba;
 }
 #content .main-bar #player-turn div .symbol {
   font-size: 5rem;
@@ -124,61 +376,35 @@ header #copy-game-id .fade-in {
   transform: translateX(-5rem);
 }
 
-/** Side Bar */
-.side-bar {
-  margin-top: 6.5rem;
-  width: 15%;
-}
-.side-bar .player {
-  margin: 1rem;
-  padding: 1rem;
-  width: 12rem;
-}
-.side-bar .player .fa-user {
-  margin-right: 0.5rem;
-  color: #e70453;
-}
-.side-bar .player .symbol {
-  color: #e70453;
-  margin-left: 0.5rem;
-  float: right;
-  transform: translateY(1px);
-}
-.side-bar .player.active {
-  border: 1px solid rgba(231, 4, 83, 0.2509803922);
-  border-radius: 0.25rem;
-  background-color: #2b0710;
-}
-.side-bar .player.active.this-user > .symbol {
-  color: #d8ff00;
-}
-
 /** Boards **/
 .board {
+  grid-template-columns: 33.3% 33.3% 33.3%;
   display: none;
   margin: 2rem auto 0 auto;
-  height: 50%;
   aspect-ratio: 1/1;
-  max-height: 600px;
-  min-height: 400px;
-  grid-template-columns: 33.3% 33.3% 33.3%;
+  height: 400px;
 }
 .board.active {
   display: grid;
+}
+@media (min-width: 1500px) {
+  .board {
+    height: 600px;
+  }
 }
 
 /** Three Board */
 #three-board .shadow {
   margin: 0.5rem;
-  border: 1px solid rgba(231, 4, 83, 0.2509803922);
-  background-color: #2b0710;
-  border-radius: 0.5rem;
+  border: 1px solid rgba(97, 67, 191, 0.5019607843);
+  background-color: #221433;
+  border-radius: 0.25rem;
 }
 #three-board .shadow .square {
   border-radius: inherit;
   transform: translate(-0.25rem, -0.25rem);
-  border: 1px solid rgba(231, 4, 83, 0.2509803922);
-  background-color: #2b0710;
+  border: 1px solid rgba(97, 67, 191, 0.5019607843);
+  background-color: #221433;
   transition: 0.5s;
   align-content: center;
   justify-content: center;
@@ -189,7 +415,7 @@ header #copy-game-id .fade-in {
 }
 #three-board .shadow .square:hover:not(.inactive) {
   opacity: 1;
-  border: 1px solid #d8ff00;
+  border: 1px solid #13ecba;
   cursor: pointer;
 }
 #three-board .shadow .square .symbol {
@@ -198,26 +424,28 @@ header #copy-game-id .fade-in {
   margin-top: calc(47.5% - 2rem);
 }
 #three-board .shadow:has(.this-user) {
-  border: 1px solid #d8ff00 !important;
+  border: 1px solid #13ecba !important;
 }
 #three-board .shadow:has(.this-user) .square {
-  background-color: #d8ff00 !important;
-  border: 1px solid #d8ff00 !important;
+  background: #13ecba;
+  background: linear-gradient(45deg, #1ec7a0 0%, #13ecba 15%, #68f1d1 80%);
+  border: 1px solid #13ecba !important;
   cursor: default !important;
 }
 #three-board .shadow:has(.this-user) .square .symbol {
-  color: #2b0710;
+  color: #221433;
 }
 #three-board .shadow:has(.opponent) {
-  border: 1px solid #e70453 !important;
+  border: 1px solid #6143bf !important;
 }
 #three-board .shadow:has(.opponent) .square {
-  background-color: #e70453 !important;
-  border: 1px solid #e70453 !important;
+  background: #6143bf;
+  background: linear-gradient(45deg, #523f90 0%, #6143bf 15%, #785ad7 80%);
+  border: 1px solid #6143bf !important;
   cursor: default !important;
 }
 #three-board .shadow:has(.opponent) .square .symbol {
-  color: #2b0710;
+  color: #221433;
 }
 
 /** Nine Board */
@@ -225,28 +453,30 @@ header #copy-game-id .fade-in {
   margin: 0.5rem;
 }
 #nine-board .shadow.outer.draw {
-  opacity: 0.3;
+  opacity: 0.5;
 }
 #nine-board .shadow.outer.this-user .inner, #nine-board .shadow.outer.opponent .inner {
   opacity: 1 !important;
-  color: #2b0710;
+  color: #221433;
 }
 #nine-board .shadow.outer.this-user .inner .square, #nine-board .shadow.outer.opponent .inner .square {
   cursor: default !important;
 }
 #nine-board .shadow.outer.this-user .inner {
-  border: 1px solid #d8ff00 !important;
+  border: 1px solid #13ecba !important;
 }
 #nine-board .shadow.outer.this-user .inner .square {
-  background-color: #d8ff00;
-  border: 1px solid #d8ff00 !important;
+  background: #13ecba;
+  background: linear-gradient(45deg, #1ec7a0 0%, #13ecba 15%, #68f1d1 80%);
+  border: 1px solid #13ecba !important;
 }
 #nine-board .shadow.outer.opponent .inner {
-  border: 1px solid #e70453 !important;
+  border: 1px solid #6143bf !important;
 }
 #nine-board .shadow.outer.opponent .inner .square {
-  background-color: #e70453;
-  border: 1px solid #e70453 !important;
+  background: #6143bf;
+  background: linear-gradient(45deg, #523f90 0%, #6143bf 15%, #785ad7 80%);
+  border: 1px solid #6143bf !important;
 }
 #nine-board .shadow.outer:not(.playable, .this-user, .opponent-user) .inner:not(.playable, .this-user, .opponent-user) {
   cursor: default !important;
@@ -254,10 +484,10 @@ header #copy-game-id .fade-in {
 }
 #nine-board .shadow.outer:not(.playable, .this-user, .opponent-user) .inner:not(.playable, .this-user, .opponent-user) .square {
   cursor: default !important;
-  border: 1px solid rgba(231, 4, 83, 0.2509803922) !important;
+  border: 1px solid rgba(97, 67, 191, 0.2509803922) !important;
 }
 #nine-board .shadow.outer:not(.playable, .this-user, .opponent-user) .inner .this-user.square {
-  border: 1px solid #d8ff00 !important;
+  border: 1px solid #13ecba !important;
 }
 #nine-board .shadow.outer .square {
   display: grid;
@@ -265,16 +495,22 @@ header #copy-game-id .fade-in {
   height: 100%;
 }
 #nine-board .shadow.inner {
-  margin: 0.375rem;
-  border: 1px solid rgba(231, 4, 83, 0.2509803922);
-  background-color: #2b0710;
-  border-radius: 0.5rem;
+  border: 0.75px solid rgba(97, 67, 191, 0.5019607843);
+  background-color: #221433;
+  border-radius: 0.25rem;
+  margin: 0.25rem;
+}
+@media (min-width: 1500px) {
+  #nine-board .shadow.inner {
+    margin: 0.375rem;
+    border: 1px solid rgba(97, 67, 191, 0.5019607843);
+  }
 }
 #nine-board .shadow.inner .square {
   border-radius: inherit;
   transform: translate(-0.25rem, -0.25rem);
-  border: 1px solid rgba(231, 4, 83, 0.2509803922);
-  background-color: #2b0710;
+  border: 1px solid rgba(97, 67, 191, 0.7490196078);
+  background-color: #221433;
   transition: 0.5s;
   align-content: center;
   justify-content: center;
@@ -285,37 +521,45 @@ header #copy-game-id .fade-in {
 }
 #nine-board .shadow.inner .square:hover:not(.inactive) {
   opacity: 1;
-  border: 1px solid #d8ff00;
+  border: 1px solid #13ecba;
   cursor: pointer;
 }
 #nine-board .shadow.inner .square .symbol {
-  font-size: 1.5rem;
   position: absolute;
-  margin-top: calc(50% - 0.75rem);
+  font-size: 1rem;
+  margin-top: calc(50% - 0.45rem);
+}
+@media (min-width: 1500px) {
+  #nine-board .shadow.inner .square .symbol {
+    font-size: 1.5rem;
+    margin-top: calc(50% - 0.75rem);
+  }
 }
 #nine-board .shadow.inner:has(.this-user) {
-  border: 1px solid #d8ff00 !important;
+  border: 1px solid #13ecba !important;
   opacity: 1 !important;
 }
 #nine-board .shadow.inner:has(.this-user) .square {
-  background-color: #d8ff00 !important;
-  border: 1px solid #d8ff00 !important;
+  background: #13ecba !important;
+  background: linear-gradient(45deg, #1ec7a0 0%, #13ecba 15%, #68f1d1 80%) !important;
+  border: 1px solid #13ecba !important;
   cursor: default !important;
 }
 #nine-board .shadow.inner:has(.this-user) .square .symbol {
-  color: #2b0710;
+  color: #221433;
 }
 #nine-board .shadow.inner:has(.opponent) {
-  border: 1px solid #e70453 !important;
+  border: 1px solid #6143bf !important;
   opacity: 1 !important;
 }
 #nine-board .shadow.inner:has(.opponent) .square {
-  background-color: #e70453 !important;
-  border: 1px solid #e70453 !important;
+  background: #6143bf !important;
+  background: linear-gradient(45deg, #523f90 0%, #6143bf 15%, #785ad7 80%) !important;
+  border: 1px solid #6143bf !important;
   cursor: default !important;
 }
 #nine-board .shadow.inner:has(.opponent) .square .symbol {
-  color: #2b0710;
+  color: #221433;
 }
 #nine-board .shadow.inner:has(.draw) {
   opacity: 0.1;
@@ -325,11 +569,16 @@ header #copy-game-id .fade-in {
 #notification {
   margin: 0 auto;
   height: 5rem;
-  width: 600px;
   letter-spacing: 0.5px;
   align-items: center;
   text-align: left;
   display: none;
+  width: 400px;
+}
+@media (min-width: 1500px) {
+  #notification {
+    width: 600px;
+  }
 }
 #notification.active {
   display: flex;
@@ -342,35 +591,45 @@ header #copy-game-id .fade-in {
   margin: 1rem;
 }
 #notification i {
-  font-size: 1.5rem;
-  margin: 0 1.5rem;
+  font-size: 2.25rem;
+  margin: 0 1rem 0 1rem;
+  transform: scale(-1, 1);
+  background: -webkit-linear-gradient(#1ec7a0, #6143bf);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: 0.2s;
+}
+#notification i:hover {
+  transform: scale(-1.05, 1.05);
 }
 #notification h3 {
-  margin: 0 0 0.5rem 0;
-  font-weight: 400;
+  margin: 0 0 0.25rem 0;
+  font-weight: 300;
+  font-size: 1.1rem;
 }
 #notification p {
   margin: 0;
   font-size: 0.7rem;
   font-weight: 200;
-}
-#notification.happy {
-  color: #d8ff00;
-}
-#notification.happy p {
-  color: whitesmoke;
-}
-#notification.sad {
-  color: #e70453;
-}
-#notification.sad h3 {
-  color: #ff2c63;
-}
-#notification.sad p {
-  color: whitesmoke;
+  opacity: 0.9;
 }
 #notification #restart {
   cursor: pointer;
+}
+
+/** Loaders */
+#game-loader {
+  display: none;
+  border: 0.5rem solid rgba(97, 67, 191, 0.5019607843);
+  border-top: 0.5rem solid #6143bf;
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+  opacity: 0.5;
+  width: 4rem;
+  height: 4rem;
+  top: 40%;
+  left: calc(50% - 2rem);
+  position: absolute;
 }
 
 /*# sourceMappingURL=game.css.map */

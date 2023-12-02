@@ -1,0 +1,121 @@
+.starfield {
+  width: 100%;
+  height: 100%;
+  background-color: #0f0f1a;
+  position: relative;
+  z-index: -10;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fade-in-out {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes fade-in-down {
+  from {
+    transform: translate3d(0, 0, 0);
+    opacity: 0;
+  }
+  to {
+    transform: translate3d(0, 1rem, 0);
+    opacity: 1;
+  }
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.game-dropdown {
+  width: 15.81625rem;
+  margin: auto;
+}
+.game-dropdown .select-btn {
+  border: 1px solid rgba(97, 67, 191, 0.5019607843);
+  text-align: center;
+  padding: 1rem;
+  font-size: 11px;
+  letter-spacing: 1px;
+  border-radius: 0.75rem;
+  align-items: center;
+  cursor: pointer;
+  color: #666;
+}
+.game-dropdown .select-btn i {
+  position: absolute;
+  right: 7.25rem;
+  color: #666;
+}
+.game-dropdown .options {
+  display: none;
+  position: absolute;
+  overflow-y: auto;
+  margin-top: -1rem;
+  padding: 0;
+  width: 15.81625rem;
+}
+.game-dropdown .options .option {
+  display: flex;
+  justify-content: space-around;
+  cursor: pointer;
+  padding: 1rem;
+  border-radius: 0;
+  align-items: center;
+  background: #221236;
+  border: 1px solid rgba(97, 67, 191, 0.5019607843);
+  border-top: none;
+}
+.game-dropdown .options .option.last {
+  border-radius: 0 0 0.75rem 0.75rem;
+}
+.game-dropdown .options .option:hover {
+  background: #301c4c;
+}
+.game-dropdown .options .option .option-text {
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.select-btn.touched {
+  color: #ccc;
+}
+
+.game-dropdown.active .select-btn {
+  border-radius: 0.75rem 0.75rem 0 0;
+  color: #ccc;
+}
+.game-dropdown.active .select-btn i {
+  transform: rotate(-180deg);
+  margin-top: 1px;
+  color: #ccc;
+}
+.game-dropdown.active .options {
+  display: block;
+  opacity: 0;
+  z-index: 10;
+  animation-name: fade-in-down;
+  -webkit-animation-name: fade-in-down;
+  animation-duration: 0.25s;
+  animation-fill-mode: both;
+  -webkit-animation-duration: 0.25s;
+  -webkit-animation-fill-mode: both;
+}
+
+/*# sourceMappingURL=dropdown.css.map */

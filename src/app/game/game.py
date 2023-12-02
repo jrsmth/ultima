@@ -1,8 +1,6 @@
 import json
 import random
-
 from flask import render_template, Blueprint, Response, current_app
-
 from src.app.model.board.board import map_to_symbol
 from src.app.model.board.threeboard import ThreeBoard
 from src.app.model.combos import get_wins
@@ -16,7 +14,7 @@ from src.version.version import __version__
 
 
 # Game Logic
-def construct_blueprint(messages, socket, redis):
+def construct_blueprint(messages, redis, socket):
     game_page = Blueprint('game_page', __name__)
 
     @game_page.route("/game/<game_id>/<user_id>")
