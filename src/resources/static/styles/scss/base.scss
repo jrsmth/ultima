@@ -42,11 +42,11 @@ body {
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       font-size: 12rem;
-      top: calc(50% - ($loginHeight * .75));
+      top: calc(50% - ($login-height * .75));
 
       @media (min-width: 1500px) {
         font-size: 16rem;
-        top: calc(50% - ($loginHeight * 0.95));
+        top: calc(50% - ($login-height * 0.95));
       }
     }
   }

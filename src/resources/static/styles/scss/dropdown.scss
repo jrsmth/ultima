@@ -3,7 +3,7 @@
 @import "animation";
 
 .game-dropdown {
-  width: $field_width;
+  width: $field-width;
   margin: auto;
 
   .select-btn {
@@ -30,7 +30,7 @@
     overflow-y: auto;
     margin-top: -1rem;
     padding: 0;
-    width: $field_width;
+    width: $field-width;
 
     .option {
       display: flex;

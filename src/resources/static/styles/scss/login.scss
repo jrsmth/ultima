@@ -2,16 +2,12 @@
 
 section {
   position: absolute;
-  width: $loginWidth;
+  width: $login-width;
   height: 28rem;
-  left: calc(50% - ($loginWidth * .5));
-  top: calc(50% - ($loginHeight * .5));
+  left: calc(50% - ($login-width * .5));
+  top: calc(50% - ($login-height * .5));
   text-align: center;
-  background: $deep-space;
-  background: linear-gradient(85deg, $deep-space 0%, $haiti 35%, $valhalla 100%);
-  padding: 2rem 1rem;
-  border-radius: 1.25rem;
-  border: 1px solid $studio25;
+  @include card;
   box-shadow: $drop-shadow;
 
   #logo {
@@ -101,7 +97,7 @@ section {
     }
 
     button {
-      width: $field_width;
+      width: $field-width;
       color: $text-lightest;
       transition: $ease-in;
       box-shadow: $drop-shadow;

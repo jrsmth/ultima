@@ -25,6 +25,7 @@ async function init(gameId) {
     if (gameState['game_mode'] === "standard") initStandardBoard(userId, thisPlayer['symbol'], gameState['board']);
     if (gameState['game_mode'] === "ultimate") initUltimateBoard(userId, thisPlayer['symbol'], gameState['board']);
 
+    toggleGameLoad(false);
 }
 
 function initUserInfo(thisPlayer) {
@@ -268,4 +269,17 @@ function allowedToPlace(outer, inner) {
                           gameState['board'][outer] !== 0 :
                           gameState['board'][outer][inner] !== 0;
     return gameStarted && gameIncomplete && isUserTurn() && !alreadyPlayed;
+}
+
+function toggleGameLoad(loading) {
+    const mainBar = $('.main-bar')[0];
+    const gameLoader = $('#game-loader')[0];
+
+    if (loading) {
+        gameLoader.style.display = 'block';
+        mainBar.style.display = 'none';
+    } else {
+        gameLoader.style.display = 'none';
+        mainBar.style.display = 'block';
+    }
 }

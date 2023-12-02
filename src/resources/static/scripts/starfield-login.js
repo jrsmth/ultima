@@ -1,4 +1,4 @@
-const canvas = $('#starfield')[0];
+const canvas = $('#starfield-login')[0];
 const context = canvas.getContext("2d");
 let width;
 let height;
@@ -7,37 +7,12 @@ let density = 500;
 let brightness = 1;
 let size = 2;
 
-function getVelocity() {
-    return velocity;
-}
-
-function setVelocity(value) {
-    velocity = value;
-}
-
-function getDensity() {
-    return density;
-}
-
-function setDensity(value) {
-    density = value;
-}
-
-function getBrightness() {
-    return brightness;
-}
-
-function setBrightness(value) {
-    brightness = value;
-}
-
-function getSize() {
-    return size;
-}
-
-function setSize(value) {
-    size = value;
-}
+function getBrightness() { return brightness; }
+function getDensity() { return density; }
+function getVelocity() { return velocity; }
+function setBrightness(value) { brightness = value; }
+function setDensity(value) { density = value; }
+function setVelocity(value) { velocity = value; }
 
 const setCanvasLimits = () => {
     width = document.body.clientWidth;
@@ -76,7 +51,7 @@ const clear = () => {
 const putPixel = (x, y, brightness) => {
     const intensity = brightness * 255;
     context.fillStyle = "rgb(" + intensity + "," + intensity + "," + intensity + ")";
-    context.fillRect(x, y, getSize(), getSize());
+    context.fillRect(x, y, size, size);
 };
 
 const moveStars = distance => {
