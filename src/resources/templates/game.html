@@ -22,20 +22,16 @@
                 </div>
                 <span>{{ gameId }}</span>
             </div>
+            <div class="player" id="player-one">
+                <i class="symbol cross fa fa-times" id="player-one-symbol"></i>
+                <span id="player-one-name"></span>
+            </div>
+            <div class="player" id="player-two">
+                <i class="symbol circle fa-regular fa-circle" id="player-two-symbol"></i>
+                <span id="player-two-name"></span>
+            </div>
         </header>
         <section id="content">
-            <section class="side-bar left">
-                <div class="player" id="player-one">
-                    <i class="fa fa-user" aria-hidden="true"></i>
-                    <span id="player-one-name"></span>
-                    <i class="symbol fa fa-times" id="player-one-symbol"></i>
-                </div>
-                <div class="player" id="player-two">
-                    <i class="fa fa-user" aria-hidden="true"></i>
-                    <span id="player-two-name"></span>
-                    <i class="symbol fa-regular fa-circle" id="player-two-symbol"></i>
-                </div>
-            </section>
             <section class="main-bar">
                 <div id="notification">
                     <i id="restart" class="fa-solid fa-arrow-rotate-left" onclick="restart()"></i>
@@ -56,7 +52,7 @@
                     <div class="board" id="nine-board"></div>
                 </section>
             </section>
-            <section class="side-bar right"></section>
+            <div id="game-loader"></div>
         </section>
         <canvas id="starfield-game" class="starfield"></canvas>
         <div id="background-overlay">
@@ -68,6 +64,7 @@
     <script src="{{ url_for('static', filename='scripts/game.js') }}"></script>
     <script>
         $(document).ready(function() {
+            toggleGameLoad(true);
             appUrl = "{{ appUrl }}";
             userId = "{{ userId }}";
 
