@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 # Releases
 <!-- @LatestFirst -->
 
+## [0.6.1] - 04/12/23
+- UMA-47: Add user error for invalid move
+- UMA-48: Add game instruction tooltip
+
 ## [0.6.0] - 02/12/23
 - UMA-37: Create star field background
 - UMA-38: Restyle login screen
@@ -102,3 +106,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.5.2]: https://github.com/jrsmth/ultima/compare/0.5.1...0.5.2
 [0.5.3]: https://github.com/jrsmth/ultima/compare/0.5.2...0.5.3
 [0.6.0]: https://github.com/jrsmth/ultima/compare/0.5.3...0.6.0
+[0.6.1]: https://github.com/jrsmth/ultima/compare/0.6.0...0.6.1

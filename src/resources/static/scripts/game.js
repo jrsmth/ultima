@@ -85,8 +85,8 @@ function initNotification(playerNotification) {
         );
 
     } else {
-        playerTurn.removeClass('hide');
         notification.removeClass();
+        playerTurn.removeClass('hide');
     }
 }
 
@@ -181,14 +181,21 @@ function placeUltimateMove(outerIndex, innerIndex) {
                      !innerSquareComplete &&
                      !outerSquareComplete
 
+
     if (canPlace) {
+        toggleInvalidNotification(false);
+        // TODO :: disallow a second user click whilst first is processing...
+
         $.get(`/game/${gameState['game_id']}/place-move/${userId}/${outerIndex}/${innerIndex}`)
             .catch(err => {
                     console.error(`[placeStandardMove] Error placing move for square with index [${index}]`);
                     console.error(err);
                 }
             );
-        // TODO :: disallow a second user click whilst first is processing...
+    } else if (!gameState['complete']) {
+        // TODO :: these should go in the message bundle
+        const message = isUserTurn() ? 'Please play in a highlighted square' : 'Please await your turn to place';
+        toggleInvalidNotification(true, message);
     }
 }
 
@@ -281,5 +288,33 @@ function toggleGameLoad(loading) {
     } else {
         gameLoader.style.display = 'none';
         mainBar.style.display = 'block';
+    }
+}
+
+function toggleInvalidNotification(display, message) {
+    const invalid = $('#invalid');
+    const restart = $('#restart');
+    const playerTurn = $('#player-turn');
+    const notification = $('#notification');
+    const notificationContent = $('#notification-content');
+    notificationContent.empty();
+
+    if (display) {
+        playerTurn.addClass('hide');
+        notification.addClass('active');
+        invalid.removeClass('hide');
+        restart.addClass('hide');
+
+        notificationContent.append(
+            `
+                <h3>Invalid Move</h3>
+                <p>${message}</p>
+            `
+        );
+    } else {
+        notification.removeClass();
+        playerTurn.removeClass('hide');
+        invalid.addClass('hide');
+        restart.removeClass('hide');
     }
 }

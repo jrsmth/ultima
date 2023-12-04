@@ -399,7 +399,7 @@ header {
     -webkit-text-fill-color: transparent;
     transition: .2s;
 
-    &:hover {
+    &#restart:hover {
       transform: scale(-1.05, 1.05);
     }
   }
@@ -422,6 +422,10 @@ header {
 
   #restart {
     cursor: pointer;
+  }
+
+  i.hide {
+    display: none;
   }
 }
 

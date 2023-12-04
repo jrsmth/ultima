@@ -599,7 +599,7 @@ header .player.active.this-user > .symbol {
   -webkit-text-fill-color: transparent;
   transition: 0.2s;
 }
-#notification i:hover {
+#notification i#restart:hover {
   transform: scale(-1.05, 1.05);
 }
 #notification h3 {
@@ -615,6 +615,9 @@ header .player.active.this-user > .symbol {
 }
 #notification #restart {
   cursor: pointer;
+}
+#notification i.hide {
+  display: none;
 }
 
 /** Loaders */
