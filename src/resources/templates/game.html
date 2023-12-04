@@ -12,7 +12,9 @@
             <div class="tooltip">
                 <a href="https://github.com/jrsmth/ultima" target="_blank"><img id="badge" alt="badge" src="{{ url_for('static', filename='img/logo-white.png') }}"></a>
                 <div class="tooltip-text">
-                    <span>{{ version }}</span>
+                    <p><i class="fa-solid fa-code"></i>{{ version }}</p>
+                    <br>
+                    <div id="tooltip-help"></div>
                 </div>
             </div>
             <div id="copy-game-id">
@@ -68,8 +70,8 @@
             toggleGameLoad(true);
             appUrl = "{{ appUrl }}";
             userId = "{{ userId }}";
+            setMessages("{{ messages }}")
 
-            enableCopy();
             connectSocket("{{ gameId }}");
             init("{{ gameId }}");
         })

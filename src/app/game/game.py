@@ -23,7 +23,9 @@ def construct_blueprint(messages, redis, socket):
         update_game_state(game_id, user_id + ' has joined the game')
         check_status(game_id)
 
-        return render_template("game.html", appUrl=app_url, gameId=game_id, userId=user_id, version=__version__)
+        return render_template("game.html",
+                               appUrl=app_url, messages=messages.load_all(), version=__version__,
+                               gameId=game_id, userId=user_id)
 
     @socket.on('restart')
     def restart(message):

@@ -1,3 +1,4 @@
+import json
 from pyjavaproperties import Properties
 
 
@@ -25,3 +26,9 @@ class Messages:
             for index in range(len(parameters)):
                 message = message.replace('{' + str(index) + '}', parameters[index])
             return message
+
+    def load_all(self):
+        all_messages = {}
+        for key in self.bundle.propertyNames():
+            all_messages[key] = self.bundle[key]
+        return json.dumps(all_messages)
