@@ -2,6 +2,7 @@ let userId;
 let gameState;
 let socket;
 let appUrl;
+let messages;
 
 async function init(gameId) {
     // Retrieve game state
@@ -19,6 +20,7 @@ async function init(gameId) {
     })[0];
 
     // Init user info
+    initTooltip();
     initUserInfo(thisPlayer);
 
     // Init board
@@ -85,8 +87,8 @@ function initNotification(playerNotification) {
         );
 
     } else {
-        playerTurn.removeClass('hide');
         notification.removeClass();
+        playerTurn.removeClass('hide');
     }
 }
 
@@ -157,13 +159,18 @@ function initUltimateBoard(userId, thisSymbol, board) {
 
 function placeStandardMove(index) {
     if (allowedToPlace(index)) {
+        toggleInvalidNotification(false);
+        // TODO :: disallow a second user click whilst first is processing...
+
         $.get(`/game/${gameState['game_id']}/place-move/${userId}/${index}`)
             .catch(err => {
                     console.error(`[placeStandardMove] Error placing move for square with index [${index}]`);
                     console.error(err);
                 }
             );
-        // TODO :: disallow a second user click whilst first is processing...
+    } else if (!gameState['complete']) {
+        const message = messages[`game.invalid-move.${isUserTurn() ? 'standard' : 'turn'}`];
+        toggleInvalidNotification(true, message);
     }
 }
 
@@ -181,14 +188,20 @@ function placeUltimateMove(outerIndex, innerIndex) {
                      !innerSquareComplete &&
                      !outerSquareComplete
 
+
     if (canPlace) {
+        toggleInvalidNotification(false);
+        // TODO :: disallow a second user click whilst first is processing...
+
         $.get(`/game/${gameState['game_id']}/place-move/${userId}/${outerIndex}/${innerIndex}`)
             .catch(err => {
                     console.error(`[placeStandardMove] Error placing move for square with index [${index}]`);
                     console.error(err);
                 }
             );
-        // TODO :: disallow a second user click whilst first is processing...
+    } else if (!gameState['complete']) {
+        const message = messages[`game.invalid-move.${isUserTurn() ? 'ultimate' : 'turn'}`];
+        toggleInvalidNotification(true, message);
     }
 }
 
@@ -282,4 +295,55 @@ function toggleGameLoad(loading) {
         gameLoader.style.display = 'none';
         mainBar.style.display = 'block';
     }
+}
+
+function toggleInvalidNotification(display, message) {
+    const invalid = $('#invalid');
+    const restart = $('#restart');
+    const playerTurn = $('#player-turn');
+    const notification = $('#notification');
+    const notificationContent = $('#notification-content');
+    notificationContent.empty();
+
+    if (display) {
+        playerTurn.addClass('hide');
+        notification.addClass('active');
+        invalid.removeClass('hide');
+        restart.addClass('hide');
+
+        notificationContent.append(
+            `
+                <h3>Invalid Move</h3>
+                <p>${message}</p>
+            `
+        );
+    } else {
+        notification.removeClass();
+        playerTurn.removeClass('hide');
+        invalid.addClass('hide');
+        restart.removeClass('hide');
+    }
+}
+
+function setMessages(bundle) {
+    // TODO :: find a more elegant way
+    messages = JSON.parse(bundle.replaceAll("&#34;", "\""));
+}
+
+function initTooltip() {
+    const help = $('#tooltip-help');
+    help.empty();
+
+    enableCopy();
+    const gameMode = gameState['game_mode'];
+    const msg = (label) => {
+        return messages[`game.tooltip.${gameMode}.${label}`];
+    }
+
+    help.append(`
+        <p class="capitalise">${gameMode}</p>
+        <p><i class="fa-regular fa-square"></i> ${msg('square')}</p>
+        <p><i class="fa-solid fa-user"></i> ${msg('user')}</p> <!-- FixMe :: <span class="green">green</span> -->
+        <p><i class="fa-solid fa-hand-pointer"></i> ${msg('pointer')}</p>
+    `);
 }
