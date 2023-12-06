@@ -1,5 +1,7 @@
 import json
 import random
+import time
+
 from flask import render_template, Blueprint, Response, current_app
 from src.app.model.board.board import map_to_symbol
 from src.app.model.board.threeboard import ThreeBoard
@@ -68,6 +70,9 @@ def construct_blueprint(messages, redis, socket):
 
             # Place Computer move [single mode]
             elif current_state["player_mode"] == PlayerMode.SINGLE.value:
+                # Update user first then simulate computer thinking time
+                update_game_state(game_id, "Computer is now placing move")  # Note: sub-par logs (b4 'user has placed')
+                simulate_computer_think_time()
                 set_standard_computer_move(game_id, current_state["board"])
 
         elif current_state["player_turn"] == 2:
@@ -107,6 +112,9 @@ def construct_blueprint(messages, redis, socket):
 
             # Place Computer move [single mode]
             elif current_state["player_mode"] == PlayerMode.SINGLE.value:
+                # Update user first then simulate computer thinking time
+                update_game_state(game_id, "Computer is now placing move")  # Note: sub-par logs (b4 'user has placed')
+                simulate_computer_think_time()
                 set_ultimate_computer_move(game_id, inner_index)
 
         elif current_state["player_turn"] == 2:
@@ -275,3 +283,9 @@ def build_notification(game_state, messages, game_status, player):
         notification.mood = Mood.SAD.value
 
     return notification
+
+
+def simulate_computer_think_time():
+    thinking_time = random.randrange(4)
+    print(f"[simulate_computer_think_time] Computer will think for [{thinking_time}] before placing move")
+    time.sleep(thinking_time)
