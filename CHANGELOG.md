@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.7.0] - 06/12/23
 - UMA-32: [BUG] If winning move is placed on the last square, the game ends in draw (ultimate only)
 - UMA-49: Add delay in single player mode for the computer thinking time (randomised)
+- UMA-53: Refresh playable square with game reset to allow first move to be anywhere (ultimate)
 
 ## [0.6.1] - 04/12/23
 - UMA-47: Add user error for invalid move

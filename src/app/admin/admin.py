@@ -20,7 +20,7 @@ def construct_blueprint(auth, redis):
     @admin_page.route("/flood")
     @auth.login_required
     def destroy_all_games():
-        print("[destroy_all_games] Request to wipe data requested by: " + auth.current_user())
+        print(f"[destroy_all_games] Request to wipe data from {auth.current_user()}")
         redis.clear()
         return Response(status=204, response="The flood is over, Noah")
 

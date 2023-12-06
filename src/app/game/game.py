@@ -40,6 +40,7 @@ def construct_blueprint(messages, redis, socket):
         game_state["player_one"]["notification"] = Notification()
         game_state["player_two"]["notification"] = Notification()
         game_state["board"] = generate_board(game_state["game_mode"])
+        game_state["playable_square"] = -1
         game_state["outer_states"] = [  # List of states for each outer square -> # Question :: better way?
             Status.IN_PROGRESS.value, Status.IN_PROGRESS.value, Status.IN_PROGRESS.value,
             Status.IN_PROGRESS.value, Status.IN_PROGRESS.value, Status.IN_PROGRESS.value,
