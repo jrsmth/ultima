@@ -23,6 +23,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 # Releases
 <!-- @LatestFirst -->
 
+## [0.7.0] - 06/12/23
+- UMA-32: [BUG] If winning move is placed on the last square, the game ends in draw (ultimate only)
+- UMA-49: Add delay in single player mode for the computer thinking time (randomised)
+- UMA-53: Refresh playable square with game reset to allow first move to be anywhere (ultimate)
+
 ## [0.6.1] - 04/12/23
 - UMA-47: Add user error for invalid move
 - UMA-48: Add game instruction tooltip
@@ -36,10 +41,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - UMA-33: Allow for parallel games through game-specific websocket channels
 
 ## [0.5.2] - 27/11/23
-- UMA-35: [Bug] Set websocket URL based on environment
+- UMA-35: [BUG] Set websocket URL based on environment
 
 ## [0.5.1] - 27/11/23
-- UMA-34: [Bug] Broken deployment due to missing gevent installation
+- UMA-34: [BUG] Broken deployment due to missing gevent installation
 
 ## [0.5.0] - 27/11/23
 - UMA-30: Add the ability to display a message from the backend via message topic
@@ -57,7 +62,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - UMA-18: Add replay button
 
 ## [0.3.1] - 11/11/23
-- UMA-26: [Bug] Draw Game Over message displayed on first load
+- UMA-26: [BUG] Draw Game Over message displayed on first load
 
 ## [0.3.0] - 11/11/23
 - UMA-17: Give the user the option of standard or ultimate tic-tac-toe
@@ -107,3 +112,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.5.3]: https://github.com/jrsmth/ultima/compare/0.5.2...0.5.3
 [0.6.0]: https://github.com/jrsmth/ultima/compare/0.5.3...0.6.0
 [0.6.1]: https://github.com/jrsmth/ultima/compare/0.6.0...0.6.1
+[0.7.0]: https://github.com/jrsmth/ultima/compare/0.6.1...0.7.0
