@@ -143,6 +143,7 @@ def construct_blueprint(messages, redis, socket):
 
     def calculate_game_status(state, test_board):
         print("[calculate_game_status] Calculating status for game with mode: " + state["game_mode"])
+        print("[calculate_game_status] Calculating status for test board: " + str(test_board))
         if isinstance(test_board[0], list):
             return calculate_ultimate_status(state, test_board)
         if has_player_won(test_board, 1):
@@ -162,7 +163,9 @@ def construct_blueprint(messages, redis, socket):
             outer_states.append(outer_state.value)
             print("[calculate_ultimate_status] outer_states: " + str(outer_states))
             if len(outer_states) == 9 and outer_states.count(1) == 0:
-                return Status.DRAW
+                status = calculate_game_status(state, create_false_board(outer_states))
+                print("[calculate_ultimate_status] does last move clinch the winner? -> status: " + str(status))
+                return Status.DRAW if status == Status.IN_PROGRESS else status
         state["outer_states"] = outer_states
         redis.set_complex(state["game_id"], state)
         return calculate_game_status(state, create_false_board(outer_states))
