@@ -2,6 +2,8 @@ import os
 from flask import Flask
 from flask_httpauth import HTTPBasicAuth
 from flask_socketio import SocketIO
+from from_root import from_root
+
 from src.app.admin import admin
 from src.app.config.config import Config, DevConfig, ProductionConfig
 from src.app.game import game
@@ -12,8 +14,8 @@ from src.app.util.redis import Redis
 
 
 # Initialise app
-templates = os.path.abspath("../resources/templates")
-statics = "../resources/static"
+templates = from_root("src", "resources", "templates")
+statics = from_root("src", "resources", "static")
 app = Flask(__name__, template_folder=templates, static_folder=statics)
 socketio = SocketIO(app)
 auth = HTTPBasicAuth()
@@ -39,7 +41,7 @@ redis = Redis(app)
 
 
 # Initialise message bundle
-messages = Messages('../resources/messages.properties')
+messages = Messages(from_root('src', 'resources', 'messages.properties'))
 
 
 # Register routes
