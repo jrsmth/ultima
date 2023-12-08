@@ -23,6 +23,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 # Releases
 <!-- @LatestFirst -->
 
+## [0.7.1] - 08/12/23
+- UMA-55: Fix the test step in the GitHub Actions workflow
+- UMA-56: Add tests for admin and login blueprint
+
 ## [0.7.0] - 06/12/23
 - UMA-32: [BUG] If winning move is placed on the last square, the game ends in draw (ultimate only)
 - UMA-49: Add delay in single player mode for the computer thinking time (randomised)
@@ -113,3 +117,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.6.0]: https://github.com/jrsmth/ultima/compare/0.5.3...0.6.0
 [0.6.1]: https://github.com/jrsmth/ultima/compare/0.6.0...0.6.1
 [0.7.0]: https://github.com/jrsmth/ultima/compare/0.6.1...0.7.0
+[0.7.1]: https://github.com/jrsmth/ultima/compare/0.7.0...0.7.1

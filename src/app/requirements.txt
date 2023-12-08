@@ -21,3 +21,5 @@ flask_socketio
 shortuuid
 jsons
 Flask-HTTPAuth
+from-root
+pyquery
