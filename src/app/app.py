@@ -1,4 +1,8 @@
+import json
+import logging
 import os
+from logging.config import dictConfig
+
 from flask import Flask
 from flask_httpauth import HTTPBasicAuth
 from flask_socketio import SocketIO
@@ -42,6 +46,11 @@ redis = Redis(app)
 
 # Initialise message bundle
 messages = Messages(from_root('resources', 'messages.properties'))
+
+
+# Initialise logger
+dictConfig(json.load(open(from_root('app', 'config', 'logs.json'))))
+app.logger_name = 'ultima'
 
 
 # Register routes
