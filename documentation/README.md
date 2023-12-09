@@ -3,7 +3,7 @@
 # <img src="../src/resources/static/img/badge.png" width="28" alt="Logo"> Documentation
 
 ## Architecture
-<img width="800" alt="Ultima Architecture" src="./ultima-architecture.png">
+<img width="1275" alt="Ultima Architecture" src="./ultima_architecture.png">
 
 ## Versioning
 - 📋 [changelog.md](./CHANGELOG.md)
