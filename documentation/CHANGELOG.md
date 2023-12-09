@@ -25,7 +25,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.1] - 09/12/23
 - UMA-40: Add pythonic logging
-- UMA-57: Bolster test suite
 
 ## [1.0.0] - 09/12/23
 - UMA-46: Address security vulnerabilities
