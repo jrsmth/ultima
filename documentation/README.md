@@ -5,6 +5,6 @@
 ## Architecture
 <img width="1275" alt="Ultima Architecture" src="./ultima_architecture.png">
 
-## Versioning
+## Version
 - 📋 [changelog.md](./CHANGELOG.md)
 
