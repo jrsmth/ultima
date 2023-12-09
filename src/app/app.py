@@ -14,8 +14,8 @@ from src.app.util.redis import Redis
 
 
 # Initialise app
-templates = from_root("src", "resources", "templates")
-statics = from_root("src", "resources", "static")
+templates = from_root("resources", "templates")
+statics = from_root("resources", "static")
 app = Flask(__name__, template_folder=templates, static_folder=statics)
 socketio = SocketIO(app)
 auth = HTTPBasicAuth()
@@ -41,7 +41,7 @@ redis = Redis(app)
 
 
 # Initialise message bundle
-messages = Messages(from_root('src', 'resources', 'messages.properties'))
+messages = Messages(from_root('resources', 'messages.properties'))
 
 
 # Register routes
