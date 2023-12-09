@@ -23,6 +23,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 # Releases
 <!-- @LatestFirst -->
 
+## [1.0.0] - 09/12/23
+- UMA-46: Address security vulnerabilities
+- UMA-59: [BUG] Address deployment issue caused by missing .git/.project-root (`from-root` lib)
+- UMA-60: Add .gif to README
+- UMA-61: Create architecture diagram
+
 ## [0.7.1] - 08/12/23
 - UMA-55: Fix the test step in the GitHub Actions workflow
 - UMA-56: Add tests for admin and login blueprint
@@ -118,3 +124,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.6.1]: https://github.com/jrsmth/ultima/compare/0.6.0...0.6.1
 [0.7.0]: https://github.com/jrsmth/ultima/compare/0.6.1...0.7.0
 [0.7.1]: https://github.com/jrsmth/ultima/compare/0.7.0...0.7.1
+[1.0.0]: https://github.com/jrsmth/ultima/compare/0.7.1...1.0.0
