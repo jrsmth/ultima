@@ -1,3 +1,4 @@
+import logging
 from json import JSONDecodeError
 import jsons
 from flask_redis import FlaskRedis
@@ -8,6 +9,7 @@ class Redis:
 
     def __init__(self, app):
         self.client = FlaskRedis(app)
+        self.log = logging.getLogger(__name__)
 
     def get_client(self):
         return self.client
@@ -23,7 +25,7 @@ class Redis:
     # Set a complex key-value element by converting to json string
     def set_complex(self, key, complex_value):
         json_value = standardise(jsons.dump(complex_value))
-        print("[set_complex] Successful conversion to JSON, setting value: " + json_value)  # TODO :: TRACE
+        self.log.debug("[set_complex] Successful conversion to JSON, setting value: " + json_value)
         return self.client.set(key, json_value)
 
     # Get a complex key-value element by converting from json string

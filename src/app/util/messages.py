@@ -1,4 +1,5 @@
 import json
+import logging
 from pyjavaproperties import Properties
 
 
@@ -8,11 +9,12 @@ class Messages:
     def __init__(self, path):
         self.bundle = Properties()
         self.bundle.load(open(path))
+        self.log = logging.getLogger(__name__)
 
     def load(self, key):
         message = self.bundle[key]
         if message is None:
-            print(f"[load] Unable to find message for key [{key}]")
+            self.log.debug(f"[load] Unable to find message for key [{key}]")
             return ''
         else:
             return message
@@ -20,7 +22,7 @@ class Messages:
     def load_with_params(self, key, parameters: list):
         message = self.bundle[key]
         if message is None:
-            print(f"[load_with_params] Unable to find message for key [{key}]")
+            self.log.debug(f"[load_with_params] Unable to find message for key [{key}]")
             return ''
         else:
             for index in range(len(parameters)):

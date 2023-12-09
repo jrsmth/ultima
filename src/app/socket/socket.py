@@ -1,3 +1,4 @@
+import logging
 from flask import Blueprint
 from flask_socketio import join_room, emit
 
@@ -5,6 +6,7 @@ from flask_socketio import join_room, emit
 # Socket Logic
 def construct_blueprint(socket):
     socket_page = Blueprint('socket_page', __name__)
+    log = logging.getLogger(__name__)
 
     @socket.on('join')
     def on_join(data):
@@ -13,7 +15,7 @@ def construct_blueprint(socket):
         join_room(room)
 
         trigger = user_id + ' has entered the room for game with id: ' + room
-        print(f"[on_join] {trigger}")
+        log.info(f"[on_join] {trigger}")
         emit('connected', trigger, to=room)
 
     # Blueprint return

@@ -1,4 +1,5 @@
 import json
+import logging
 import random
 import time
 
@@ -18,6 +19,7 @@ from src.version.version import __version__
 # Game Logic
 def construct_blueprint(messages, redis, socket):
     game_page = Blueprint('game_page', __name__)
+    log = logging.getLogger(__name__)
 
     @game_page.route("/game/<game_id>/<user_id>")
     def game(game_id, user_id):
@@ -34,7 +36,7 @@ def construct_blueprint(messages, redis, socket):
         game_id = message['gameId']
         user_id = message['userId']
         game_state = redis.get_complex(game_id)
-        print(f"[restart] Received restart from [{user_id}] for {game_id}")
+        log.info(f"[restart] Received restart from [{user_id}] for {game_id}")
 
         game_state["complete"] = False
         game_state["player_one"]["notification"] = Notification()
@@ -55,7 +57,7 @@ def construct_blueprint(messages, redis, socket):
 
     @game_page.route("/game/<game_id>/place-move/<user_id>/<square>")
     def place_standard_move(game_id, user_id, square):
-        print("[place_standard_move] [" + game_id + "] [" + user_id + "] Placing square with index: " + square)
+        log.info("[place_standard_move] [" + game_id + "] [" + user_id + "] Placing square with index: " + square)
 
         # Set player's move
         index_tuple = (int(square))
@@ -88,7 +90,7 @@ def construct_blueprint(messages, redis, socket):
     def place_ultimate_move(game_id, user_id, outer_square, inner_square):
         outer_index = int(outer_square)
         inner_index = int(inner_square)
-        print(f"[place_ultimate_move] [{game_id}] [{user_id}] Placing move with on [{outer_square}] [{inner_square}]")
+        log.info(f"[place_ultimate_move] [{game_id}] [{user_id}] Placing move on [{outer_square}] [{inner_square}]")
 
         # Set player's move
         index_tuple = (outer_index, inner_index)
@@ -100,7 +102,7 @@ def construct_blueprint(messages, redis, socket):
             current_state["playable_square"] = -1
         else:
             current_state["playable_square"] = inner_index
-        print("[place_ultimate_move] Next playable square set to: " + str(current_state["playable_square"]))
+        log.info("[place_ultimate_move] Next playable square set to: " + str(current_state["playable_square"]))
 
         # Switch player turn
         if current_state["player_turn"] == 1:
@@ -129,19 +131,19 @@ def construct_blueprint(messages, redis, socket):
     @game_page.route('/game/state/<game_id>')
     def get_game_state(game_id):
         game_state = redis.get_complex(game_id)
-        print('[retrieve_game_state] Retrieving game state: ' + str(game_state))
+        log.debug('[retrieve_game_state] Retrieving game state: ' + str(game_state))
         return Response(status=200, content_type='application/json', response=json.dumps(game_state))
 
     def update_game_state(game_id, description):
-        print('[update_game_state] Game state update: ' + description)
-        print('[update_game_state] Game state updated for game id: ' + game_id)
+        log.debug('[update_game_state] Game state update: ' + description)
+        log.debug('[update_game_state] Game state updated for game id: ' + game_id)
         socket.emit('update_game_state', redis.get_complex(game_id), to=game_id)
 
     def check_status(game_id):
         state = redis.get_complex(game_id)
-        print("[check_status] Checking status for game with state: " + str(state))
+        log.debug("[check_status] Checking status for game with state: " + str(state))
         status = calculate_game_status(state, state["board"])
-        print("[check_status] Status determined to be: " + str(status))
+        log.debug("[check_status] Status determined to be: " + str(status))
 
         if status != Status.IN_PROGRESS:
             state["player_one"]["notification"] = build_notification(state, messages, status, 1)
@@ -151,8 +153,8 @@ def construct_blueprint(messages, redis, socket):
         return status
 
     def calculate_game_status(state, test_board):
-        print("[calculate_game_status] Calculating status for game with mode: " + state["game_mode"])
-        print("[calculate_game_status] Calculating status for test board: " + str(test_board))
+        log.debug("[calculate_game_status] Calculating status for game with mode: " + state["game_mode"])
+        log.debug("[calculate_game_status] Calculating status for test board: " + str(test_board))
         if isinstance(test_board[0], list):
             return calculate_ultimate_status(state, test_board)
         if has_player_won(test_board, 1):
@@ -165,15 +167,15 @@ def construct_blueprint(messages, redis, socket):
             return Status.IN_PROGRESS
 
     def calculate_ultimate_status(state, board):
-        print(f"[calculate_ultimate_status] Calculating status for board: {board}")
+        log.debug(f"[calculate_ultimate_status] Calculating status for board: {board}")
         outer_states = []
         for outer_square in board:
             outer_state = calculate_game_status(state, outer_square)
             outer_states.append(outer_state.value)
-            print("[calculate_ultimate_status] outer_states: " + str(outer_states))
+            log.debug("[calculate_ultimate_status] outer_states: " + str(outer_states))
             if len(outer_states) == 9 and outer_states.count(1) == 0:
                 status = calculate_game_status(state, create_false_board(outer_states))
-                print("[calculate_ultimate_status] does last move clinch the winner? -> status: " + str(status))
+                log.debug("[calculate_ultimate_status] does last move clinch the winner? -> status: " + str(status))
                 return Status.DRAW if status == Status.IN_PROGRESS else status
         state["outer_states"] = outer_states
         redis.set_complex(state["game_id"], state)
@@ -182,7 +184,7 @@ def construct_blueprint(messages, redis, socket):
     def set_player_move(game_id, user_id, index_tuple):
         current_state = redis.get_complex(game_id)
         board = current_state["board"]
-        print("[set_player_move] Board retrieved: " + str(board))
+        log.debug("[set_player_move] Board retrieved: " + str(board))
 
         players = [current_state["player_one"], current_state["player_two"]]
         user_symbol = [player for player in players if player["name"] == user_id][0]["symbol"]  # Could be more elegant
@@ -197,13 +199,13 @@ def construct_blueprint(messages, redis, socket):
 
     def set_standard_computer_move(game_id, board):
         available_squares = [index for index, square in enumerate(board) if square == 0]
-        print("[set_standard_computer_move] Available squares: " + str(available_squares))
+        log.debug("[set_standard_computer_move] Available squares: " + str(available_squares))
         if available_squares:
-            print("[set_standard_computer_move] Computer is placing move in random available square")
+            log.debug("[set_standard_computer_move] Computer is placing move in random available square")
             place_standard_move(game_id, "Computer", str(random.choice(available_squares)))
 
     def set_ultimate_computer_move(game_id, inner_square):
-        print("[set_ultimate_computer_move] Computer is placing move in a random available square")
+        log.debug("[set_ultimate_computer_move] Computer is placing move in a random available square")
         game_state = redis.get_complex(game_id)
 
         # Prevent computer from placing in an already completed outer square
@@ -213,11 +215,16 @@ def construct_blueprint(messages, redis, socket):
             chosen_outer_square = random.choice(available_outers)
 
         current_board = game_state["board"][chosen_outer_square]
-        print("[set_ultimate_computer_move] Board: " + str(current_board))
+        log.debug("[set_ultimate_computer_move] Board: " + str(current_board))
         available_squares = [index for index, square in enumerate(current_board) if square == 0]
-        print("[set_ultimate_computer_move] Available: " + str(available_squares))
+        log.debug("[set_ultimate_computer_move] Available: " + str(available_squares))
         if available_squares:
             place_ultimate_move(game_id, "Computer", chosen_outer_square, random.choice(available_squares))
+
+    def simulate_computer_think_time():
+        thinking_time = random.randrange(4)
+        log.debug(f"[simulate_computer_think_time] Computer will think for [{thinking_time}] before placing move")
+        time.sleep(thinking_time)
 
     # Blueprint return
     return game_page
@@ -251,12 +258,10 @@ def create_false_board(states):  # Question :: does a more elegant way exist?
     board.bot_mid = map_to_symbol(states[7])
     board.bot_rhs = map_to_symbol(states[8])
 
-    print("[create_false_board] board: " + str(board.list()))
     return board.list()
 
 
 def build_notification(game_state, messages, game_status, player):
-    print(f"[build_notification] Building notification for player [{player}] with status [{game_status}]")
     notification = Notification()
     notification.active = True
     random_message = str(random.randrange(3))
@@ -284,9 +289,3 @@ def build_notification(game_state, messages, game_status, player):
         notification.mood = Mood.SAD.value
 
     return notification
-
-
-def simulate_computer_think_time():
-    thinking_time = random.randrange(4)
-    print(f"[simulate_computer_think_time] Computer will think for [{thinking_time}] before placing move")
-    time.sleep(thinking_time)
