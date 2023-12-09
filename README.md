@@ -5,8 +5,7 @@
 # <img src="./src/resources/static/img/badge.png" width="28" alt="Logo"> Ultima
 [ultima.jrsmth.io](https://www.ultima.jrsmth.io)
 
-<img width="1440" alt="Ultima Game Play" src="https://github.com/jrsmth/ultima/assets/34093915/c847db7d-8b72-4614-b3fc-7219e95c3bf5">
-<!-- TODO :: Replace with .GIF -->
+![ultima_demo](https://github.com/jrsmth/ultima/assets/34093915/701a547e-66ab-4178-9da1-cb5ae9654166)
 
 ## Explanation
 - ⭕ Each square contains a smaller game of Tic-Tac-Toe
